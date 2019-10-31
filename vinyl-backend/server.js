@@ -1,5 +1,6 @@
 'use strict';
 
+const Routes = require('./lib/routes');
 const Hapi = require('hapi');
 
 // Create a server with a host and port
@@ -8,14 +9,7 @@ const server = Hapi.server({
 	port: 8001
 });
 
-// Add the route
-server.route({
-	method: 'GET',
-	path: '/',
-	handler: (request, h) => {
-		return 'helslo world';
-	}
-});
+server.route(Routes);
 
 // Start the server
 async function start() {
