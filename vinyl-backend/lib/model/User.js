@@ -1,6 +1,13 @@
-const UserModel = mongoose.model("book", {
-    title: String,
-    price: Number,
-    author: String,
-    category: String
-});
+"use strict"
+
+module.exports = class  User{
+    constructor(name, email, userRole){
+        this.name = name
+        this.email = email
+        this.userRole = userRole
+    }
+
+    getAll(){
+        return this.name + ' is a user'
+    }
+}
