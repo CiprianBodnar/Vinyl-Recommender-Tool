@@ -1,13 +1,15 @@
 "use strict"
-//https://appdividend.com/2017/12/21/simple-nodejs-authentication-system-using-passport/
-module.exports = class  User{
-    constructor(name, email, userRole){
-        this.name = name
-        this.email = email
-        this.userRole = userRole
-    }
+const mongoose = require('mongoose')
 
-    getAll(){
-        return this.name + ' is a user'
+const UserSchema = new mongoose.Schema({
+    title:{
+        type: String,
+        require: true
+    },
+    author:{
+        type: String,
+        require: true
     }
-}
+},{strict: false});
+
+module.exports = mongoose.model('User', UserSchema);

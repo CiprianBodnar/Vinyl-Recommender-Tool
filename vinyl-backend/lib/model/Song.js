@@ -1,13 +1,15 @@
 "use strict"
+const mongoose = require('mongoose')
 
-module.exports = class  Song{
-    constructor(name, artist, album){
-        this.name = name
-        this.artist = artist
-        this.album = album
+const SongSchema = new mongoose.Schema({
+    title:{
+        type: String,
+        require: true
+    },
+    author:{
+        type: String,
+        require: true
     }
+},{strict: false});
 
-    display(){
-        return '${this.name} is a song'
-    }
-}
+module.exports = mongoose.model('Song', SongSchema);

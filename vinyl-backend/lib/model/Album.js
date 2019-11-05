@@ -1,12 +1,15 @@
 "use strict"
+const mongoose = require('mongoose')
 
-module.exports = class  Album{
-    constructor(name, artist){
-        this.name = name
-        this.artist = artist
+const AlbumSchema = new mongoose.Schema({
+    title:{
+        type: String,
+        require: true
+    },
+    author:{
+        type: String,
+        require: true
     }
+},{strict: false});
 
-    display(){
-        return this.name + ' is a album'
-    }
-}
+module.exports = mongoose.model('Album', AlbumSchema);
