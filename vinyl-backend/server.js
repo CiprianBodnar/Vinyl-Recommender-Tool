@@ -5,9 +5,11 @@ const session = require('express-session');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
+require('./lib/model/user')
 
-var songs = require('./lib/controller/SongController')
-var users = require('./lib/controller/UserController')
+var songs = require('./lib/controller/song-controller')
+var users = require('./lib/controller/user-controller')
+
 
 //Configure mongoose's promise to global promise
 mongoose.promise = global.Promise;
