@@ -6,9 +6,9 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
 require('./lib/model/user')
+require('./lib/service/passport-config')
 
-var songs = require('./lib/controller/song-controller')
-var users = require('./lib/controller/user-controller')
+
 
 
 //Configure mongoose's promise to global promise
@@ -28,8 +28,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
-app.use(songs)
-app.use(users)
+app.use(require('./lib/controller'))
 
 if(!isProduction) {
   app.use(errorHandler());
