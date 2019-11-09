@@ -27,7 +27,9 @@
     "passport": "*",
     "passport-google-oauth2": "^0.2.0",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.1.2"
   },
   "devDependencies": {},
   "scripts": {
