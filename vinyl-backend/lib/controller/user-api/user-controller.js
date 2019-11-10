@@ -57,6 +57,7 @@ router.post('/register', auth.optional, (req, res, next) => {
   const finalUser = new Users(user);
 
   finalUser.setPassword(user.password);
+  finalUser.setFirstRegistration(true);
 
   return finalUser.save()
     .then(() => res.json({ user: finalUser.toAuthJSON() }));
@@ -113,6 +114,7 @@ router.post('/login', auth.optional, (req, res, next) => {
     });
   }
 
+
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
     if(err) {
       return next(err);
@@ -121,11 +123,11 @@ router.post('/login', auth.optional, (req, res, next) => {
     if(passportUser) {
       const user = passportUser;
       user.token = passportUser.generateJWT();
-
+     
       return res.json({ user: user.toAuthJSON() });
     }
 
-    return status(400).info;
+    return res.sendStatus(400).info;
   })(req, res, next);
 });
 
