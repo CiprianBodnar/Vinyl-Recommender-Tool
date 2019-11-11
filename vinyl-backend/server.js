@@ -5,7 +5,8 @@ const session = require('express-session');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
-require('./lib/model/user')
+require('./lib/model/User')
+require('./lib/model/Question')
 require('./lib/service/passport-config')
 const swaggerConf = require('./lib/service/swaggerConfig')
 const endpoints = require('./lib/controller')

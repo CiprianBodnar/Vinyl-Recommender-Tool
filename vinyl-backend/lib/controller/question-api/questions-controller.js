@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const router = require('express').Router();
 const auth = require('../../service/auth');
 const Users = mongoose.model('Users');
-
+const Question = mongoose.model('Questions')
 /**
  * @swagger
  * /display:
@@ -39,6 +39,15 @@ router.get('/display', auth.required, (req, res, next)=>{
         
     });
 
+})
+
+router.post('/submit', auth.required, (req, res, next) =>{
+    const { body: { question } } = req;
+    const { payload: { id } } = req;
+    const finalQuestion = new Question(question);
+    finalQuestion.setUserId(id);
+    return finalQuestion.save()
+        .then(() => res.json({ question: finalQuestion.toAuthJSON() }));
 })
 
 module.exports = router;
