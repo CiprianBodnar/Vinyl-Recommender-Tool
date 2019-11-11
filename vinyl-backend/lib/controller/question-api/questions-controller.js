@@ -40,7 +40,37 @@ router.get('/display', auth.required, (req, res, next)=>{
     });
 
 })
-
+/**
+ * @swagger
+ * /submit:
+ *  post:
+ *    tags:
+ *        - Question
+ *    description: Submit answer to a specific question
+ *    security:
+ *      - beareAuth: []
+ *    responses:
+ *      200:
+ *        description: Succes subitted
+ *      422:
+ *        description: Missing information
+ *      401:
+ *        description: No auth token
+ *    parameters: [
+ *      {
+ *        name: question,
+ *        in: body,
+ *        description: Question that need a response,
+ *        required: true
+ *      },
+ *      {
+ *        name: answer,
+ *        in: body,
+ *        description: Answer to the question,
+ *        required: true
+ *      }
+ *    ]  
+ */
 router.post('/submit', auth.required, (req, res, next) =>{
     const { body: { question } } = req;
     const { payload: { id } } = req;
