@@ -4,20 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const { Schema } = mongoose;
 
-/**
- * @swagger
- * definition:
- *  User:
- *    type: Object
- *     properties:
- *      email: string
- *      hash: string
- *      salt: string
- *     required:
- *      -email
- *      -hash
- *      -salt
- */
+
 const UsersSchema = new Schema({
   email: String,
   hash: String,

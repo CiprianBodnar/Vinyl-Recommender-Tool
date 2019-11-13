@@ -134,6 +134,17 @@ router.post('/login', auth.optional, (req, res, next) => {
 //GET current route (required, only authenticated users have access)
 /**
  * @swagger
+ * definitions:
+ *  User:
+ *    type: Object
+ *    properties:
+ *      email: string
+ *      hash: string
+ *      salt: string
+ *    required:
+ *      -email
+ *      -hash
+ *      -salt
  * /current:
  *  get:
  *    tags:
@@ -147,7 +158,14 @@ router.post('/login', auth.optional, (req, res, next) => {
  *      200:
  *        descriptions: Succes get the current user
  *        schema:
- *          $ref: '#/definition/User'
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *              hash:
+ *                type: string
+ *              salt:
+ *                type: string
  *      401:
  *         desciptions: No valid auth token 
  *        

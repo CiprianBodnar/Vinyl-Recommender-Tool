@@ -5,6 +5,17 @@ const Users = mongoose.model('Users');
 const Question = mongoose.model('Questions')
 /**
  * @swagger
+ * definitions:
+ *  Question:
+ *    type: Object
+ *    properties:
+ *      question: string
+ *      answer: string
+ *      user_id: string
+ *    required:
+ *      -question
+ *      -answer
+ *      -user_id
  * /display:
  *  get:
  *      tags:
@@ -15,6 +26,15 @@ const Question = mongoose.model('Questions')
  *      responses:
  *          200:
  *              description: Displyed question
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      question:
+ *                          type: string
+ *                      answer:
+ *                          type: string
+ *                      user_id:
+ *                          type: string
  *          401:
  *              description: Unauthorize to this endpoint, please regiset
  *          204:

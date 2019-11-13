@@ -2,6 +2,20 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+/**
+ * @swagger
+ * definitions:
+ *  Question:
+ *    type: Object
+ *     properties:
+ *      question: string
+ *      answer: string
+ *      user_id: string
+ *     required:
+ *      -question
+ *      -answer
+ *      -user_id
+ */
 const QuestionSchema = new Schema({
     question: String,
     answer: String,
