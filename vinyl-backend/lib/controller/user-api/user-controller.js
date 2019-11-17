@@ -184,4 +184,14 @@ router.get('/current', auth.required, (req, res, next) => {
     });
 });
 
+router.get('/login2', function(req, res) {
+  var scopes = 'user-read-private user-read-email';
+  res.redirect('https://accounts.spotify.com/authorize' +
+    '?response_type=code' +
+    '&client_id=' + '158f2d04baf54331b490d40a5b0c2741' +
+    (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+    '&redirect_uri=' + encodeURIComponent('http://localhost:8000'));
+  });
+  
+
 module.exports = router;
