@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Login from './components/Login/Login'
+import SignInOut from './views/SignInOut/SignInOut'
 
-ReactDOM.render(<Login />, document.getElementById('root'));
+ReactDOM.render(
+        <SignInOut/>, 
+    document.getElementById('root'));
