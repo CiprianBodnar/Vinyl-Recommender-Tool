@@ -9,7 +9,7 @@ export default class Navigation extends Component{
         };
         return(
             <Navbar collapseOnSelect bg="dark" variant="dark" expand="lg">
-                <Navbar.Brand href="#home" style={title}>Vinyl Recommander</Navbar.Brand>
+                <Navbar.Brand href="/home" style={title}>Vinyl Recommander</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>
@@ -27,8 +27,6 @@ export default class Navigation extends Component{
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
                     <Nav>
-                    <NavLink className="d-inline p-2 bg-dark text-white"
-                        to="/signin">Sign In</NavLink>
                     <NavLink className="d-inline p-2 bg-dark text-white"
                         to="/signup">Sign Up</NavLink>
                     </Nav>

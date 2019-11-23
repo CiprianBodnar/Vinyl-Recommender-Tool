@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import NavigationHome from '../components/NavigationHome'
+import NavigationHome from './NavigationHome'
 import { Container} from 'react-bootstrap';
-import Footer from '../components/Footer';
+import Footer from './Footer';
 
 
 const BtnFacebook = styled.button`
@@ -65,7 +65,7 @@ export default class SignIn extends Component {
         };
         return (
         <Container>
-            <NavigationHome /> 
+            {/* <NavigationHome />  */}
             <form style={formm}>
                 <h3>Sign In</h3>
 
@@ -105,8 +105,9 @@ export default class SignIn extends Component {
 
 
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                <p className="not-account text-center">Don't have an account? <a href='/signup'>Sign up</a></p>
                 <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
+                    Forgot <a href="#"> password?</a>
                 </p>
             </form>
             <Footer />

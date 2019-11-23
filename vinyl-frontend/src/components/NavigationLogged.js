@@ -9,7 +9,7 @@ export default class Navigation extends Component{
         };
         return(
             <Navbar collapseOnSelect bg="dark" variant="dark" expand="lg">
-                <Navbar.Brand href="#home" style={title}>Vinyl Recommander</Navbar.Brand>
+                <Navbar.Brand href="/home" style={title}>Vinyl Recommander</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>

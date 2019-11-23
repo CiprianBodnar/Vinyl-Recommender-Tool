@@ -22,7 +22,7 @@
 }
 
 body {
-  background: #666668 !important;
+  background: #343a40 !important;
 
   font-family: 'Fira Sans', sans-serif;
 }
@@ -37,7 +37,7 @@ body {
 }
 
 .btn {
-    background: #242327;
+    background: #343a40;
 }
 
 .forgot-password,
@@ -53,4 +53,9 @@ body {
   color: #0c0d0e;
   text-decoration: underline;
 
+}
+
+.not-account a{
+  color: #0c0d0e;
+  text-decoration: underline;
 }

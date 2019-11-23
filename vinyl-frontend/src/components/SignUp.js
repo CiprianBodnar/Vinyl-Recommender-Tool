@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import NavigationHome from '../components/NavigationHome'
+import NavigationHome from './NavigationHome'
 import { Container} from 'react-bootstrap';
-import Footer from '../components/Footer';
+import Footer from './Footer';
 
 export default class SignUp extends Component {
     render() {

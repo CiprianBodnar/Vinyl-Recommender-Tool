@@ -1,0 +1,9 @@
+.jumbotron{
+    background-image: url('../assets/vinyl1.jpg');
+    background-position: center;
+    background-repeat: repeat-x;
+    background-size: 100% auto;
+    color: #343a40;
+    height: 25%;
+
+}
