@@ -1,19 +1,18 @@
 import React from 'react';
-import NavigationLogged from '../../components/NavigationLogged'
+import NavigationHome from '../../components/NavigationHome'
 import { Container} from 'react-bootstrap';
 import Footer from '../../components/Footer';
-import './Profile.css';
+import './About.css';
 
-export const Profile = () => {
+export const About = () => {
 
   return (
     <Container>
-        <NavigationLogged /> 
-
+        <NavigationHome /> 
         <Footer />
     </Container>
       
   )
 }
 
-export default Profile ;
+export default About ;

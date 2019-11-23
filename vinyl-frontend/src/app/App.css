@@ -20,3 +20,37 @@
 .App-link {
   color: #09d3ac;
 }
+
+body {
+  background: #666668 !important;
+
+  font-family: 'Fira Sans', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
+
+
+.column {
+  float: left;
+  width: 33.3%;
+  padding: 5px;
+}
+
+.btn {
+    background: #242327;
+}
+
+.forgot-password,
+.forgot-password a {
+  text-align: right;
+  font-size: 13px;
+  padding-top: 10px;
+  color: #7f7d7d;
+  margin: 0;
+}
+
+.forgot-password a {
+  color: #0c0d0e;
+  text-decoration: underline;
+
+}

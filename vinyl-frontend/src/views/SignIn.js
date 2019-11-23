@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import styled, { css } from 'styled-components';
-
+import styled from 'styled-components';
+import NavigationHome from '../components/NavigationHome'
+import { Container} from 'react-bootstrap';
+import Footer from '../components/Footer';
 
 
 const BtnFacebook = styled.button`
@@ -52,8 +54,19 @@ const BtnSpotify = styled.button`
 
 export default class SignIn extends Component {
     render() {
+        const formm={
+            width: '450px',
+            margin: 'auto',
+            background: '#ffffff',
+            boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
+            padding: '40px 55px 45px 55px',
+            borderRadius: '15px',
+            transition: 'all .3s',
+        };
         return (
-            <form>
+        <Container>
+            <NavigationHome /> 
+            <form style={formm}>
                 <h3>Sign In</h3>
 
                 <div className="form-group">
@@ -96,6 +109,8 @@ export default class SignIn extends Component {
                     Forgot <a href="#">password?</a>
                 </p>
             </form>
+            <Footer />
+        </Container>   
         );
     }
 }

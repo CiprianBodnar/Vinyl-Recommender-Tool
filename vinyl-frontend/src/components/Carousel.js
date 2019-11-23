@@ -3,6 +3,7 @@ import { MDBCarousel, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDB
 "mdbreact";
 
 const Carousel = () => {
+
   return (
     <MDBContainer>
       <MDBCarousel

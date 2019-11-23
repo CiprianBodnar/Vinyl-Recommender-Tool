@@ -4,8 +4,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import SignInOut from './views/SignInOut/SignInOut'
+import App from './app/App'
+// import SignInOut from './views/SignInOut/SignInOut'
 
 ReactDOM.render(
-        <SignInOut/>, 
+        <App/>, 
     document.getElementById('root'));
