@@ -70,15 +70,39 @@
     <section typeof="sa:Materials" id="technologies">
         <h2>Technologies</h2>
         <ul>
-            <li><p><a href="https://nodejs.org/en/">NodeJS</a> is an open-source server side runtime environment
-                built on Chrome's V8 JavaScript engine. It provides an event driven, non-blocking (asynchronous)
-                I/O and cross-platform runtime environment for building highly scalable server-side application
-                using JavaScript.</p></li>
-            <li><p><a href="https://angular.io/">Angular</a> is a structural framework for dynamic web apps. It
-                lets you use HTML as your template language and lets you extend HTML's syntax to express your
-                application's components clearly and succinctly. AngularJS's data binding and dependency
-                injection eliminate much of the code you would otherwise have to write. And it all happens
-                within the browser, making it an ideal partner with any server technology.</p></li>
+            <li>
+                <p>
+                    <a href="https://nodejs.org/en/">NodeJS</a> is an open-source server side runtime environment
+                    built on Chrome's V8 JavaScript engine. It provides an event driven, non-blocking (asynchronous)
+                    I/O and cross-platform runtime environment for building highly scalable server-side application
+                    using JavaScript.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <a href="https://reactjs.org/">ReactJS</a>
+                    is an open-source JavaScript library which is used for building
+                    user interfaces specifically for single page applications. It’s
+                    used for handling view layer for web and mobile apps. React also
+                    allows us to create reusable UI components. ReactJS allows developers
+                    to create large web applications which can change data, without reloading
+                    the page. The main purpose of React is to be fast, scalable, and simple.
+                    It works only on user interfaces in application. This corresponds to view
+                    in the MVC template. ReactJS was first created by Jordan Walke, a software engineer working for Facebook.
+            <li>
+                <p>
+                    <a href="https://www.mongodb.com/">MongoDB</a> is a document-oriented NoSQL database used for high volume data storage.
+                    For local storage we use mongoDb to help storage user credentials, question logic etc. For the SPARQL part we could call from a graph db the informations that we need in order to complete the recommendations for a user about what vinyls might like.
+
+                </p>
+            <li>
+                <p>
+                    <a href="https://getbootstrap.com/">Bootstrap</a> is a framework to help you design websites faster and easier. It
+                    includes HTML and CSS based design templates for typography, forms, buttons, tables, navigation, modals, 
+                    image carousels, etc. ... Here are some additional reasons to use Bootstrap: Bootstrap's responsive CSS 
+                    adjusts to phones, tablets, and desktops.
+                </p>
+            </li>
         </ul>
     </section>
     <section typeof="sa:Methods" id="architecture">
@@ -101,13 +125,10 @@
                 </figcaption>
             </figure>
             <p>
-                As we can observe in the diagram shown above, all of the MuSeR's features require the authentication of the user. The user can visualize the already created playlists. During the visualization, users will be able to edit them.
-            </p>
-            <p>
-                Another aspect of the application that can be observed in the diagram is the content finding mechanism. Users - for example - can find artists based on keywords specified by them. After finding the desired entity, he can select and add a specific song played by the respective artist into a personal playlist.
-            </p>
-            <p>
-                Aside from this, the application will recommend other entities based on relationships of the visualized entity. (e.g. 'Songs from same artist', 'Songs from same Album' etc.)
+                Vinyl-Recommender-Tool has been created to ease up the management of playlists for music enthusiasts by providing an 
+                intuitive platform that uses semantic Web concepts to enhance the way of visualizing the relationships between various 
+                entities in the context of musical domain. The application can be extended and improved in different ways by conceiving 
+                new mechanisms and architectural ideas such as media streaming or machine-learning-related suggesting mechanisms.
             </p>
         </section>
 
@@ -138,9 +159,9 @@
 
                 <dt>Angular Framework, 2017</dt>
                 <dd id="ref-angular" typeof="schema:CreativeWork"
-                    resource="https://angular.io/">
+                    resource="https://reactjs.org/">
                     <cite property="schema:name">
-                        <a href="https://angular.io/">Angular</a>
+                        <a href="https://reactjs.org/">Angular</a>
                     </cite>,
                     by
                     <span property="schema:author" typeof="schema:Organization">
