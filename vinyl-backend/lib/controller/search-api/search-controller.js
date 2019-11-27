@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 const router = require('express').Router();
 const auth = require('../../service/auth');
 const Users = mongoose.model('Users');

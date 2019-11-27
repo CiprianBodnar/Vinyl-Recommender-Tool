@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
 
-router.use('/users', require('./user-controller'));
-
+router.use('/social', require('./social-controller'));
 module.exports = router;

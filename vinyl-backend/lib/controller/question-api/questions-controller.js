@@ -36,7 +36,7 @@ const Question = mongoose.model('Questions')
  *                      user_id:
  *                          type: string
  *          401:
- *              description: Unauthorize to this endpoint, please regiset
+ *              description: Unauthorize to this endpoint, please register
  *          204:
  *              description: User is not on the first login so no question are displayed.
  */
