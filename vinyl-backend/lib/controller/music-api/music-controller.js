@@ -133,9 +133,9 @@ router.delete('/vinyl', auth.required, (req, res, next)=>{
  *          401:
  *              description: Unauthorize to this endpoint, please register
  */
-router.get('/recomand', auth.required, (req, res, next)=>{
+router.get('/recommand', auth.required, (req, res, next)=>{
     const { payload: { id } } = req;
-    return res
+    return res.json("test")
 })
 
 
@@ -265,3 +265,4 @@ router.post('/playlist', auth.required, (req, res, next)=>{
     const { payload: { id } } = req;
     return res
 })
+module.exports = router;

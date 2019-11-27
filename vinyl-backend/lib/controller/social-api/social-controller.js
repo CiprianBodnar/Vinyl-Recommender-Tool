@@ -31,3 +31,5 @@ router.post('/share', auth.required, (req, res, next)=>{
     const { payload: { id } } = req;
     return res
 })
+
+module.exports = router;

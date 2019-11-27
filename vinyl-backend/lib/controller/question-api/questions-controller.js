@@ -27,7 +27,7 @@ const Question = mongoose.model('Questions')
  *          200:
  *              description: Displyed question
  *              schema:
- *                  $ref: '#/definitions/Questions'
+ *                  $ref: '#/definitions/Question'
  *          401:
  *              description: Unauthorize to this endpoint, please register
  *          204:

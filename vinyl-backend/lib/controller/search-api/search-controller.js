@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 const router = require('express').Router();
 const auth = require('../../service/auth');
-const Users = mongoose.model('Users');
 
 
 /**
@@ -38,3 +37,5 @@ const Users = mongoose.model('Users');
 router.post('/vinyl', auth.required, (req, res, next) => {
     return res.json("todo");
 });
+
+module.exports = router;
