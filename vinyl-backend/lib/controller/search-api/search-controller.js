@@ -6,7 +6,7 @@ const Users = mongoose.model('Users');
 
 /**
  * @swagger
- * /song:
+ * /vinyl:
  *  post:
  *    tags:
  *        - Search
@@ -16,6 +16,8 @@ const Users = mongoose.model('Users');
  *    responses:
  *      200:
  *        description: Succes search a song by title
+ *        schema:
+ *          $ref: '#/definitions/Vinyl'  
  *      401:
  *        description: No auth token
  *    parameters: [
@@ -33,6 +35,6 @@ const Users = mongoose.model('Users');
  *      }
  *    ]  
  */
-router.post('/song', auth.required, (req, res, next) => {
+router.post('/vinyl', auth.required, (req, res, next) => {
     return res.json("todo");
 });

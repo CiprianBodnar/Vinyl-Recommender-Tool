@@ -20,7 +20,7 @@ var request = require('request')
  *    responses:
  *      200: 
  *        description: Registration succes
- *      422:
+ *      204:
  *        description: Missing information
  *      401:
  *        description: No auth token valid
@@ -80,7 +80,7 @@ router.post('/register', auth.optional, (req, res, next) => {
  *    responses:
  *      200:
  *        description: Succes log in
- *      422:
+ *      204:
  *        description: Missing information
  *      401:
  *        description: No auth token
@@ -162,14 +162,7 @@ router.post('/login', auth.optional, (req, res, next) => {
  *      200:
  *        descriptions: Succes get the current user
  *        schema:
- *            type: object
- *            properties:
- *              email:
- *                type: string
- *              hash:
- *                type: string
- *              salt:
- *                type: string
+ *          $ref: '#/definitions/User'
  *      401:
  *         desciptions: No valid auth token 
  *        
@@ -187,6 +180,19 @@ router.get('/current', auth.required, (req, res, next) => {
       return res.json({ user: user.toAuthJSON() });
     });
 });
+
+
+var generateRandomString = function(length) {
+  var text = '';
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (var i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};
+
+var stateKey = 'spotify_auth_state';
 
 /**
  * @swagger
@@ -208,19 +214,6 @@ router.get('/current', auth.required, (req, res, next) => {
  *        
  *
  */
-var generateRandomString = function(length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
-
-var stateKey = 'spotify_auth_state';
-
-
 router.get('/login', function(req, res) {
 
   var state = generateRandomString(16);
@@ -301,7 +294,26 @@ router.get('/callback', function(req, res) {
     });
   }
 });
-
+/**
+ * @swagger
+ * definitions:
+ *  User:
+ *    type: Object
+ * /login/refresh_token:
+ *  get:
+ *    tags:
+ *      - Users
+ *    description: Refres token for Spotify auth
+ *    produces:
+ *      - application/json
+ *    responses:
+ *      200:
+ *        descriptions: Succes generated a refresh token.
+ *      401:
+ *         desciptions: No valid auth token 
+ *        
+ *
+ */
 router.get('/refresh_token', function(req, res) {
 
   // requesting access token from refresh token

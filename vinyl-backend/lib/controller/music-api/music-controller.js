@@ -4,7 +4,7 @@ const auth = require('../../service/auth');
 /**
  * @swagger
  * definitions:
- *  Music:
+ *  Vinyl:
  *    type: Object
  *    properties:
  *      title: string
@@ -21,11 +21,12 @@ const auth = require('../../service/auth');
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: id
- *          - description: Vinyl id
  *          - in: path
- *          - required: true
- *          - type: string
+ *            name: id
+ *            description: Vinyl id 
+ *            minimum: 1
+ *            required: true
+ *            type: string
  *      responses:
  *          200:
  *              description: Vinyl displayed.
@@ -60,12 +61,12 @@ router.get('/vinyl', auth.required, (req, res, next)=>{
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: Vinyl
+ *       - in: body
+ *         name: Vinyl
  *         description: Vinyl(song) object
- *         in: body
  *         required: true
  *         schema:
- *           $ref: '#/definitions/Music'
+ *           $ref: '#/definitions/Vinyl'
  *     responses:
  *       200:
  *         description: Successfully created
@@ -87,11 +88,11 @@ router.post('/vinyl', auth.required, (req, res, next)=>{
  *      security:
  *          - bearerAuth: []
  *      parameters:
- *          - name: id
- *          - description: Vinyl id
  *          - in: path
- *          - required: true
- *          - type: string
+ *            name: id
+ *            description: Vinyl id
+ *            required: true
+ *            type: string
  *              
  *      produces:
  *          - application/json
@@ -154,11 +155,11 @@ router.get('/recomand', auth.required, (req, res, next)=>{
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: id
- *          - description: playlist id
  *          - in: path
- *          - required: true
- *          - type: string
+ *            name: id
+ *            description: playlist id
+ *            required: true
+ *            type: string
  *      responses:
  *          200:
  *              description: Playlist retrtieved
@@ -192,11 +193,11 @@ router.get('/playlist/{id}', auth.required, (req, res, next)=>{
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: id
- *          - description: playlist id
  *          - in: path
- *          - required: true
- *          - type: string
+ *            name: id
+ *            description: playlist id
+ *            required: true
+ *            type: string
  *      responses:
  *          200:
  *              description: Playlist deleted
@@ -239,11 +240,11 @@ router.delete('/playlist/{id}', auth.required, (req, res, next)=>{
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: id
- *          - description: playlist id
  *          - in: path
- *          - required: true
- *          - type: string
+ *            name: id
+ *            description: playlist id
+ *            required: true
+ *            type: string
  *      responses:
  *          200:
  *              description: Playlist created

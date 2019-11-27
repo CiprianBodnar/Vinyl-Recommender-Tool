@@ -27,14 +27,7 @@ const Question = mongoose.model('Questions')
  *          200:
  *              description: Displyed question
  *              schema:
- *                  type: object
- *                  properties:
- *                      question:
- *                          type: string
- *                      answer:
- *                          type: string
- *                      user_id:
- *                          type: string
+ *                  $ref: '#/definitions/Questions'
  *          401:
  *              description: Unauthorize to this endpoint, please register
  *          204:
@@ -72,22 +65,22 @@ router.get('/display', auth.required, (req, res, next)=>{
  *    responses:
  *      200:
  *        description: Succes subitted
- *      422:
+ *      204:
  *        description: Missing information
  *      401:
  *        description: No auth token
  *    parameters: [
  *      {
- *        name: question,
- *        in: body,
- *        description: Question that need a response,
- *        required: true
+*          in: body,
+ *         name: question,
+ *         description: Question that need a response,
+ *         required: true
  *      },
  *      {
- *        name: answer,
- *        in: body,
- *        description: Answer to the question,
- *        required: true
+ *          in: body,
+ *          name: answer,
+ *          description: Answer to the question,
+ *          required: true
  *      }
  *    ]  
  */
