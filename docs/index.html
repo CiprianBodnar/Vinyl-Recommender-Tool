@@ -113,7 +113,296 @@
                 <center>The general architecture of Vinyl-Recommender-Tool</center>
             </figcaption>
         </figure>
+	
+  	<p>The Vinyl main storage is the RDF solution <strong>GraphDB</strong>. Every entity is saved in the graph (see the diagram above) by interconnecting the relationship with other entities and properties.</p>
 
+        <p>In the tables below we describe each entities' properties.</p>
+
+        <p>By using the ontology / RDF concepts, MuSeR is able to smartly suggest entities based on the relationships between instances. For example, upon creating a 'smart' playlist, the underlying mechanisms use other playlists created, stored and interlinked inside the RDF storage to suggest similar songs / artists, based on the keywords provided by the user and also on the personal user data.</p>
+
+        <p>The entire ontology was 'packed' under the 'muser' vocabulary. In the following examples, everything without a prefix is assumed to be part of it.</p>
+
+	<figure typeof="schema:Table">
+                    <table>
+                        <thead>
+                        <tr><code>MusicalAgent / MusicalArtist / MusicalBand</code></tr>
+                        <tr>
+                            <th>
+                                <center>Property</center>
+                            </th>
+                            <th>
+                                <center>Type / Range</center>
+                            </th>
+                            <th>
+                                <center>Description</center>
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tr>
+                            <td>rdf:type</td>
+                            <td>MusicalArtist / MusicalBand</td>
+                            <td>both types are subclasses of MusicalAgent</td>
+                        </tr>
+
+                        <tr>
+                            <td>idSpotify</td>
+                            <td>string</td>
+                            <td>the unique ID from Spotify</td>
+                        </tr>
+
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>the MusicalAgent's label equivalent</td>
+                        </tr>
+
+                        <tr>
+                            <td>firstName</td>
+                            <td>string</td>
+                            <td>the MusicalArtist's first name</td>
+                        </tr>
+
+                        <tr>
+                            <td>lastName</td>
+                            <td>string</td>
+                            <td>the MusicalArtist's last name</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>gender</td>
+                            <td>string</td>
+                            <td>the MusicalArtist's gender</td>
+                        </tr>
+                        <tr>
+                            <td>about</td>
+                            <td>string</td>
+                            <td>description of the MusicalAgent</td>
+                        </tr>
+                        <tr>
+                            <td>hasMusicalGenre</td>
+                            <td>MusicalGenre</td>
+                            <td>the genres representing the MusicalAgent's style</td>
+                        </tr>
+
+                        <tr>
+                            <td>musicalAgentOrigin</td>
+                            <td>dbo:Place</td>
+                            <td>the origin place of the MusicalAgent</td>
+                        </tr>
+
+                        <tr>
+                            <td>inceptionDate</td>
+                            <td>date</td>
+                            <td>the inception date of the MusicalAgent</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>retiringDate</td>
+                            <td>date</td>
+                            <td>the retiring date of the MusicalAgent</td>
+                        </tr>
+
+                        <tr>
+                            <td>performs</td>
+                            <td>Song</td>
+                            <td>the songs performed by the MusicalAgent</td>
+                        </tr>
+
+                        <tr>
+                            <td>released</td>
+                            <td>Album</td>
+                            <td>the albums released by the MusicalArtist</td>
+                        </tr>
+
+                        <tr>
+                            <td>relatedMusicalAgent</td>
+                            <td>MusicalAgent</td>
+                            <td>the MusicalAgents related to the MusicalArtist</td>
+                        </tr>
+
+                        <caption>
+                            The list of properties of the <code>MusicalAgent / MusicalArtist / MusicalBand</code> entity along with their data types / ranges.
+                        </caption>
+                    </table>
+                </figure>
+
+                <figure typeof="schema:Table">
+                    <table>
+                        <thead>
+                        <tr><code>Song</code></tr>
+                        <tr>
+                            <th><center>Property</center></th>
+                            <th><center>Type / Range</center></th>
+                            <th><center>Description</center></th>
+                        </tr>
+                        </thead>
+
+                        <tr>
+                            <td>rdf:type</td>
+                            <td>Song</td>
+                            <td>the type of the song</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>idSpotify</td>
+                            <td>string</td>
+                            <td>the unique ID from Spotify</td>
+                        </tr>
+
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>the Song's label equivalent</td>
+                        </tr>
+
+                        <tr>
+                            <td>duration</td>
+                            <td>int</td>
+                            <td>the duration of the song</td>
+                        </tr>
+
+                        <tr>
+                            <td>performedBy</td>
+                            <td>MusicalAgent</td>
+                            <td>the MusicalAgents that perform the song</td>
+                        </tr>
+
+                        <tr>
+                            <td>containedBy</td>
+                            <td>Album</td>
+                            <td>the Albums that contain the song</td>
+                        </tr>
+
+                        <tr>
+                            <td>hasMusicalGenre</td>
+                            <td>MusicalGenre</td>
+                            <td>the MusicalGenres of the song</td>
+                        </tr>
+
+                        <tr>
+                            <td>partOf</td>
+                            <td>MusicalPlaylist</td>
+                            <td>the MusicalPlaylists that contain the song</td>
+                        </tr>
+
+                        <caption>
+                            The list of properties of the <code>Song</code> entity along with their data types.
+                        </caption>
+                    </table>
+                </figure>
+
+
+                <figure typeof="schema:Table">
+                    <table>
+                        <thead>
+                        <tr><code>Album</code></tr>
+                        <tr>
+                            <th><center>Property</center></th>
+                            <th><center>Type / Range</center></th>
+                            <th><center>Description</center></th>
+                        </tr>
+                        </thead>
+                        
+                        <tr>
+                            <td>rdf:type</td>
+                            <td>Album</td>
+                            <td>the type of the album</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>idSpotify</td>
+                            <td>string</td>
+                            <td>the unique ID from Spotify</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>the Album's label equivalent</td>
+                        </tr>
+                        <tr>
+                            <td>releasedBy</td>
+                            <td>MusicalAgent</td>
+                            <td>the MusicalAgent that released the album</td>
+                        </tr>
+                        <tr>
+                            <td>releaseDate</td>
+                            <td>date</td>
+                            <td>the year of album release</td>
+                        </tr>
+                        <tr>
+                            <td>contains</td>
+                            <td>Song</td>
+                            <td>the songs contained by the album</td>
+                        </tr>
+                        <tr>
+                            <td>duration</td>
+                            <td>int</td>
+                            <td>the duration of the album</td>
+                        </tr>
+                        <tr>
+                            <td>hasMusicalGenre</td>
+                            <td>Genre</td>
+                            <td>the genres of the album</td>
+                        </tr>
+
+                        <caption>
+                            The list of properties of the <code>Album</code> entity along with their data types.
+                        </caption>
+                    </table>
+                </figure>
+
+                <figure typeof="schema:Table">
+                    <table>
+                        <thead>
+                        <tr><code>MusicalGenre</code></tr>
+                        <tr>
+                            <th><center>Property</center></th>
+                            <th><center>Type / Range</center></th>
+                            <th><center>Description</center></th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>rdf:type</td>
+                            <td>MusicalGenre</td>
+                            <td>the type of the genre</td>
+                        </tr>
+
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>the MusicalGenre's label equivalent</td>
+                        </tr>
+
+                        <tr>
+                            <td>about</td>
+                            <td>string</td>
+                            <td>description of the genre</td>
+                        </tr>
+
+                        <tr>
+                            <td>embracedBy</td>
+                            <td>MusicalAgent / Song / Album</td>
+                            <td>the entities that embrace the genre</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>idSpotify</td>
+                            <td>string</td>
+                            <td>the unique ID from Spotify</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>relatedMusicalGenre</td>
+                            <td>MusicalGenre]</td>
+                            <td>the genres related</td>
+                        </tr>
+
+                        <caption>
+                            The list of properties of the <code>Genre</code> entity along with their data types.
+                        </caption>
+                    </table>
+                </figure>
 
         <section id="use-cases">
             <h2>Use-Cases</h2>
