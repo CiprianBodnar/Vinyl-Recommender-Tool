@@ -43,6 +43,8 @@ const auth = require('../../service/auth');
  *                          type: string
  *          401:
  *              description: Unauthorize to this endpoint, please register
+ *          404:
+ *              description: No vinyl found for given id
  */
 router.get('/vinyl', auth.required, (req, res, next)=>{
     const { payload: { id } } = req;
@@ -101,6 +103,8 @@ router.post('/vinyl', auth.required, (req, res, next)=>{
  *              description: Vinyl deleted
  *          401:
  *              description: Unauthorize to this endpoint, please register
+ *          404:
+ *              description: Vinyl not found for given id
  */
 router.delete('/vinyl', auth.required, (req, res, next)=>{
     const { payload: { id } } = req;
@@ -132,6 +136,8 @@ router.delete('/vinyl', auth.required, (req, res, next)=>{
  *                          type: string
  *          401:
  *              description: Unauthorize to this endpoint, please register
+ *          404:
+ *              description: Not getting any recommandation
  */
 router.get('/recommand', auth.required, (req, res, next)=>{
     const { payload: { id } } = req;
@@ -201,17 +207,7 @@ router.get('/playlist/{id}', auth.required, (req, res, next)=>{
  *      responses:
  *          200:
  *              description: Playlist deleted
- *              schema:
- *                  type: object
- *                  properties:
- *                      title:
- *                          type: string
- *                      creator:
- *                          type: string
- *                      id:
- *                          type: string
- *                      songs:
- *                          type: array
+ *              
  *          401:
  *              description: Unauthorize to this endpoint, please register
  */

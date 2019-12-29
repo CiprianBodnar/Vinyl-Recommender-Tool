@@ -22,6 +22,7 @@ var request = require('request')
  *        description: Registration succes
  *      204:
  *        description: Missing information
+ *    
  *      401:
  *        description: No auth token valid
  *    parameters: [
@@ -160,11 +161,13 @@ router.post('/login', auth.optional, (req, res, next) => {
  *      - bearerAuth: []
  *    responses:
  *      200:
- *        descriptions: Succes get the current user
+ *        description: Succes get the current user
  *        schema:
  *          $ref: '#/definitions/User'
  *      401:
- *         desciptions: No valid auth token 
+ *         description: No valid auth token
+ *      404:
+ *         description: No user data found
  *        
  *
  */
@@ -208,9 +211,9 @@ var stateKey = 'spotify_auth_state';
  *      - application/json
  *    responses:
  *      200:
- *        descriptions: Succes logged in. A code token is generated. And a redirect link is accesed.
+ *        description: Succes logged in. A code token is generated. And a redirect link is accesed.
  *      401:
- *         desciptions: No valid auth token 
+ *         description: No valid auth token 
  *        
  *
  */
@@ -308,10 +311,11 @@ router.get('/callback', function(req, res) {
  *      - application/json
  *    responses:
  *      200:
- *        descriptions: Succes generated a refresh token.
+ *        description: Succes generated a refresh token.
  *      401:
- *         desciptions: No valid auth token 
- *        
+ *         description: No valid auth token 
+ *      404:
+*          description: No refresh token found  
  *
  */
 router.get('/refresh_token', function(req, res) {
