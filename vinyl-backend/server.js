@@ -5,6 +5,7 @@ const session = require('express-session');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
+const cookieParser = require('cookie-parser');
 require('./lib/model/User')
 require('./lib/model/Question')
 require('./lib/service/passport-config')
@@ -23,6 +24,7 @@ const app = express();
 
 //Configure our app
 app.use(cors());
+app.use(cookieParser())
 app.use(require('morgan')('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
