@@ -27,18 +27,13 @@ const Question = mongoose.model('Questions')
  *          200:
  *              description: Displyed question
  *              schema:
- *                  type: object
- *                  properties:
- *                      question:
- *                          type: string
- *                      answer:
- *                          type: string
- *                      user_id:
- *                          type: string
+ *                  $ref: '#/definitions/Question'
  *          401:
- *              description: Unauthorize to this endpoint, please regiset
+ *              description: Unauthorize to this endpoint, please register
  *          204:
  *              description: User is not on the first login so no question are displayed.
+ *          404:
+ *              description: No question found
  */
 listOfQuestions = ["What kind of music to you listen?", "Tell me a list of vinyl artists that you love to play."]
 router.get('/display', auth.required, (req, res, next)=>{
@@ -71,23 +66,23 @@ router.get('/display', auth.required, (req, res, next)=>{
  *      - beareAuth: []
  *    responses:
  *      200:
- *        description: Succes subitted
- *      422:
+ *        description: Succes submitted
+ *      204:
  *        description: Missing information
  *      401:
  *        description: No auth token
  *    parameters: [
  *      {
- *        name: question,
- *        in: body,
- *        description: Question that need a response,
- *        required: true
+*          in: body,
+ *         name: question,
+ *         description: Question that need a response,
+ *         required: true
  *      },
  *      {
- *        name: answer,
- *        in: body,
- *        description: Answer to the question,
- *        required: true
+ *          in: body,
+ *          name: answer,
+ *          description: Answer to the question,
+ *          required: true
  *      }
  *    ]  
  */

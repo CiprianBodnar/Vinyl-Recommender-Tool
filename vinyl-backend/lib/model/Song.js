@@ -1,15 +1,11 @@
 "use strict"
 const mongoose = require('mongoose')
 
-const SongSchema = new mongoose.Schema({
-    title:{
-        type: String,
-        require: true
-    },
-    author:{
-        type: String,
-        require: true
-    }
-},{strict: false});
+const { Schema } = mongoose;
 
-module.exports = mongoose.model('Song', SongSchema);
+const SongSchema = new Schema({
+    title: String,
+    author: String
+});
+
+module.exports = mongoose.model('Songs', SongSchema);
