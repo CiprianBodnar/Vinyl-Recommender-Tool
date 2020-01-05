@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const router = require('express').Router();
 const auth = require('../../service/auth');
 const Users = mongoose.model('Users');
-const Question = mongoose.model('Questions')
-const get_question = require('../../service/quesion_retriever')
+const Question =  require('../../service/qustion_service')
+const my_question_service = new Question();
 /**
  * @swagger
  * definitions:
@@ -47,7 +47,7 @@ router.get('/display', auth.required, (req, res, next)=>{
         if(user.firstRegistration==true){
             user.setFirstRegistration(false)
             return user.save()
-                .then(() => res.json(get_question()));
+                .then(() => res.json(my_question_service.get_question()));
         }else{
             return res.sendStatus(204)
         }
@@ -89,11 +89,7 @@ router.get('/display', auth.required, (req, res, next)=>{
 router.post('/submit', auth.required, (req, res, next) =>{
     const { body: { questions } } = req;
     const { payload: { id } } = req;
-    for (question in questions){
-        var final_question = new Question(questions[question].question)
-        final_question.setUserId(id)
-        final_question.save()
-    }
+    my_question_service.save(questions, id)
     res.end()
 })
 
