@@ -6,7 +6,7 @@ var redirect_uri = 'http://localhost:8000/api/spotify/callback/'; // Your redire
 var request = require('request')
 var my_code = null
 const authOptionsFunction = require('../../service/spotify_auth');
-const refreshFunction = require('../../service/spotift_refresh')
+const refreshFunction = require('../../service/spotify_refresh')
 
 router.get('/callback', function(req, res) {
 
@@ -16,6 +16,8 @@ router.get('/callback', function(req, res) {
     var code = req.query.code || null;
     var authOptions = authOptionsFunction(code, client_id, client_secret, redirect_uri)
     my_code = authOptions['form']['code']
+    console.log("!!!"+code)
+    console.log("???"+my_code)
     return res.json(authOptions['form']['code']); 
   });
   /**
@@ -58,27 +60,29 @@ router.get('/callback', function(req, res) {
  /**
    
    */
-  router.get('/search', function(req, res){
+  router.post('/search', function(req, res){
 
     var code = my_code;
-    
+    const { body: { type } } = req;
+    const { body: {search} } = req;
+    var my_search = search.replace(/ /g, "%20")
+    console.log("--"+my_code)
     var authOptions = authOptionsFunction(code, client_id, client_secret, redirect_uri)
-
     request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
-  
         var access_token = body.access_token,
             refresh_token = body.refresh_token;
-
+     
         var options = {
-          url: 'https://api.spotify.com/v1/search?q=tania%20bowra&type=artist',
+          url: 'https://api.spotify.com/v1/search?q=+'+my_search+'&type='+type,
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
-          console.log(body['artists']['items'][0]);
+        console.log('this get')
+       //   console.log(body['artists']['items'][0]);
         });
 
         // we can also pass the token to the browser to make requests from there
@@ -97,4 +101,4 @@ router.get('/callback', function(req, res) {
 });
   
 
-  module.exports = router;
+module.exports = router;

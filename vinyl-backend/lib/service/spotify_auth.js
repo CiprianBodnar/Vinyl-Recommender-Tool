@@ -1,7 +1,7 @@
 
 module.exports = function authOptionsFunction(my_code, client_id, client_secret, redirect_uri) {
   var obj = {
-    url: 'https://accounts.spotify.com/api/token',
+    url: 'https://accounts.spotify.com/api/token/',
     form: {
         code: my_code,
         redirect_uri: redirect_uri,
