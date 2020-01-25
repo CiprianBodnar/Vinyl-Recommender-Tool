@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const router = require('express').Router();
 const auth = require('../../service/auth');
 const Users = mongoose.model('Users');
-const Question = mongoose.model('Questions')
+const Question =  require('../../service/qustion_service')
+const my_question_service = new Question();
 /**
  * @swagger
  * definitions:
@@ -35,7 +36,6 @@ const Question = mongoose.model('Questions')
  *          404:
  *              description: No question found
  */
-listOfQuestions = ["What kind of music to you listen?", "Tell me a list of vinyl artists that you love to play."]
 router.get('/display', auth.required, (req, res, next)=>{
     const { payload: { id } } = req;
 
@@ -47,7 +47,7 @@ router.get('/display', auth.required, (req, res, next)=>{
         if(user.firstRegistration==true){
             user.setFirstRegistration(false)
             return user.save()
-                .then(() => res.json(listOfQuestions));
+                .then(() => res.json(my_question_service.get_question()));
         }else{
             return res.sendStatus(204)
         }
@@ -87,12 +87,10 @@ router.get('/display', auth.required, (req, res, next)=>{
  *    ]  
  */
 router.post('/submit', auth.required, (req, res, next) =>{
-    const { body: { question } } = req;
+    const { body: { questions } } = req;
     const { payload: { id } } = req;
-    const finalQuestion = new Question(question);
-    finalQuestion.setUserId(id);
-    return finalQuestion.save()
-        .then(() => res.json({ question: finalQuestion.toAuthJSON() }));
+    my_question_service.save(questions, id)
+    res.end()
 })
 
 module.exports = router;
