@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import NavigationHome from './NavigationHome'
 import { Container} from 'react-bootstrap';
 import Footer from './Footer';
 

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import styled from 'styled-components';
 import NavigationHome from './NavigationHome'
 import { Container} from 'react-bootstrap';
 import Footer from './Footer';
@@ -40,10 +39,10 @@ export default class SignUp extends Component {
                     <label>Password</label>
                     <input type="password" className="form-control" placeholder="Enter password" />
                 </div>
-
+         
                 <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
                 <p className="forgot-password text-right">
-                    Already registered <a href="#">sign in?</a>
+                    Already registered <a href="/signin">sign in?</a>
                 </p>
             </form>
             <Footer />
