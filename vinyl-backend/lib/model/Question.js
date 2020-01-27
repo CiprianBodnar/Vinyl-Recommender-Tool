@@ -18,7 +18,7 @@ const { Schema } = mongoose;
  */
 const QuestionSchema = new Schema({
     question: String,
-    answer: String,
+    answer: [String],
     user_id: String
   });
 
