@@ -5,7 +5,7 @@ import Home from '../views/Home/Home'
 import SignIn from '../components/SignIn'
 import SignUp from '../components/SignUp'
 import Profile from '../views/Profile/Profile'
-// import FormPreferences from '../components/FormPreferences'
+import FormPreferences from '../components/FormPreferences'
 import './App.css';
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
             <Route path='/profile' component={Profile} />
+            <Route path='/form' component={FormPreferences}/>
             {/* <Route path='/formPreferences' component={FormPreferences} /> */}
         </Switch>
     </div>
