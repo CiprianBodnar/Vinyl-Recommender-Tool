@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <title>Vinyl-Recommender-Tool</title>
+    <link rel="stylesheet" href="public/css/scholarly.css">
+    <style>
+        p {
+            text-align: justify;
+        }
+        li {
+            display: inline-block;
+            padding: 45px;
+            justify-content: center;
+            text-align: center; 
+            align-items: center;
+        }
+    </style>
+</head>
+<header>
+    <p class="title">Music Recommender-Tool</p>
+    <p class="subtitle">Vinyl</p>
+</header>
+	 
+    <li><a href="#abstract"><span>1. </span>Abstract</a></li>
+	<li><a href="#technologies"><span>2. </span>Technologies</a></li>
+	<li><a href="#architecture"><span>3. </span>Architecture</a></li>
+	<li><a href="#client-side"><span>4. </span>Client Side</a></li>
+	<li><a href="#use-cases"><span>5. </span>Use Case</a></li>
+	<li><a href="#conclusion"><span>6. </span>Conclusion</a></li>
+	<li><a href="#references"><span>7. </span>References</a></li>
+	
+<article id="what" typeof="schema:ScholarlyArticle" resource="#">
+    <h1>What is Vinyl-Recommender-Tool?</h1>
+    <section>
+        <ol>
+			<li property="schema:contributor" typeof="sa:ContributorRole">
+                <a property="schema:contributor" href="https://github.com/CiprianBodnar" typeof="schema:Person">
+                   <strong>
+				   <span property="schema:givenName">Ciprian</span>
+                   <span property="schema:familyName">Bodnar</span>
+				   </strong>
+                </a>
+            </li>
+            <li property="schema:contributor" typeof="sa:ContributorRole">
+                <a property="schema:contributor" href="https://github.com/cosminpintilie" typeof="schema:Person">
+                    <span property="schema:givenName">Cosmin</span>
+                    <span property="schema:familyName">Pintilie</span>
+                </a>
+            </li>
+
+            <li property="schema:contributor" typeof="sa:ContributorRole">
+                <a property="schema:contributor" href="https://github.com/andradatapuc" typeof="schema:Person">
+                        <span property="schema:givenName">Andrada</span>
+                        <span property="schema:familyName">Tapuc</span>
+                </a>
+            </li>
+        </ol>
+        <ol>
+            <li id="scienceai">
+                <a href="https://www.info.uaic.ro/bin/Main/" typeof="schema:Corporation">
+                    <span property="schema:name">Faculty of Computer Science</span>
+                </a>
+            </li>
+        </ol>
+    </section>
+
+
+    <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
+	    <h2><span>1. </span>Abstract</h2>
+        <p><strong>Vinyl</strong> (Music Recommender-Tool) is a semantic Web application able to "intelligently" recommend 
+		    – by exposing a SPARQL endpoint – vinyl music records according to various criteria: user preferences 
+			(specified via controlled natural language constructs such as "I always like/love/prefer classical music,
+			especially opera music by Rossini or Verdi and performed by Angela Gheorghiu or Juan Diego Flórez; 
+			I sometimes like progressive rock and post-rock; I like only metal albums released before 2000; 
+			I always dislike/hate rap and hip-hop; I dislike songs produced by Flood in the last 25 years"), 
+			past song purchases on various music stores, playlists – available online via music streaming services 
+			Spotify and alternatives – and/or locally (i.e. uploading a JSPF/XSPF document). The playlists could be created 
+			by the user or shared by her/his virtual "friends" (consider at least one social network). The system will use 
+			several music-related knowledge models (e.g., Music Ontology or MusicRecording concept from schema.org) and available 
+			public resources: Free Music Archive, MusicBrainz, Musicmoz Music Styles. Bonus: using Solid principles & tools.</br>
+            The main shining features of Vinyl are: easy interlinked search through artists, songs, albums, genres and playlists, 
+			lookup on different events related to the artists, create and manage playlists manually or generate "smart" playlists 
+			through a series of keywords and the existing created playlists.
+        </p>
+    </section>
+    <section typeof="sa:Materials" id="technologies">
+	    <h2><span> 2. </span>Technologies</h2>
+        <ul>
+            <li>
+                <p>
+                    <a href="https://nodejs.org/en/">NodeJS</a> is an open-source server side runtime environment
+                    built on Chrome's V8 JavaScript engine. It provides an event driven, non-blocking (asynchronous)
+                    I/O and cross-platform runtime environment for building highly scalable server-side application
+                    using JavaScript.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <a href="https://reactjs.org/">ReactJS</a>
+                    is an open-source JavaScript library which is used for building
+                    user interfaces specifically for single page applications. It’s
+                    used for handling view layer for web and mobile apps. React also
+                    allows us to create reusable UI components. ReactJS allows developers
+                    to create large web applications which can change data, without reloading
+                    the page. The main purpose of React is to be fast, scalable, and simple.
+                    It works only on user interfaces in application. This corresponds to view
+                    in the MVC template. ReactJS was first created by Jordan Walke, a software engineer working for Facebook.
+            <li>
+                <p>
+                    <a href="https://www.mongodb.com/">MongoDB</a> is a document-oriented NoSQL database used for high volume data storage.
+                    For local storage we use mongoDb to help storage user credentials, question logic etc. For the SPARQL part we could call from a graph db the informations that we need in order to complete the recommendations for a user about what vinyls might like.
+
+                </p>
+            <li>
+                <p>
+                    <a href="https://getbootstrap.com/">Bootstrap</a> is a framework to help you design websites faster and easier. It
+                    includes HTML and CSS based design templates for typography, forms, buttons, tables, navigation, modals, 
+                    image carousels, etc. ... Here are some additional reasons to use Bootstrap: Bootstrap's responsive CSS 
+                    adjusts to phones, tablets, and desktops.
+                </p>
+            </li>
+	    <li>
+		    <p><a href="http://graphdb.ontotext.com/">GraphDB</a> is a highly-efficient and robust graph
+                database - a semantic repository that stores and manipulates RDF data along with an inference
+                engine that uses rules to infer new knowledge - and SPARQL support.
+		</p>
+	   </li>
+        </ul>
+    </section>
+    <section typeof="sa:Methods" id="architecture">
+        <h2><span> 3. </span>Architecture</h2>
+        <figure typeof="sa:Image">
+            <img src="public/resources/architecture.png" width="880" height="655">
+            <figcaption>
+                <center>The general architecture of Vinyl-Recommender-Tool</center>
+            </figcaption>
+        </figure>
+
+        <figure typeof="sa:Image">
+            <img src="public/resources/general_architecture.png" width="880" height="655">
+            <figcaption>
+                <center>The general architecture of Vinyl-Recommender-Tool</center>
+            </figcaption>
+        </figure>
+
+        <p>The Vinyl main storage is the RDF solution <strong>GraphDB</strong>. Every entity is saved in the graph (see the diagram above) by interconnecting the relationship with other entities and properties.</p>
+
+        <p>In the tables below we describe each entities' properties.</p>
+
+        <p>By using the ontology / RDF concepts, MuSeR is able to smartly suggest entities based on the relationships between instances. For example, upon creating a 'smart' playlist, the underlying mechanisms use other playlists created, stored and interlinked inside the RDF storage to suggest similar songs / artists, based on the keywords provided by the user and also on the personal user data.</p>
+
+        <p>The entire ontology was 'packed' under the 'muser' vocabulary. In the following examples, everything without a prefix is assumed to be part of it.</p>
+
+        <figure typeof="schema:Table">
+            <table>
+                <thead>
+                    <tr><code>MusicalAgent / MusicalArtist / MusicalBand</code></tr>
+                    <tr>
+                        <th>
+                            <center>Property</center>
+                        </th>
+                        <th>
+                            <center>Type / Range</center>
+                        </th>
+                        <th>
+                            <center>Description</center>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <td>rdf:type</td>
+                    <td>MusicalArtist / MusicalBand</td>
+                    <td>both types are subclasses of MusicalAgent</td>
+                </tr>
+
+                <tr>
+                    <td>idSpotify</td>
+                    <td>string</td>
+                    <td>the unique ID from Spotify</td>
+                </tr>
+
+                <tr>
+                    <td>name</td>
+                    <td>string</td>
+                    <td>the MusicalAgent's label equivalent</td>
+                </tr>
+
+                <tr>
+                    <td>firstName</td>
+                    <td>string</td>
+                    <td>the MusicalArtist's first name</td>
+                </tr>
+
+                <tr>
+                    <td>lastName</td>
+                    <td>string</td>
+                    <td>the MusicalArtist's last name</td>
+                </tr>
+
+                <tr>
+                    <td>gender</td>
+                    <td>string</td>
+                    <td>the MusicalArtist's gender</td>
+                </tr>
+                <tr>
+                    <td>about</td>
+                    <td>string</td>
+                    <td>description of the MusicalAgent</td>
+                </tr>
+                <tr>
+                    <td>hasMusicalGenre</td>
+                    <td>MusicalGenre</td>
+                    <td>the genres representing the MusicalAgent's style</td>
+                </tr>
+
+                <tr>
+                    <td>musicalAgentOrigin</td>
+                    <td>dbo:Place</td>
+                    <td>the origin place of the MusicalAgent</td>
+                </tr>
+
+                <tr>
+                    <td>inceptionDate</td>
+                    <td>date</td>
+                    <td>the inception date of the MusicalAgent</td>
+                </tr>
+
+                <tr>
+                    <td>retiringDate</td>
+                    <td>date</td>
+                    <td>the retiring date of the MusicalAgent</td>
+                </tr>
+
+                <tr>
+                    <td>performs</td>
+                    <td>Song</td>
+                    <td>the songs performed by the MusicalAgent</td>
+                </tr>
+
+                <tr>
+                    <td>released</td>
+                    <td>Album</td>
+                    <td>the albums released by the MusicalArtist</td>
+                </tr>
+
+                <tr>
+                    <td>relatedMusicalAgent</td>
+                    <td>MusicalAgent</td>
+                    <td>the MusicalAgents related to the MusicalArtist</td>
+                </tr>
+
+                <caption>
+                    The list of properties of the <code>MusicalAgent / MusicalArtist / MusicalBand</code> entity along with their data types / ranges.
+                </caption>
+            </table>
+        </figure>
+
+        <figure typeof="schema:Table">
+            <table>
+                <thead>
+                    <tr><code>Song</code></tr>
+                    <tr>
+                        <th><center>Property</center></th>
+                        <th><center>Type / Range</center></th>
+                        <th><center>Description</center></th>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <td>rdf:type</td>
+                    <td>Song</td>
+                    <td>the type of the song</td>
+                </tr>
+
+                <tr>
+                    <td>idSpotify</td>
+                    <td>string</td>
+                    <td>the unique ID from Spotify</td>
+                </tr>
+
+                <tr>
+                    <td>name</td>
+                    <td>string</td>
+                    <td>the Song's label equivalent</td>
+                </tr>
+
+                <tr>
+                    <td>duration</td>
+                    <td>int</td>
+                    <td>the duration of the song</td>
+                </tr>
+
+                <tr>
+                    <td>performedBy</td>
+                    <td>MusicalAgent</td>
+                    <td>the MusicalAgents that perform the song</td>
+                </tr>
+
+                <tr>
+                    <td>containedBy</td>
+                    <td>Album</td>
+                    <td>the Albums that contain the song</td>
+                </tr>
+
+                <tr>
+                    <td>hasMusicalGenre</td>
+                    <td>MusicalGenre</td>
+                    <td>the MusicalGenres of the song</td>
+                </tr>
+
+                <tr>
+                    <td>partOf</td>
+                    <td>MusicalPlaylist</td>
+                    <td>the MusicalPlaylists that contain the song</td>
+                </tr>
+
+                <caption>
+                    The list of properties of the <code>Song</code> entity along with their data types.
+                </caption>
+            </table>
+        </figure>
+
+
+        <figure typeof="schema:Table">
+            <table>
+                <thead>
+                    <tr><code>Album</code></tr>
+                    <tr>
+                        <th><center>Property</center></th>
+                        <th><center>Type / Range</center></th>
+                        <th><center>Description</center></th>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <td>rdf:type</td>
+                    <td>Album</td>
+                    <td>the type of the album</td>
+                </tr>
+
+                <tr>
+                    <td>idSpotify</td>
+                    <td>string</td>
+                    <td>the unique ID from Spotify</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>string</td>
+                    <td>the Album's label equivalent</td>
+                </tr>
+                <tr>
+                    <td>releasedBy</td>
+                    <td>MusicalAgent</td>
+                    <td>the MusicalAgent that released the album</td>
+                </tr>
+                <tr>
+                    <td>releaseDate</td>
+                    <td>date</td>
+                    <td>the year of album release</td>
+                </tr>
+                <tr>
+                    <td>contains</td>
+                    <td>Song</td>
+                    <td>the songs contained by the album</td>
+                </tr>
+                <tr>
+                    <td>duration</td>
+                    <td>int</td>
+                    <td>the duration of the album</td>
+                </tr>
+                <tr>
+                    <td>hasMusicalGenre</td>
+                    <td>Genre</td>
+                    <td>the genres of the album</td>
+                </tr>
+
+                <caption>
+                    The list of properties of the <code>Album</code> entity along with their data types.
+                </caption>
+            </table>
+        </figure>
+
+        <figure typeof="schema:Table">
+            <table>
+                <thead>
+                    <tr><code>MusicalGenre</code></tr>
+                    <tr>
+                        <th><center>Property</center></th>
+                        <th><center>Type / Range</center></th>
+                        <th><center>Description</center></th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>rdf:type</td>
+                    <td>MusicalGenre</td>
+                    <td>the type of the genre</td>
+                </tr>
+
+                <tr>
+                    <td>name</td>
+                    <td>string</td>
+                    <td>the MusicalGenre's label equivalent</td>
+                </tr>
+
+                <tr>
+                    <td>about</td>
+                    <td>string</td>
+                    <td>description of the genre</td>
+                </tr>
+
+                <tr>
+                    <td>embracedBy</td>
+                    <td>MusicalAgent / Song / Album</td>
+                    <td>the entities that embrace the genre</td>
+                </tr>
+
+                <tr>
+                    <td>idSpotify</td>
+                    <td>string</td>
+                    <td>the unique ID from Spotify</td>
+                </tr>
+
+                <tr>
+                    <td>relatedMusicalGenre</td>
+                    <td>MusicalGenre]</td>
+                    <td>the genres related</td>
+                </tr>
+
+                <caption>
+                    The list of properties of the <code>Genre</code> entity along with their data types.
+                </caption>
+            </table>
+        </figure>
+
+        <section id="client-side">
+            <h2><span> 4. </span>Client Side</h2>
+
+            <p>
+                The homepage will contain the registration form for users who are not yet registered,
+                but also the login form for existing users. Also on this page will find new vinyls.
+            </p>
+
+            <figure typeof="sa:Image">
+                <img src="public/resources/homepage.PNG">
+                <figcaption>
+                    <center>Homepage</center>
+                </figcaption>
+            </figure>
+
+            <p>
+                The user profile page will contain his wish list with the vinyls he does not have yet,
+                the library with the vinyls he owns, but also its recommendations that are displayed in
+                a rolling carousel. From the carousel with recommendations, the user can directly add
+                vinyls to the wish list.
+            </p>
+
+            <figure typeof="sa:Image">
+                <img src="public/resources/user-profile.PNG">
+                <figcaption>
+                    <center>User profile page</center>
+                </figcaption>
+            </figure>
+
+        </section>
+
+        <section id="use-cases">
+            <h2><span> 5. </span>Use-Cases</h2>
+
+            <figure typeof="sa:Image">
+                <img src="public/resources/use_case.png">
+                <figcaption>
+                    <center>Use-Case diagram</center>
+                </figcaption>
+            </figure>
+            <p>
+                As we can observe in the diagram shown above, all of the Vinyl features require the authentication of the user. The user can visualize the already created playlists. During the visualization, users will be able to edit them.
+
+                Another aspect of the application that can be observed in the diagram is the content finding mechanism. Users - for example - can find artists based on keywords specified by them. After finding the desired entity, he can select and add a specific song played by the respective artist into a personal playlist.
+
+                Aside from this, the application will recommend other entities based on relationships of the visualized entity. (e.g. 'Songs from same artist', 'Songs from same Album' etc.)
+            </p>
+        </section>
+
+        <section id="conclusion">
+            <h2><span> 6. </span>Conclusion & Future considerations</h2>
+            <p>
+                Vinyl-Recommender-Tool has been created to ease up the management of playlists for music enthusiasts by providing an intuitive platform that uses semantic Web concepts to enhance the
+                way of visualizing the relationships between various entities in the context of musical domain. The application can be extended and improved in different ways by conceiving new mechanisms and architectural ideas such as media streaming or machine-learning-related suggesting mechanisms.
+            </p>
+
+        </section>
+
+        <section typeof="sa:ReferenceList" id="references">
+            <h2><span> 7. </span>References</h2>
+            <dl>
+                <dt>NodeJS</dt>
+                <dd id="ref-ionic" typeof="schema:CreativeWork"
+                    resource="https://nodejs.org/en/">
+                    <cite property="schema:name">
+                        <a href="https://nodejs.org/en/">NodeJS</a>
+                    </cite>,
+                    by
+                    <span property="schema:author" typeof="schema:Organization">
+                        <span property="schema:name">Joyent, Inc.</span>
+                    </span>
+                </dd>
+
+                <dt>React Framework</dt>
+                <dd id="ref-angular" typeof="schema:CreativeWork"
+                    resource="https://reactjs.org/">
+                    <cite property="schema:name">
+                        <a href="https://reactjs.org/">React</a>
+                    </cite>,
+                    by
+                    <span property="schema:author" typeof="schema:Organization">
+                        <span property="schema:name">Facebook</span>
+                    </span>
+                </dd>
+                <dt>MongoDB</dt>
+                <dd id="ref-angular" typeof="schema:CreativeWork"
+                    resource="https://www.mongodb.com/">
+                    <cite property="schema:name">
+                        <a href="https://www.mongodb.com/">MongoDB</a>
+                    </cite>,
+                    by
+                    <span property="schema:author" typeof="schema:Organization">
+                        <span property="schema:name">MongoDB</span>
+                    </span>
+                </dd>
+                <dt>Bootstrap</dt>
+                <dd id="ref-angular" typeof="schema:CreativeWork"
+                    resource="https://getbootstrap.com/">
+                    <cite property="schema:name">
+                        <a href="https://getbootstrap.com/">Bootstrap</a>
+                    </cite>,
+                    by
+                    <span property="schema:author" typeof="schema:Organization">
+                        <span property="schema:name">Bootstrap</span>
+                    </span>
+                </dd>
+                <dt>GraphDB, 2017</dt>
+                <dd id="ref-ionic" typeof="schema:CreativeWork"
+                    resource="https://ontotext.com/products/graphdb/">
+                    <cite property="schema:name">
+                        <a href="https://ontotext.com/products/graphdb/">GraphDB</a>
+                    </cite>,
+                    by
+                    <span property="schema:author" typeof="schema:Organization">
+                        <span property="schema:name">Ontotext</span>
+                    </span>
+                </dd>
+            </dl>
+        </section>
+
+    </section>
+</article>
+<footer>
+    <p>
+       Vinyl-Recommender-Tool
+        •
+        <a href="https://www.info.uaic.ro/bin/Main/">
+            <img src="public/resources/fii logo.png" height="20px">
+        </a>
+        •
+        <a href="https://github.com/CiprianBodnar/Vinyl-Recommender-Tool">Vinyl @ Github</a>
+	•
+        <a href="https://trello.com/vinylrecommendertool/home">Vinyl @ Trello</a>
+    </p>
+</footer>
+</body>
+</html>

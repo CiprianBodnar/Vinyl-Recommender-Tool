@@ -1,0 +1,46 @@
+{
+  "name": "vinyl-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "*",
+    "cors": "^2.8.5",
+    "ejs": "*",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "hapi": "^18.1.0",
+    "mongodb": "*",
+    "mongoose": "^5.7.11",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.4",
+    "passport": "*",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-http": "*",
+    "passport-local": "*",
+    "rdfstore": "^0.9.17",
+    "react": "^16.12.0",
+    "request": "^2.88.0",
+    "spotify-web-api-node": "^4.0.0",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.1.2",
+    "window": "^4.2.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
