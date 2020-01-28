@@ -85,18 +85,18 @@ export default class SignIn extends Component {
                     </div>
                 </div>
 
-                <div class="column">    
+                <div className="column">    
                     <BtnFacebook >
                         &nbsp;&nbsp;Sign In with Facebook
                         </BtnFacebook >
                 </div>
-                <div class="column">  
+                <div className="column">  
                     <BtnGoogle>
                         &nbsp;&nbsp;Sign In with Google
                     </BtnGoogle >
                 </div>
 
-                <div class="column">  
+                <div className="column">  
                     <BtnSpotify>
                         &nbsp;&nbsp;Sign In with Spotify
                     </BtnSpotify >

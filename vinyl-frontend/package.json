@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
     "mdbreact": "^4.22.1",
     "mixins": "0.0.1",
@@ -14,7 +15,7 @@
     "react-leaf-carousel": "^1.2.2",
     "react-responsive-carousel": "^3.1.51",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.3.0",
     "styled-components": "^4.4.1",
     "yarn": "^1.19.1"
   },

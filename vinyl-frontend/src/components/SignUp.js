@@ -4,13 +4,17 @@ import { Container} from 'react-bootstrap';
 import Footer from './Footer';
 // import FormPreferences from './FormPreferences';
 
+
+
 export default class SignUp extends Component {
 
-    
+
     render() {
+
         const formm={
-            width: '450px',
+            marginTop:"15%",
             margin: 'auto',
+            width: '450px',
             background: '#ffffff',
             boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
             padding: '40px 55px 45px 55px',
@@ -18,42 +22,58 @@ export default class SignUp extends Component {
             transition: 'all .3s',
         };
 
-        const handleSubmit = (event) =>  {
-
-            event.preventDefault()
-            // console.log(event.target[0].value)
-            // console.log(event.target.elements.email.value)
-            // console.log(event.target.email.value)
-            var email = this.inputEmail.value;
-            var pass = this.inputPassword.value;
-            console.log(email)
-            console.log(pass)
-
-            async function getToken(){
-            const response = await fetch('http://localhost:8000/api/users/register', {
+        async function getToken(email, pass){
+            try{
+                await fetch('http://localhost:8000/api/users/register', {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(
                     {
                     "user":{
-                         'email': email,
-                         'password': pass
+                        'email': email,
+                        'password': pass
                     
-                         }
-                     })
+                        }
+                    })
                 })
+                .then((response) => {
+                    localStorage.setItem('statusToken', response.status);
+                    // console.log(response.status);
+                    if(!response.ok){
+                        throw new Error("HTTP status " + response.status);
+                    }
+                    return response.json(); 
 
-                const content = await response.json();
-                // console.log(content.user.token);
-                return await content.user.token;
-                }
+                })
+                .then((myJson) => {
+                    localStorage.setItem('token',myJson.user.token);
+                    // console.log(myJson.user);
+                    return myJson.user.token;
+                });
 
-                var res = getToken();
-                console.log(res);
             }
+            catch(err){
+                console.log(err);
+                return 0;
+            }
+        }
+
+        const handleSubmit = (event) =>  {
+
+            event.preventDefault()
+
+            var email = this.inputEmail.value;
+            var pass = this.inputPassword.value;
+            console.log(email);
+            console.log(pass);
+
+            getToken(email, pass);
+            this.props.history.push('/form');
+        }
+
         return (
         <Container>
             <NavigationHome />

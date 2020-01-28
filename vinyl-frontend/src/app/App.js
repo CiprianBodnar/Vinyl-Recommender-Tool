@@ -9,6 +9,7 @@ import FormPreferences from '../components/FormPreferences'
 import './App.css';
 
 function App() {
+  
   return (
     <BrowserRouter>
 
@@ -19,7 +20,7 @@ function App() {
             <Route path='/about' component={About} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
-            <Route path='/profile' component={Profile} />
+            <Route path='/profileUser' component={Profile} />
             <Route path='/form' component={FormPreferences}/>
             {/* <Route path='/formPreferences' component={FormPreferences} /> */}
         </Switch>

@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-// import {DropdownButton, MenuItem} from 'react-bootstrap';
 import NavigationHome from './NavigationHome';
 import { Container} from 'react-bootstrap';
 import Footer from './Footer';
 
 export default class FormPreferences extends Component {
+
+
     render() {
+
         const formm={
             width: '550px',
             margin: 'auto',
@@ -24,19 +26,54 @@ export default class FormPreferences extends Component {
             fontWeight: 'bold',
         };
 
-        const handleSubmit = (event) =>  {
+        async function getPreferences(artists, genres){
+
+            var tok = localStorage.getItem('token');
+            var inputToken = "Token "+ tok;
+            console.log(inputToken);
+
+            await fetch('http://localhost:8000/api/question/submit', {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": inputToken
+                },
+                body: JSON.stringify(
+                    {
+                        "questions": [
+                          {
+                            "question": {
+                              "text_question": "What 2 bla",
+                              "answer": artists
+                            }
+                          },
+                           {
+                            "question": {
+                              "text_question": "What bla lbabla",
+                              "answer": genres
+                            }
+                          }
+                        ]
+                      })
+                })
+                .then(function(response) {
+                    localStorage.setItem('statusPreferences', response.status);
+                    console.log(response.status);
+                    if(!response.ok){
+                        throw new Error("HTTP status " + response.status);
+                    }
+                });
+        }
+
+    
+        const handleFormSubmit = (event) =>  {
 
             event.preventDefault()
-            // console.log(event.target[0].value)
-            // console.log(event.target.elements.email.value)
-            // console.log(event.target.email.value)
 
             var country = document.getElementById("country");
             var countryUser = country.options[country.selectedIndex].value;
             console.log(countryUser);
-
-            // var artist1 = this.artist1.value;
-            // console.log(artist1);
 
             var artists = [];
             var inputArtist = document.getElementsByClassName('artist');
@@ -54,34 +91,18 @@ export default class FormPreferences extends Component {
                     checkedGenre.push(inputElements[j].value);
                 }
             }
-            console.log(checkedGenre);
+            // console.log(checkedGenre);
 
+            getPreferences(artists, checkedGenre);
+            // .then((data) => {
+            //     // console.log(data);
+            // });
 
-            // async function getToken(){
-            // const response = await fetch('http://localhost:8000/api/users/register', {
-                // method: "POST",
-                // headers: {
-                //     Accept: "application/json",
-                //     "Content-Type": "application/json"
-                // },
-                // body: JSON.stringify(
-                //     {
-                //     "user":{
-                //          'email': email,
-                //          'password': pass
-                    
-                //          }
-                //      })
-                // })
+            this.props.history.push('/profileUser');
 
-                // const content = await response.json();
-                // console.log(content.user.token);
-                // return await content.user.token;
-                // }
+        }
 
-                // var res = getToken();
-                // console.log(res);
-            }
+           
         return (
         <Container>
             <NavigationHome />
@@ -132,7 +153,7 @@ export default class FormPreferences extends Component {
 
 
                 <br/>
-                <button type="submit" className="btn btn-primary btn-block" onClick={handleSubmit}> Register</button>
+                <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"> Register</button>
                 
             </form>
             <Footer />
