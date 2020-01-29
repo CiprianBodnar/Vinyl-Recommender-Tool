@@ -12,7 +12,8 @@ myQuery(artist,title) {
             "?band dbp:currentMembers ?members .",
             "?band foaf:name ?bandName",
             "FILTER(langMatches(lang(?bandName), \"en\"))",
-           "}"].join(" ")
+           "}",
+           "LIMIT 10"].join(" ")
          
 
     var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;

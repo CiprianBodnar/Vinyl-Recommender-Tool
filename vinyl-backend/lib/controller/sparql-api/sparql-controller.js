@@ -3,7 +3,9 @@ const auth = require('../../service/auth');
 const SPARQL = require('../../service/sparql_service')
 const my_sparql = new SPARQL();
 var request = require('request')
-
+var myResultList = []
+var mappedResultList = []
+var mapOfBands = new Map()
 function getOpt(search) {
     return  {
         url: 'http://localhost:8000/api/spotify/search',
@@ -15,27 +17,34 @@ function getOpt(search) {
     }
 }
 
-
 router.get('/', auth.required, (req, res, next) => {
-    var result = my_sparql.myQuery("dani","moca") 
-    
+    var result = my_sparql.myQuery("","") 
+   
     request.get(result, function(error, response, body) {
         var obj = JSON.parse(response.body)
         var listOfBindings = obj['results']['bindings']
-      // for(it in listOfBindings){
-            request.get('http://localhost:8000/api/users/login', function(error, response, body){
-                request.post(getOpt(listOfBindings[23]['bandName']['value']), function(error, response, body){
-                    //console.log(listOfBindings[23]['bandName']['value'])
-                   return res.json(body)
-                });
-            });
-            //console.log(listOfBindings[it]['bandName']['value'] + "--" + listOfBindings[it]['members']['value'])
-           
-       // }
 
-       
-     
+       for(it in listOfBindings){
+            mapOfBands[listOfBindings[it]['bandName']['value']] = listOfBindings[it]
+            //spotifySearch(listOfBindings[it]['bandName']['value'])
+        }
+        Object.keys(mapOfBands).forEach(function(key) {
+            value = mapOfBands[key];
+            mappedResultList.push(value)
+        });
+        for(it in mappedResultList){
+             spotifySearch(mappedResultList[it]['bandName']['value'])
+         }
+       return res.json(myResultList)
     });
 });
+
+function spotifySearch(param) {
+    return  request.post(getOpt(param), function(error, response, body) {
+        if(body!=null)
+            myResultList.push(body)
+        return body
+    });
+}
 
 module.exports = router;
