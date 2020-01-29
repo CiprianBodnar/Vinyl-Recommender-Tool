@@ -8,12 +8,12 @@ myQuery(artist,title) {
     var query = [
     
         "SELECT ?members ?bandName where {",
-            "?band dbo:genre dbr:Punk_rock .",
+            "?band dbo:genre dbr:Jazz .",
             "?band dbp:currentMembers ?members .",
             "?band foaf:name ?bandName",
             "FILTER(langMatches(lang(?bandName), \"en\"))",
            "}",
-           "LIMIT 10"].join(" ")
+           "LIMIT 50",].join(" ")
          
 
     var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;
@@ -44,5 +44,6 @@ rdf() {
         });
       });
     }
+    
 };
 module.exports = SPARQL_service
