@@ -9,9 +9,10 @@ class Qustion_service {
     
         
     save(questions, id) {
-        
         for (var q in questions){
+            
             var final_question = new Question(questions[q].question)
+            final_question.setQuestionText(questions[q].question.text_question)
             final_question.setUserId(id)
             final_question.save()
             }

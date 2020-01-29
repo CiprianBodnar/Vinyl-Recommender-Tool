@@ -33,6 +33,7 @@ function getUser() {
 
 router.get('/', auth.required, (req, res, next) => {
     var result = my_sparql.myQuery("","") 
+    get_user_preference()
     request.get(result, function(error, response, body) {
         var obj = JSON.parse(response.body)
         var listOfBindings = obj['results']['bindings']
@@ -62,5 +63,25 @@ function spotifySearch(param) {
 }
 
 
+
+function get_user_preference() {
+    request.get(getUser(),  function(error, response, body){
+        const User = body.user
+
+        Question.find({}, function( err , question){
+            if(err){
+                console.log("nothing found")
+            }
+            else{
+                for(q in question){
+                    if(question[q].user_id == User._id){
+                        console.log(question[q])
+                    }
+                }
+            }
+        })
+    });
+    
+}
 
 module.exports = router;
