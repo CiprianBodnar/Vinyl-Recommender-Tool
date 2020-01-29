@@ -26,6 +26,10 @@ QuestionSchema.methods.setUserId = function(user_id){
     this.user_id = user_id;
 };
 
+QuestionSchema.methods.setQuestionText = function(question){
+  this.question = question;
+}
+
 QuestionSchema.methods.toAuthJSON = function() {
     return {
       _id: this._id,
