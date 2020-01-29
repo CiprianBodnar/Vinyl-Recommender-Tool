@@ -18,7 +18,7 @@ router.get('/callback', function(req, res) {
     my_code = authOptions['form']['code']
     console.log("!!!"+code)
     console.log("???"+my_code)
-    return res.json(authOptions['form']['code']); 
+     res.redirect('http://localhost:3000/profileUser')
   });
   /**
    * @swagger
