@@ -1,4 +1,5 @@
 import React from 'react';
+import {Router, browserHistory} from 'react-router';
 import { BrowserRouter, Switch, Route} from "react-router-dom";
 import About from '../views/About/About'
 import Home from '../views/Home/Home'
@@ -20,7 +21,7 @@ function App() {
             <Route path='/about' component={About} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
-            <Route path='/profileUser' component={Profile} />
+            <Route path='/profile/user' component={Profile} />
             <Route path='/form' component={FormPreferences}/>
             {/* <Route path='/formPreferences' component={FormPreferences} /> */}
         </Switch>

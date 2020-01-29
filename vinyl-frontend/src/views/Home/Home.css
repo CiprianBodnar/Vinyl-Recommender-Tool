@@ -2,3 +2,11 @@ p {
     color: black;
     text-decoration-style: wavy;
 }
+
+body {
+    /* background: #6c757d !important; */ 
+    background-image: url('../../assets/vinyl-wall.jpg') !important ;
+    font-family: 'Fira Sans', sans-serif;
+
+  
+  }

@@ -9,16 +9,18 @@ export default class FormPreferences extends Component {
     render() {
 
         const formm={
-            width: '550px',
-            margin: 'auto',
-            background: '#ffffff',
+            width: '80%',
+            marginTop:"10%",
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            background: '#dee2e6',
             boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
             padding: '40px 55px 45px 55px',
             borderRadius: '15px',
             transition: 'all .3s',
         };
         const drop_choosee = {
-            fontSize: '20px',
+            fontSize: '30px',
         };
 
         const drop_choose = {
@@ -73,7 +75,6 @@ export default class FormPreferences extends Component {
 
             var country = document.getElementById("country");
             var countryUser = country.options[country.selectedIndex].value;
-            console.log(countryUser);
 
             var artists = [];
             var inputArtist = document.getElementsByClassName('artist');
@@ -82,7 +83,6 @@ export default class FormPreferences extends Component {
                     artists.push(inputArtist[i].value)
                 }
             }
-            console.log(artists);
 
             var checkedGenre = [];
             var inputElements = document.getElementsByClassName('genre');
@@ -91,14 +91,10 @@ export default class FormPreferences extends Component {
                     checkedGenre.push(inputElements[j].value);
                 }
             }
-            // console.log(checkedGenre);
 
             getPreferences(artists, checkedGenre);
-            // .then((data) => {
-            //     // console.log(data);
-            // });
 
-            this.props.history.push('/profileUser');
+            this.props.history.push('/profile/user');
 
         }
 
@@ -108,8 +104,8 @@ export default class FormPreferences extends Component {
             <NavigationHome />
             <form method="GET" style={formm}>
                  <div >
-                    <h2>Tell us what you like!</h2>
-                    <h3>Music will describe you.</h3>
+                    <h2 style={{"fontWeight":"bold", "textDecoration":"underline",  "textAlign":"center"}}>Tell us what you like!</h2>
+                    {/* <h3>Music will describe you.</h3> */}
                 </div>
                 <br/>
 
@@ -133,14 +129,14 @@ export default class FormPreferences extends Component {
             
                 <label style={drop_choose}>Choose your favorite genre of music:</label>
                 <div style={drop_choosee}>
-                        <input className="genre" type="checkbox" value="pop" name="pop" />Pop<br/>
-                        <input className="genre" type="checkbox" value="hiphop" name="hiphop" />Hip-Hop<br/>
-                        <input className="genre" type="checkbox" value="country" name="conutry" />Country<br/>
-                        <input className="genre" type="checkbox" value="jazz" name="jazz" />Jazz<br/>
-                        <input className="genre" type="checkbox" value="rock" name="rock" />Rock<br/>
-                        <input className="genre" type="checkbox" value="folk" name="folk" />Folk<br/>
-                        <input className="genre" type="checkbox" value="latino" name="latino" />Latino<br/>
-                        <input className="genre" type="checkbox" value="electro/house" name="electro/house" />Electro/House<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="pop" name="pop" />Pop<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="hiphop" name="hiphop" />Hip-Hop<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="country" name="conutry" />Country<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="jazz" name="jazz" />Jazz<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="rock" name="rock" />Rock<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="folk" name="folk" />Folk<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="latino" name="latino" />Latino<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="electro/house" name="electro/house" />Electro/House<br/>
                 </div>
                 <br/>
 
@@ -153,7 +149,7 @@ export default class FormPreferences extends Component {
 
 
                 <br/>
-                <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"> Register</button>
+                <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"> Next Step</button>
                 
             </form>
             <Footer />

@@ -12,10 +12,11 @@ export default class SignUp extends Component {
     render() {
 
         const formm={
-            marginTop:"15%",
-            margin: 'auto',
+            marginTop:"10%",
+            marginLeft: 'auto',
+            marginRight: 'auto',
             width: '450px',
-            background: '#ffffff',
+            background: '#dee2e6',
             boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
             padding: '40px 55px 45px 55px',
             borderRadius: '15px',
@@ -50,7 +51,7 @@ export default class SignUp extends Component {
                 })
                 .then((myJson) => {
                     localStorage.setItem('token',myJson.user.token);
-                    // console.log(myJson.user);
+                    console.log(myJson.user);
                     return myJson.user.token;
                 });
 
@@ -78,7 +79,7 @@ export default class SignUp extends Component {
         <Container>
             <NavigationHome />
             <form style={formm} onSubmit={this.handleSubmit}>
-                <h3>Sign Up</h3>
+                <h3 style={{"fontWeight":"bold", "textDecoration":"underline",  "textAlign":"center"}}>Sign Up</h3>
 
                 <div className="form-group">
                     <label>First name</label>
@@ -102,11 +103,9 @@ export default class SignUp extends Component {
          
                 <button onClick={handleSubmit} type="submit" className="btn btn-primary btn-block">Sign Up</button>
                 <p className="forgot-password text-right">
-                    Already registered? <a href="/signin">sign in</a>
+                    Already registered? <a href="/home">sign in</a>
                 </p>
-                <p className="forgot-password text-right">
-                    Complete this <a href="/form">form</a> to know you better.
-                </p>
+              
             </form>
             <Footer />
         </Container>    
