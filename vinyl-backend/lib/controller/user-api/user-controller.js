@@ -170,7 +170,7 @@ router.post('/login', auth.optional, (req, res, next) => {
  */
 router.get('/current', auth.required, (req, res, next) => {
   const { payload: { id } } = req;
-
+  
   return Users.findById(id)
     .then((user) => {
       if(!user) {
