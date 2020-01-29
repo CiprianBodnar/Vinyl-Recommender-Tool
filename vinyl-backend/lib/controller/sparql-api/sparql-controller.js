@@ -41,6 +41,9 @@ router.get('/', auth.required, (req, res, next) => {
         }
         else{
             resultOfRandom = my_sparql.getRandomGenre(question, userId) 
+            if(resultOfRandom == "Punk"){
+                resultOfRandom = "Punk_rock"
+            }
             var result = my_sparql.myQuery(resultOfRandom,"") 
             var mappedResultList = []
             var mapOfBands = new Map()
