@@ -3,19 +3,20 @@ var rdfstore = require('rdfstore');
 
 class SPARQL_service {
     
-myQuery(artist,title) {
+myQuery(genre,title) {
     var DBP = "http://dbpedia.org/sparql";
+    
     var query = [
     
         "SELECT ?members ?bandName where {",
-            "?band dbo:genre dbr:Jazz .",
+            "?band dbo:genre dbr:"+genre+" .",
             "?band dbp:currentMembers ?members .",
             "?band foaf:name ?bandName",
             "FILTER(langMatches(lang(?bandName), \"en\"))",
            "}",
            "LIMIT 50",].join(" ")
          
-
+    console.log(query)
     var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;
     return queryURL;
     }
@@ -46,6 +47,18 @@ rdf() {
     }
     getRandomInt(max) {
       return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    getRandomGenre(question, userId){
+      for(var q in question){
+        if(question[q].user_id == userId){
+            if(question[q].question == "Genre"){
+                var listOfGenre = question[q].answer
+                var randomIndex = this.getRandomInt(listOfGenre.length)
+                return listOfGenre[randomIndex]
+            }  
+        }
+    }
     }
 };
 module.exports = SPARQL_service
