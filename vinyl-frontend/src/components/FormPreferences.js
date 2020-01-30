@@ -105,7 +105,7 @@ export default class FormPreferences extends Component {
 
             getPreferences(artists, checkedGenre);
             loginSpotify();
-            window.location.replace("http://localhost:8000/api/users/login");
+            // window.location.replace("http://localhost:8000/api/users/login");
         }
 
            
