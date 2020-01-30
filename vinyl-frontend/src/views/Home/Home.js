@@ -4,7 +4,6 @@ import NavigationHome from '../../components/NavigationHome'
 import Footer from '../../components/Footer';
 import Jumbotron from '../../components/Jumbotron';
 import SignIn from '../../components/SignIn';
-import './Home.css';
 
 
 export const Home = () => {
@@ -17,9 +16,9 @@ export const Home = () => {
           <div className="container">
           <Row >
             <Col sm={6}>
-            <div class="vinyl-wrapper">
-                <div class="vinyl"></div>
-                <div class="record-sleeve"></div> 
+            <div className="vinyl-wrapper">
+                <div className="vinyl"></div>
+                <div className="record-sleeve"></div> 
                 <p>Vinyl-Recommander-Tool</p>
             </div>
             <br></br>

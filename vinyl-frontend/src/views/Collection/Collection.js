@@ -34,7 +34,7 @@ export default class Collection extends Component {
                     return <div className="col-md-4" key={index}>
                         <div className="card text-center shadow">
                             <div className="overflow">
-                                <img src={this.state.storedImages[index]} className='card-img-top'></img>
+                                <img  alt={name} src={this.state.storedImages[index]} className='card-img-top'></img>
                             </div>
                             <div className="card-body text-dark">
                                 <h4 className="card-title">{name}</h4>
