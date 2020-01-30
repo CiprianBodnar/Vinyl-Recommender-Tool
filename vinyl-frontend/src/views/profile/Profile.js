@@ -93,7 +93,7 @@ export default class Profile extends Component {
           <NavigationLogged /> 
           <Jumbotron/>
           <br/>
-          <MusicSoundcloud/>
+          {/* <MusicSoundcloud/> */}
           <br/><br/>
           <div className="container">
 
@@ -101,7 +101,7 @@ export default class Profile extends Component {
               
                     <div className="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
                           <div>
-                                <h5 className="pink-text"><i class="fas fa-chart-pie"></i> </h5>
+                                <h5 className="pink-text"><i className="fas fa-chart-pie"></i> </h5>
                                 <h3 className="card-title pt-2" style={{alignText:'right'}}><strong></strong></h3>
                                 <br/><br/><br/><br/><br/><br/><br/><br/>
                           </div>
