@@ -9,12 +9,12 @@ export default class Navigation extends Component{
         };
         return(
             <Navbar collapseOnSelect bg="dark" variant="dark" expand="lg">
-                <Navbar.Brand href="/home" style={title}>Vinyl Recommander</Navbar.Brand>
+                <Navbar.Brand href="/profile/user" style={title}>Vinyl Recommander</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>
                         <NavLink className="d-inline p-2 bg-dark text-white"
-                        to="/">Home</NavLink>
+                        to="/profile/user">Home</NavLink>
                         <NavLink className="d-inline p-2 bg-dark text-white"
                         to="/about">About</NavLink>
                     </Nav>

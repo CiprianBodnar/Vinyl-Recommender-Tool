@@ -5,7 +5,6 @@ import Footer from './Footer';
 
 export default class FormPreferences extends Component {
 
-
     render() {
 
         const formm={

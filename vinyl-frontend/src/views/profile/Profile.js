@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import NavigationLogged from '../../components/NavigationLogged'
 import Footer from '../../components/Footer';
 import Jumbotron from '../../components/Jumbotron';
-// import CarouselLeaf from '../../components/CarouselLeaf'
-import './Profile.css';
+import MusicSoundcloud from '../../components/MusicSoundcloud';
+import Background from '../../assets/vinyl3.jpg'
 
 export default class Profile extends Component {
 
@@ -72,14 +72,10 @@ export default class Profile extends Component {
           localStorage.setItem("genres", JSON.stringify(genres));
           localStorage.setItem("images", JSON.stringify( images));
 
-
         })
         .catch((err) => {
             console.log('ERROR', err.message);
-        });
-
-        // for i in jsonData:
-              
+        });              
       }
       
 
@@ -92,24 +88,29 @@ export default class Profile extends Component {
       window.location.replace("http://localhost:3000/profile/collection");
   }
 
-
     return (
           <div>
           <NavigationLogged /> 
           <Jumbotron/>
-          {/* <CarouselLeaf/> */}
+          <br/>
+          <MusicSoundcloud/>
+          <br/><br/>
           <div className="container">
-            <h2>Recomandation</h2>
-            
-            <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"> See the recomandation</button>
 
+              <div className="card card-image" style={{backgroundImage: "url("+Background+")"}}>
+              
+                    <div className="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+                          <div>
+                                <h5 className="pink-text"><i class="fas fa-chart-pie"></i> </h5>
+                                <h3 className="card-title pt-2" style={{alignText:'right'}}><strong></strong></h3>
+                                <br/><br/><br/><br/><br/><br/><br/><br/>
+                          </div>
+                    </div>
+                    <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"><strong>Let's see your recommandation!</strong></button>
 
-            {/* <p>Web application able to "intelligently" recommend – by exposing a SPARQL endpoint – vinyl music records according to various criteria: user preferences (specified via controlled natural language constructs such as "I always like/love/prefer classical music, especially opera music by Rossini or Verdi and performed by Angela Gheorghiu or Juan Diego Flórez; I sometimes like progressive rock and post-rock; I like only metal albums released before 2000; I always dislike/hate rap and hip-hop; I dislike songs produced by Flood in the last 25 years"), past song purchases on various music stores, playlists – available online via music streaming services Spotify and alternatives – and/or locally (i.e. uploading a JSPF/XSPF document).</p> */}
-            {/* <p> The playlists could be created by the user or shared by her/his virtual "friends" (consider at least one social network). The system will use several music-related knowledge models (e.g., Music Ontology or MusicRecording concept from schema.org) and available public resources: Free Music Archive, MusicBrainz, Musicmoz Music Styles. Bonus: using Solid principles & tools. Inspiration: Musicmap.</p> */}
-          
-          
+              </div>   
           </div>
-
+          <br/>
           <Footer />
       </div>
         

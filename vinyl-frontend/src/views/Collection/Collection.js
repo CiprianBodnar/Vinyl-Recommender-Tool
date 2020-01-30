@@ -2,10 +2,7 @@ import React, {Component} from 'react';
 import NavigationLogged from '../../components/NavigationLogged'
 import Footer from '../../components/Footer';
 import Jumbotron from '../../components/Jumbotron';
-// import CarouselLeaf from '../../components/CarouselLeaf'
-import Card from 'react-bootstrap/Card'
-import ListGroup from 'react-bootstrap/ListGroup'
-import { ListGroupItem, CardGroup} from "react-bootstrap";
+import MusicSoundcloud from '../../components/MusicSoundcloud';
 import './Collection.css';
 
 
@@ -24,41 +21,34 @@ export default class Collection extends Component {
 
     render(){
 
-
-  return (
-        <div>
-        <NavigationLogged /> 
-        <Jumbotron/>
-        {/* <CarouselLeaf/> */}
-        <div className="container" >
-          <h2>Collection</h2>
-        <CardGroup>
-          {this.state.storedNames.map ((name,index) => {
-         
-         return <Card style={{display: 'flex', width: '10%', height:'30%' }} key={index} >
-            <Card.Img variant="top" src={this.state.storedImages[index]} />
-            <Card.Body>
-                <Card.Title>{name}</Card.Title>
-                {/* <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-                </Card.Text> */}
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-                <ListGroupItem>Genre: {this.state.storedGenres[index]}</ListGroupItem>
-                 <ListGroupItem>Followers on spotify: {this.state.storedFollowers[index]}</ListGroupItem>
-            </ListGroup>
-            <Card.Body>
-                <Card.Link href={this.state.storedUrls[index]}>Spotify Link</Card.Link>
-            </Card.Body>
-        </Card>
-        })}
-        </CardGroup>  
+    return (
+            <div>
+            <NavigationLogged /> 
+            <Jumbotron/>
+            <br/>
+            <MusicSoundcloud />
+            <br/><br/>
+            <div className="container-fluid d-flex justify-content-center">
+                <div className="row">
+                {this.state.storedNames.map ((name,index) => {
+                    return <div className="col-md-4" key={index}>
+                        <div className="card text-center shadow">
+                            <div className="overflow">
+                                <img src={this.state.storedImages[index]} className='card-img-top'></img>
+                            </div>
+                            <div className="card-body text-dark">
+                                <h4 className="card-title">{name}</h4>
+                                <p className="card-text text-secondary">Genre: {this.state.storedGenres[index]} </p>
+                                <p className="card-text text-secondary">Followers on spotify: {this.state.storedFollowers[index]}</p>
+                                <a href={this.state.storedUrls[index]} className="btn btn-outline-success">Go to Spotify</a>
+                            </div>
+                        </div>
+                    </div>
+                })}
+                </div>
+            </div>
+            <Footer />
         </div>
-
-        <Footer />
-    </div>
-      
-  );
-}
+    );
+    }
 }

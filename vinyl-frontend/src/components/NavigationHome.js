@@ -14,12 +14,7 @@ export default class Navigation extends Component{
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>
                         <NavLink className="d-inline p-2 bg-dark text-white"
-                        to="/">Home</NavLink>
-
-                        {/*Urmatorul link va fi decat dupa logare - pus provizoriu*/}
-                        {/* <NavLink className="d-inline p-2 bg-dark text-white"
-                        to="/profile/user">Profile</NavLink> */}
-
+                        to="/home">Home</NavLink>
                         <NavLink className="d-inline p-2 bg-dark text-white"
                         to="/about">About</NavLink>
                     </Nav>
