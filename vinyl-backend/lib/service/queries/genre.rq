@@ -1,0 +1,7 @@
+SELECT ?members ?bandName where {,
+            ?band dbo:genre dbr:${dbpInstance} .,
+            ?band dbp:currentMembers ?members .,
+            ?band foaf:name ?bandName,
+            FILTER(langMatches(lang(?bandName), "en")),
+           },
+           LIMIT 50
