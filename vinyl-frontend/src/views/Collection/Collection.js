@@ -26,7 +26,7 @@ export default class Collection extends Component {
             <NavigationLogged /> 
             <Jumbotron/>
             <br/>
-            <MusicSoundcloud />
+            {/* <MusicSoundcloud /> */}
             <br/><br/>
             <div className="container-fluid d-flex justify-content-center">
                 <div className="row">

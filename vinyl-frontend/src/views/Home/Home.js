@@ -4,6 +4,7 @@ import NavigationHome from '../../components/NavigationHome'
 import Footer from '../../components/Footer';
 import Jumbotron from '../../components/Jumbotron';
 import SignIn from '../../components/SignIn';
+import '../../components/Jumbotron.css';
 
 
 export const Home = () => {
