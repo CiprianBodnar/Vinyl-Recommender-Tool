@@ -1,72 +1,42 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 import { Container} from 'react-bootstrap';
-import Footer from './Footer';
-
-
-const BtnFacebook = styled.button`
-    width: 110px;
-    height:50px;  
-    border-radius: 4px;
-    background: #1E90FF;
-    color:white;
-    border:0px transparent;  
-    text-align: center;
-    margin:5px;
-    display: inline-block;
-
-    &:hover{
-        background: #3b5998;
-        opacity: 0.6;
-    }`;
-
-const BtnGoogle = styled.button`
-    margin:5px;
-    margin-left:10px;
-    width: 100px;
-    height:50px;
-    border-radius: 4px;
-    background: #db3236;
-    color:white;
-    border:0px transparent;
-    text-align: center;
-
-    &:hover{
-        background: #3b5998;
-        opacity: 0.6;
-    }`    
-
-const BtnSpotify = styled.button`
-    margin:5px;
-    width: 100px;
-    height:50px;
-    border-radius: 4px;
-    background: #33cc33;
-    color:white;
-    border:0px transparent;
-    text-align: center;
-
-    &:hover{
-        background: #3b5998;
-        opacity: 0.6;
-    }`  
 
 export default class SignIn extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            navigate: false,
+            referrer: null,
+        };
+    }
+
+    handleClickLogin = () => {
+        this.setState({referrer: '/profile/user'});
+    }
+
     render() {
+
+        const{referrer} = this.state;
+        if (referrer) return <Redirect to={referrer} />;
+        
         const formm={
             width: '450px',
             margin: 'auto',
-            background: '#ffffff',
+            background: '#dee2e6',
+            fontColor: 'white',
             boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
             padding: '40px 55px 45px 55px',
             borderRadius: '15px',
             transition: 'all .3s',
+            height: '480px',
         };
+
         return (
         <Container>
-            {/* <NavigationHome />  */}
             <form style={formm}>
-                <h3>Sign In</h3>
+                <h3 style={{"fontWeight":"bold", "textDecoration":"underline",  "textAlign":"center"}}>Sign In</h3>
 
                 <div className="form-group">
                     <label>Email address</label>
@@ -85,31 +55,13 @@ export default class SignIn extends Component {
                     </div>
                 </div>
 
-                <div class="column">    
-                    <BtnFacebook >
-                        &nbsp;&nbsp;Sign In with Facebook
-                        </BtnFacebook >
-                </div>
-                <div class="column">  
-                    <BtnGoogle>
-                        &nbsp;&nbsp;Sign In with Google
-                    </BtnGoogle >
-                </div>
-
-                <div class="column">  
-                    <BtnSpotify>
-                        &nbsp;&nbsp;Sign In with Spotify
-                    </BtnSpotify >
-                </div>
-
-
-                <button type="submit" className="btn btn-primary btn-block">Submit</button>
-                <p className="not-account text-center">Don't have an account? <a href='/signup'>Sign up</a></p>
                 <p className="forgot-password text-right">
-                    Forgot <a href="#"> password?</a>
+                    Forgot <a href="/"> password?</a>
                 </p>
+                <button onClick={this.handleClickLogin} id="myButton" type="submit" className="btn btn-primary btn-block">Sign in</button>
+                <p className="not-account text-center">Don't have an account? <a href='/signup'>Sign up</a></p>
+                
             </form>
-            <Footer />
         </Container>   
         );
     }

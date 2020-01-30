@@ -9,12 +9,12 @@ export default class Navigation extends Component{
         };
         return(
             <Navbar collapseOnSelect bg="dark" variant="dark" expand="lg">
-                <Navbar.Brand href="/home" style={title}>Vinyl Recommander</Navbar.Brand>
+                <Navbar.Brand href="/profile/user" style={title}>Vinyl Recommander</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>
                         <NavLink className="d-inline p-2 bg-dark text-white"
-                        to="/">Home</NavLink>
+                        to="/profile/user">Home</NavLink>
                         <NavLink className="d-inline p-2 bg-dark text-white"
                         to="/about">About</NavLink>
                     </Nav>
@@ -22,13 +22,9 @@ export default class Navigation extends Component{
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
                     <Nav>
-                        <NavLink className="d-inline p-2 bg-dark text-white"
-                            to="/profile">My profile</NavLink>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/signin">Library</NavDropdown.Item>
-                            <NavDropdown.Item href="/">Wish List</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/">Sign Out</NavDropdown.Item>
+                        <NavDropdown title="My profile" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/profile/collection">Collection</NavDropdown.Item>
+                            <NavDropdown.Item href="/home">Sign Out</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

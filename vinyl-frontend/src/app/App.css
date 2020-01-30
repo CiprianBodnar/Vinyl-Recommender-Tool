@@ -22,9 +22,9 @@
 }
 
 body {
-  background: #343a40 !important;
-
+  background: #6c757d !important;
   font-family: 'Fira Sans', sans-serif;
+
 }
 
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
@@ -43,6 +43,7 @@ body {
 .forgot-password,
 .forgot-password a {
   text-align: right;
+  text-decoration: bold;
   font-size: 13px;
   padding-top: 10px;
   color: #7f7d7d;
