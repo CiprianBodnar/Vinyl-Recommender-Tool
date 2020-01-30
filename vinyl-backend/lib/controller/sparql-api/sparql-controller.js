@@ -60,8 +60,8 @@ router.get('/', auth.required, (req, res, next) => {
                 for(it in mappedResultList){
                      spotifySearch(mappedResultList[it]['bandName']['value'])
                  }
-                 
-               return res.json(myResultList)
+               return res.json(my_sparql.shuffleList(myResultList))
+              // return res.json(myResultList)
             });
         
         }

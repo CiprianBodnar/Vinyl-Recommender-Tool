@@ -1,0 +1,14 @@
+SELECT ?entity ?label ?name ?about ?sameWd WHERE {
+    ?entity     rdfs:label    ?label ;
+                foaf:name     ?name ;
+                rdf:type	    ?type ;
+                dbo:abstract  ?about ;
+                owl:sameAs    ?sameWd .
+    
+    FILTER (?entity = ${dbpInstance})
+    FILTER (?type IN (dbo:MusicGenre))
+    FILTER (regex(str(?sameWd), "wikidata.org/entity"))
+    FILTER (lang(?name) = "en")
+    FILTER (lang(?about) = "en")
+    FILTER (lang(?label) = "en")
+}
