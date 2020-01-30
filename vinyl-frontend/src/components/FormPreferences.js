@@ -28,11 +28,23 @@ export default class FormPreferences extends Component {
             fontWeight: 'bold',
         };
 
+    
+        async function loginSpotify(){
+
+            const url = 'http://localhost:8000/api/users/login';
+            fetch(url)
+            .then(data =>{
+                localStorage.setItem('statusSpoty', data.status);
+                return data.json();
+            })
+            .then(res=>{console.log(res)})
+        }
+
+
         async function getPreferences(artists, genres){
 
             var tok = localStorage.getItem('token');
             var inputToken = "Token "+ tok;
-            console.log(inputToken);
 
             await fetch('http://localhost:8000/api/question/submit', {
                 method: "POST",
@@ -46,13 +58,13 @@ export default class FormPreferences extends Component {
                         "questions": [
                           {
                             "question": {
-                              "text_question": "What 2 bla",
+                              "text_question": "Artists",
                               "answer": artists
                             }
                           },
                            {
                             "question": {
-                              "text_question": "What bla lbabla",
+                              "text_question": "Genre",
                               "answer": genres
                             }
                           }
@@ -61,7 +73,7 @@ export default class FormPreferences extends Component {
                 })
                 .then(function(response) {
                     localStorage.setItem('statusPreferences', response.status);
-                    console.log(response.status);
+
                     if(!response.ok){
                         throw new Error("HTTP status " + response.status);
                     }
@@ -73,9 +85,6 @@ export default class FormPreferences extends Component {
 
             event.preventDefault()
 
-            var country = document.getElementById("country");
-            var countryUser = country.options[country.selectedIndex].value;
-
             var artists = [];
             var inputArtist = document.getElementsByClassName('artist');
             for(var i=0; inputArtist[i]; ++i){
@@ -83,6 +92,8 @@ export default class FormPreferences extends Component {
                     artists.push(inputArtist[i].value)
                 }
             }
+            localStorage.setItem("artistsPref", JSON.stringify(artists));
+            // var storedNames = JSON.parse(localStorage.getItem("names"));
 
             var checkedGenre = [];
             var inputElements = document.getElementsByClassName('genre');
@@ -91,11 +102,11 @@ export default class FormPreferences extends Component {
                     checkedGenre.push(inputElements[j].value);
                 }
             }
+            localStorage.setItem("genrePref", JSON.stringify(checkedGenre));
 
             getPreferences(artists, checkedGenre);
-
-            this.props.history.push('/profile/user');
-
+            loginSpotify();
+            window.location.replace("http://localhost:8000/api/users/login");
         }
 
            
@@ -103,6 +114,7 @@ export default class FormPreferences extends Component {
         <Container>
             <NavigationHome />
             <form method="GET" style={formm}>
+                
                  <div >
                     <h2 style={{"fontWeight":"bold", "textDecoration":"underline",  "textAlign":"center"}}>Tell us what you like!</h2>
                     {/* <h3>Music will describe you.</h3> */}
@@ -129,24 +141,21 @@ export default class FormPreferences extends Component {
             
                 <label style={drop_choose}>Choose your favorite genre of music:</label>
                 <div style={drop_choosee}>
-                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="pop" name="pop" />Pop<br/>
-                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="hiphop" name="hiphop" />Hip-Hop<br/>
-                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="country" name="conutry" />Country<br/>
-                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="jazz" name="jazz" />Jazz<br/>
-                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="rock" name="rock" />Rock<br/>
-                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="folk" name="folk" />Folk<br/>
-                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="latino" name="latino" />Latino<br/>
-                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="electro/house" name="electro/house" />Electro/House<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="Punk" name="Punk" />Punk <br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="Country" name="Conutry" />Country<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="Jazz" name="Jazz" />Jazz<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="Rock" name="Rock" />Rock<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="Folk" name="Folk" />Folk<br/>
+                        <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="Latino" name="Latino" />Latino<br/>
                 </div>
                 <br/>
 
                 <label  style={drop_choose}>Complete your favorite artists:</label>
-                <p>Eg. Justin Bieber, Luciano Pavarotti, Solomun</p>
+                <p>Eg. Luciano Pavarotti, Solomun</p>
                 <input className="artist" type = "Text" id="artist1" ref={node => (this.artist1 = node)}></input><br/> 
                 <input className="artist" type = "Text" id="artist2" ref={node => (this.artist2 = node)}></input> <br/>
                 <input className="artist" type = "Text" id="artist3" ref={node => (this.artist3 = node)}></input> <br/>
                 <input className="artist" type = "Text" id="artist4" ref={node => (this.artist4 = node)}></input> <br/>
-
 
                 <br/>
                 <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"> Next Step</button>

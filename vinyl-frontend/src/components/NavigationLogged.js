@@ -22,13 +22,9 @@ export default class Navigation extends Component{
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
                     <Nav>
-                        <NavLink className="d-inline p-2 bg-dark text-white"
-                            to="/profile/user">My profile</NavLink>
-                        <NavDropdown title="Collections" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/signin">Library</NavDropdown.Item>
-                            <NavDropdown.Item href="/">Wish List</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/">Sign Out</NavDropdown.Item>
+                        <NavDropdown title="My profile" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/profile/collection">Collection</NavDropdown.Item>
+                            <NavDropdown.Item href="/home">Sign Out</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Router, browserHistory} from 'react-router';
 import { BrowserRouter, Switch, Route} from "react-router-dom";
 import About from '../views/About/About'
 import Home from '../views/Home/Home'
@@ -7,6 +6,7 @@ import SignIn from '../components/SignIn'
 import SignUp from '../components/SignUp'
 import Profile from '../views/Profile/Profile'
 import FormPreferences from '../components/FormPreferences'
+import Collection from '../views/Collection/Collection'
 import './App.css';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
             <Route path='/signup' component={SignUp} />
             <Route path='/profile/user' component={Profile} />
             <Route path='/form' component={FormPreferences}/>
-            {/* <Route path='/formPreferences' component={FormPreferences} /> */}
+            <Route path='/profile/collection' component={Collection}/>
         </Switch>
     </div>
   </BrowserRouter>

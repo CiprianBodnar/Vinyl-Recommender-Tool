@@ -1,24 +1,24 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { Container} from 'react-bootstrap';
 
 
-const BtnSpotify = styled.button`
-    margin:5px;
-    width: 100px;
-    height:50px;
-    border-radius: 4px;
-    background: #33cc33;
-    color:white;
-    border:0px transparent;
-    text-align: center;
-    margin-left: 100%;
+// const BtnSpotify = styled.button`
+//     margin:5px;
+//     width: 100px;
+//     height:50px;
+//     border-radius: 4px;
+//     background: #33cc33;
+//     color:white;
+//     border:0px transparent;
+//     text-align: center;
+//     margin-left: 100%;
 
-    &:hover{
-        background: #3b5998;
-        opacity: 0.6;
-    }`  
+//     &:hover{
+//         background: #3b5998;
+//         opacity: 0.6;
+//     }`  
 
 export default class SignIn extends Component {
 
@@ -29,7 +29,6 @@ export default class SignIn extends Component {
             referrer: null,
         };
     }
-
 
     handleClickLogin = () => {
         this.setState({referrer: '/profile/user'});
@@ -54,7 +53,6 @@ export default class SignIn extends Component {
 
         return (
         <Container>
-            {/* <NavigationHome />  */}
             <form style={formm}>
                 <h3 style={{"fontWeight":"bold", "textDecoration":"underline",  "textAlign":"center"}}>Sign In</h3>
 
@@ -81,12 +79,12 @@ export default class SignIn extends Component {
                 <button onClick={this.handleClickLogin} id="myButton" type="submit" className="btn btn-primary btn-block">Sign in</button>
                 <p className="not-account text-center">Don't have an account? <a href='/signup'>Sign up</a></p>
                 
-
+{/* 
                 <div className="column">  
                     <BtnSpotify>
                         &nbsp;&nbsp;Sign In with Spotify
                     </BtnSpotify >
-                </div>
+                </div> */}
             </form>
         </Container>   
         );

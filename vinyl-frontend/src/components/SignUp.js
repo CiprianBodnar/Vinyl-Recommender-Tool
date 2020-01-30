@@ -2,12 +2,8 @@ import React, { Component } from "react";
 import NavigationHome from './NavigationHome'
 import { Container} from 'react-bootstrap';
 import Footer from './Footer';
-// import FormPreferences from './FormPreferences';
-
-
 
 export default class SignUp extends Component {
-
 
     render() {
 
@@ -38,7 +34,7 @@ export default class SignUp extends Component {
                         'password': pass
                     
                         }
-                    })
+                    }),
                 })
                 .then((response) => {
                     localStorage.setItem('statusToken', response.status);
@@ -51,7 +47,7 @@ export default class SignUp extends Component {
                 })
                 .then((myJson) => {
                     localStorage.setItem('token',myJson.user.token);
-                    console.log(myJson.user);
+                    localStorage.setItem('id_user',myJson.user._id);
                     return myJson.user.token;
                 });
 
