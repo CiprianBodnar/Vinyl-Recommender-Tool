@@ -30,6 +30,9 @@
 	<li><a href="#references"><span>7. </span>References</a></li>
 	
 <article id="what" typeof="schema:ScholarlyArticle" resource="#">
+    <div class="image">
+    <img src="public/resources/logo.png" className="App-logo" alt="logo" /> 
+    </div>
     <h1>What is Vinyl-Recommender-Tool?</h1>
     <section>
         <ol>
@@ -124,7 +127,11 @@
                 database - a semantic repository that stores and manipulates RDF data along with an inference
                 engine that uses rules to infer new knowledge - and SPARQL support.
 		</p>
-	   </li>
+       </li>
+       <li>
+        <p><a href="https://www.mongodb.com/">MongoDB</a> is a general purpose, document-based, distributed database built for modern application developers and for the cloud era. No database makes you more productive.
+    </p>
+   </li>
         </ul>
     </section>
     <section typeof="sa:Methods" id="architecture">
@@ -432,6 +439,30 @@
                 </caption>
             </table>
         </figure>
+        <p>
+            On the backend side there was some important steps according initial architecture.
+        </p>
+        <p>
+            One major outcome was the login part, for that, passport api was used for generate the JWT token in order to grant the access only for those that are registered for in application. The registration was made without any additional library. 
+        </p>
+        <p>
+            In order to listen those vinyls, the user must have a spotify account that will be matched with the application and authorized. Each recommended vinyl will be displayed in main page of the user. For that, the open Api from Spotify was used. To obtain access, the official guide from them was used.
+        </p>
+        <figure typeof="sa:Image">
+            <img src="public/resources/spotify.PNG">
+            <figcaption>
+                <center>Spotify Api schema</center>
+            </figcaption>
+        </figure>
+        <p>
+            Recommendation was generated through SPARQL queries that were customized by the user  choice though a form where the user must answer in order to know better about. The ontology used was that from DBPedia.
+        </p>
+        <p>
+            All the results from SPARQL query are used in Spotify Api for receiving those jsons with information about song, artist and also info that are consumed by the client.
+        </p>
+        <p>
+            As main architecture from backend, the Model-View-Controller design pattern was used in order to separate the important concepts in implementation. Each concept is in a separate package and the communication between client and server is made through controllers. For the models, mongoose was used in order to ease up the process of storing and receive from database. For the server, express lib is used and all of the controllers use ‘router’ properties. 
+        </p>
 
         <section id="client-side">
             <h2><span> 4. </span>Client Side</h2>
@@ -443,6 +474,13 @@
 
             <figure typeof="sa:Image">
                 <img src="public/resources/homepage.PNG">
+                <figcaption>
+                    <center>Homepage</center>
+                </figcaption>
+            </figure>
+
+            <figure typeof="sa:Image">
+                <img src="public/resources/homepage2.PNG">
                 <figcaption>
                     <center>Homepage</center>
                 </figcaption>
