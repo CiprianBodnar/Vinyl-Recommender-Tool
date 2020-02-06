@@ -3,7 +3,7 @@ var rdfstore = require('rdfstore');
 
 class SPARQL_service {
     
-myQuery(genre,title) {
+myQuery(genre) {
     var DBP = "http://dbpedia.org/sparql";
     
     var query = [
@@ -16,7 +16,6 @@ myQuery(genre,title) {
            "}",
            "LIMIT 50",].join(" ")
          
-    console.log(query)
     var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;
     return queryURL;
     }
@@ -63,18 +62,49 @@ rdf() {
 
     shuffleList(array){
       var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-       while (0 !== currentIndex) {
+      while (0 !== currentIndex) {
           randomIndex = Math.floor(Math.random() * currentIndex);
           currentIndex -= 1;
-
-          // And swap it with the current element.
           temporaryValue = array[currentIndex];
           array[currentIndex] = array[randomIndex];
           array[randomIndex] = temporaryValue;
       }
       return array;
     }
+
+    storeInMap(listOfSparqlJsons){
+      var mapOfBands = new Map()
+      for(var it in listOfSparqlJsons){
+        mapOfBands[listOfSparqlJsons[it]['bandName']['value']] = listOfSparqlJsons[it]
+      }
+      return mapOfBands
+    }
+
+    removeDuplicates(mapOfBands){
+      var mappedResultList = []
+      Object.keys(mapOfBands).forEach(function(key) {
+        var value = mapOfBands[key];
+        mappedResultList.push(value)
+      });
+      return mappedResultList
+    }
+
+    getOpt(search) {
+      return  {
+          url: 'http://localhost:8000/api/spotify/search',
+          body: {
+              'search': search,
+              'type': 'artist'
+          },
+          json: true
+      }
+  }
+
+  getBody(search){
+    return {
+      'search': search,
+      'type': 'artist'
+    }
+  }
 };
 module.exports = SPARQL_service

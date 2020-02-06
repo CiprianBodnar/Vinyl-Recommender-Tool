@@ -1,5 +1,18 @@
 
 class Spotify_service {
+
+
+    searchOptions(accesToken){
+      var obj = {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + accesToken
+        },
+        mode: 'cors',
+        cache: 'default'
+    }
+    return obj;
+  }
     
     authOptionsFunction(my_code, client_id, client_secret, redirect_uri) {
         var obj = {

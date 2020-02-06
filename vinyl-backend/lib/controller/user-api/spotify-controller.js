@@ -4,6 +4,8 @@ var client_id = '158f2d04baf54331b490d40a5b0c2741'; // Your client id
 var client_secret = '94d84b237bdd47dd83ef1114d4aaf439'; // Your secret
 var redirect_uri = 'http://localhost:8000/api/spotify/callback/'; // Your redirect uri
 var request = require('request')
+const fetch = require("node-fetch");
+
 var my_code = null
 const Spotify =  require('../../service/spotify_service')
 const my_spotify = new Spotify();
@@ -65,34 +67,25 @@ router.get('/callback', function(req, res) {
     var code = my_code;
     const { body: { type } } = req;
     const { body: {search} } = req;
+    const {body: {Acode} } = req;
     var my_search = search.replace(/ /g, "%20")
     var authOptions = my_spotify.authOptionsFunction(code, client_id, client_secret, redirect_uri)
-    request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
-     
-        var options = {
-          url: 'https://api.spotify.com/v1/search?q=+'+my_search+'&type='+type,
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
-
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
-          return res.json((body['artists']['items']));
-        });
+  
+    // use the access token to access the Spotify Web API
+        FETCH_URL = 'https://api.spotify.com/v1/search?q='+my_search+'&type='+type
+        var spotiyOpt = my_spotify.searchOptions(Acode)
+        fetch(FETCH_URL, spotiyOpt)
+        .then(function (res) {
+          return res.json();
+        })
+          .then(jsno =>{
+            console.log(jsno)
+            return res.json(jsno)
+          })
         
-        // we can also pass the token to the browser to make requests from there
-       
-      } else {
-        res.redirect('/#' +
-          querystring.stringify({
-            error: 'invalid_token'
-          }));
-      }
      
-    });
+  
+    
 });
   
 
