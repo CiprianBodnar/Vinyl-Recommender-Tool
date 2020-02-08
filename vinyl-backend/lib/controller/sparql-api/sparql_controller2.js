@@ -3,7 +3,9 @@ var request = require('request')
 const SPARQL = require('../../service/sparql_service')
 const my_sparql = new SPARQL();
 const fetch = require("node-fetch");
-const sparql_url = 'http://localhost:8000/api/sparql/aux'
+const sparql_url_genre = 'http://localhost:8000/api/sparql/genre/aux'
+const sparql_url_artist = 'http://localhost:8000/api/sparql/artist/aux'
+
 var querystring = require('querystring');
 var myResultList = []
 var userId;
@@ -125,7 +127,7 @@ router.get('/refresh_token', function(req, res) {
 });
 
 
- router.get('/aux', (req, res, next) => {
+ router.get('/genre/aux', (req, res, next) => {
 
     Question.find({}, function( err , question){
         if(err){
@@ -136,7 +138,7 @@ router.get('/refresh_token', function(req, res) {
             if(resultOfRandom == "Punk"){
                 resultOfRandom = "Punk_rock"
             }
-            var linkResultOfSparql = my_sparql.myQuery(resultOfRandom)
+            var linkResultOfSparql = my_sparql.myGenreQuey(resultOfRandom)
             fetch(linkResultOfSparql)
             .then(resp => resp.json())
             .then(data => {
@@ -151,10 +153,27 @@ router.get('/refresh_token', function(req, res) {
     
 });
 
-router.get('/spotify',  (req, res, next) => {
+
+router.get('/artist/aux', (req, res, next) => {
+
+       
+  var linkResultOfSparql =  my_sparql.myArtistQuery("BLA")
+  fetch(linkResultOfSparql)
+  .then(resp => resp.json())
+  .then(data => {
+      var getObj = data['results']['bindings']
+      return res.json(getObj)
+  })
+  .catch((error) =>  {
+      return res.json(error)
+  });
+  
+});
+
+router.get('/genre/spotify',  (req, res, next) => {
     userId = req.query.id
     
-    fetch(sparql_url)
+    fetch(sparql_url_genre)
         .then(resp => resp.json())
         .then(data =>{
             mapOfBands = my_sparql.storeInMap(data)
@@ -181,8 +200,66 @@ router.get('/spotify',  (req, res, next) => {
             });
 
         });
-
 });
 
+router.get("/artist/spotify/generator", (req, res, next)=> {
+  resultMap = new Map()
+  fetch(sparql_url_artist)
+        .then(resp => resp.json())
+        .then(data =>{
+          var index = my_sparql.getRandomInt(data.length)
+          var mySearch = data[index]['label']['value']
+          var replaced = mySearch.split(' ').join('%20');
+          var o = {
+            url : 'https://api.spotify.com/v1/search?q='+replaced+'&type=track',
+            headers: { 'Authorization': 'Bearer ' + pCode },
+            json: true
+          };
+          request.get(o, function(error, response, body) {
+              
+              console.log(mySearch)
+              var listOfTracks = body['tracks']['items']
+              for(it in listOfTracks){
+                var listOfArtists = listOfTracks[it]['album']['artists']
+                for(jt in listOfArtists){
+                  if( listOfArtists[jt]['name'] == "Queen"){
+                    resultMap['link'] = listOfTracks[it]['href']
+                    return res.json(resultMap)
+                  
+                  }
+                }
+              }
+            
+            resultMap['name'] = mySearch
+            return res.json(resultMap)        
+          });
+        });
+});
+
+router.get('/artist/spotify', (req, res, next)=> {
+  userId = req.query.id
+  
+  fetch('http://localhost:8000/api/sparql/artist/spotify/generator')
+  .then(resp => resp.json())
+  .then(data =>{
+    if(data['link']){
+      var o = {
+        url : data['link'],
+        headers: { 'Authorization': 'Bearer ' + pCode },
+        json: true
+      };
+      request.get(o, function(error, response, body) {      
+        resultMap = new Map()
+        resultMap['name'] = body['name']
+        resultMap['link'] = body['external_urls']['spotify']
+        resultMap['images'] = body['album']['images']
+        return res.json(resultMap)      
+      });
+    }else{
+      return res.json(data)
+    }
+   
+  });
+});    
 
 module.exports = router;
