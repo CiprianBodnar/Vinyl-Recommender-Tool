@@ -107,5 +107,12 @@ myArtistQuery(artist){
       'type': 'artist'
     }
   }
+
+  deleteExtra(string){
+    if(string.search("(song)")){
+      console.log('gasit')
+    }
+  }
+
 };
 module.exports = SPARQL_service

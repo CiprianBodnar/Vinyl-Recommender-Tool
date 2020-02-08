@@ -234,31 +234,32 @@ router.get("/artist/spotify/generator", (req, res, next)=> {
             return res.json(resultMap)        
           });
         });
-
-    router.get('/artist/spotify', (req, res, next)=> {
-      fetch('http://localhost:8000/api/sparql/artist/spotify/generator')
-      .then(resp => resp.json())
-      .then(data =>{
-        if(data['link']){
-          var o = {
-            url : data['link'],
-            headers: { 'Authorization': 'Bearer ' + pCode },
-            json: true
-          };
-          request.get(o, function(error, response, body) {      
-            resultMap = new Map()
-            resultMap['name'] = body['name']
-            resultMap['link'] = body['external_urls']['spotify']
-            resultMap['images'] = body['album']['images']
-            return res.json(resultMap)      
-          });
-        }else{
-          return res.json(data)
-        }
-       
-      });
-    });    
 });
 
+router.get('/artist/spotify', (req, res, next)=> {
+  userId = req.query.id
+  
+  fetch('http://localhost:8000/api/sparql/artist/spotify/generator')
+  .then(resp => resp.json())
+  .then(data =>{
+    if(data['link']){
+      var o = {
+        url : data['link'],
+        headers: { 'Authorization': 'Bearer ' + pCode },
+        json: true
+      };
+      request.get(o, function(error, response, body) {      
+        resultMap = new Map()
+        resultMap['name'] = body['name']
+        resultMap['link'] = body['external_urls']['spotify']
+        resultMap['images'] = body['album']['images']
+        return res.json(resultMap)      
+      });
+    }else{
+      return res.json(data)
+    }
+   
+  });
+});    
 
 module.exports = router;
