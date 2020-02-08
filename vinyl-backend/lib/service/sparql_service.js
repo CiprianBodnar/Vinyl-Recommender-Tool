@@ -15,7 +15,7 @@ myQuery(genre) {
             "FILTER(langMatches(lang(?bandName), \"en\"))",
            "}",
            "LIMIT 50",].join(" ")
-         
+    console.log(query)
     var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;
     return queryURL;
     }
@@ -54,7 +54,9 @@ rdf() {
             if(question[q].question == "Genre"){
                 var listOfGenre = question[q].answer
                 var randomIndex = this.getRandomInt(listOfGenre.length)
-                return listOfGenre[randomIndex]
+                var obj = listOfGenre[randomIndex]
+                console.log(obj)
+                return obj
             }  
         }
       }

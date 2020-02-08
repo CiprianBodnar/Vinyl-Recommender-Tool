@@ -159,7 +159,6 @@ router.get('/spotify',  (req, res, next) => {
         .then(data =>{
             mapOfBands = my_sparql.storeInMap(data)
             myList = my_sparql.removeDuplicates(mapOfBands)
-            
             var index = my_sparql.getRandomInt(myList.length)
             var mySearch = myList[index]['bandName']['value']
             var replaced = mySearch.split(' ').join('%20');
@@ -169,7 +168,16 @@ router.get('/spotify',  (req, res, next) => {
                 json: true
               };
             request.get(o, function(error, response, body) {
-               return res.json(body['artists']['items'])
+              
+              if(body['artists']['items'].length == 0){
+                  var resultList = []
+                  var singleMap = new Map()
+                  singleMap['name'] = mySearch
+                  resultList.push(singleMap)
+                  return res.json(resultList)
+              }else{
+                return res.json(body['artists']['items'])
+              }
             });
 
         });

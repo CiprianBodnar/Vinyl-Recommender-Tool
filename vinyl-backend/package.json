@@ -19,6 +19,7 @@
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "*",
+    "fetch": "^1.1.0",
     "hapi": "^18.1.0",
     "mongodb": "*",
     "mongoose": "^5.7.11",
