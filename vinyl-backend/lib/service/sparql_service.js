@@ -30,12 +30,13 @@ myArtistQuery(artist){
       "      dbo:musicalArtist ?artist ;",
       "      owl:sameAs        ?same .",
       
-     " FILTER (?artist=<http://dbpedia.org/resource/Queen_(band)>)",
+     " FILTER (?artist=<http://dbpedia.org/resource/"+artist+">)",
      " FILTER (?type IN (dbo:MusicalWork))",
      " FILTER (?type NOT IN (dbo:Album))",
      " FILTER (regex(str(?same), 'wikidata.org/entity'))",
      " FILTER (lang(?label) = 'en')",
     "} LIMIT 100",].join(" ")
+    console.log(query)
     var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;
     return queryURL;
 
@@ -54,6 +55,19 @@ myArtistQuery(artist){
                 var randomIndex = this.getRandomInt(listOfGenre.length)
                 var obj = listOfGenre[randomIndex]
                 console.log(obj)
+                return obj
+            }  
+        }
+      }
+    }
+
+    getRandomArtist(question, userId){
+      for(var q in question){
+        if(question[q].user_id == userId){
+            if(question[q].question == "Artists"){
+                var listOfGenre = question[q].answer
+                var randomIndex = this.getRandomInt(listOfGenre.length)
+                var obj = listOfGenre[randomIndex]
                 return obj
             }  
         }
