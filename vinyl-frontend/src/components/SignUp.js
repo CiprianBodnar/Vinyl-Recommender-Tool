@@ -24,7 +24,7 @@ export default class SignUp extends Component {
                 await fetch('http://localhost:8000/api/users/register', {
                 method: "POST",
                 headers: {
-                    Accept: "application/json",
+                    "Accept": "application/json",
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(

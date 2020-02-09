@@ -25,7 +25,7 @@ export const Home = () => {
             <br></br>
             <br></br>
             <h3>Welcome to our Vinyl recommander tool!</h3>
-            <p>You must log in / register to receive music recommendations.</p>
+            <p>You must log in/register to receive music recommendation.</p>
             </Col> 
             <Col sm={3}>
                 <SignIn />

@@ -11,20 +11,15 @@ export default class Profile extends Component {
 
     async function getSparql(){
 
-      var getToken = localStorage.getItem('token');
-      var putToken = "Token " + getToken;
-      const url = 'http://localhost:8000/api/sparql';
+      // var getToken = localStorage.getItem('token');
+      // var putToken = "Token " + getToken;
+      
+      const url = 'http://localhost:8000/api/sparql/spotify';
 
       var idUser  = localStorage.getItem('id_user');
 
-      var names = [];
-      var urls_spotify = [];
-      var followers = [];
-      var genres = [];
-      var images = [];
-
       let header = new Headers();
-      header.append('Authorization', putToken);
+      // header.append('Authorization', putToken);
       let req = new Request(url, {
         method: 'GET',
         headers: header,
@@ -42,35 +37,38 @@ export default class Profile extends Component {
           }
         })
         .then((jsonData) => {
-
+          console.log('gwegwegw');
           console.log(jsonData);
-          localStorage.setItem('lenJsonSparq',jsonData.length);
+          // localStorage.setItem('lenJsonSparq',jsonData.length);
 
-          for(const prop in jsonData){
-              var subData = jsonData[prop];
+          // for(const prop in jsonData){
+
+              var subData = jsonData[0];
               console.log(subData);
               for(const prop2 in subData){
                       var item = subData[prop2];
+                      console.log('efwefewfwe');
                       console.log(item);
                       console.log(item.name);
                       console.log(item.external_urls.spotify);
                       console.log(item.followers.total);
                       console.log(item.genres[0]);
                       console.log(item.images[0].url);
-                      if(names.includes(item.name) === false){
-                              names.push(item.name);
-                              urls_spotify.push(item.external_urls.spotify);
-                              followers.push(item.followers.total);
-                              genres.push(item.genres[0]);
-                              images.push(item.images[0].url);
+                      if(item.name === false){
+                              // names.push(item.name);
+                              // urls_spotify.push(item.external_urls.spotify);
+                              // followers.push(item.followers.total);
+                              // genres.push(item.genres[0]);
+                              // images.push(item.images[0].url);
+                        localStorage.setItem("names", item.name);
+                        localStorage.setItem("urls_spotify",item.external_urls.spotify);
+                        localStorage.setItem("followers", item.followers.total);
+                        localStorage.setItem("genres", item.genres[0]);
+                        localStorage.setItem("images",item.images[0].url);
                       }
                 }
-          }
-          localStorage.setItem("names", JSON.stringify(names));
-          localStorage.setItem("urls_spotify", JSON.stringify(urls_spotify));
-          localStorage.setItem("followers", JSON.stringify(followers));
-          localStorage.setItem("genres", JSON.stringify(genres));
-          localStorage.setItem("images", JSON.stringify( images));
+          // }
+
 
         })
         .catch((err) => {
@@ -82,10 +80,17 @@ export default class Profile extends Component {
     const handleFormSubmit = (event) =>  {
 
       event.preventDefault()
-
-      getSparql();
-
-      window.location.replace("http://localhost:3000/profile/collection");
+      // var stoName = localStorage.JSON.parse(localStorage.getItem("names"));
+      // while(!stoName){
+      //   getSparql();
+      //   stoName = localStorage.JSON.parse(localStorage.getItem("names"))
+      // }
+      // var album = localStorage.getItem('names');
+      // while( album === null){
+          getSparql();
+      
+      // getSparql();
+      // window.location.replace("http://localhost:3000/profile/collection");
   }
 
     return (

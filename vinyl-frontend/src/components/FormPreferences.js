@@ -30,13 +30,27 @@ export default class FormPreferences extends Component {
     
         async function loginSpotify(){
 
-            const url = 'http://localhost:8000/api/users/login';
-            fetch(url)
-            .then(data =>{
-                localStorage.setItem('statusSpoty', data.status);
-                return data.json();
+            const url = 'http://localhost:8000/api/sparql/login';
+            let req = new Request(url, {
+                method: 'GET',
+                mode: 'cors',
+              });
+              fetch(req)
+            .then((response) => {
+            if(response.ok){
+                return response.json();
+            }
+            else{
+                throw new Error('BAD HTTP stuff')
+            }
             })
-            .then(res=>{console.log(res)})
+            .then((jsonData) => {
+
+            console.log(jsonData);
+        })
+        .catch((err) => {
+            console.log('ERROR', err.message);
+        });  
         }
 
 
@@ -45,28 +59,36 @@ export default class FormPreferences extends Component {
             var tok = localStorage.getItem('token');
             var inputToken = "Token "+ tok;
 
+            var inputTextarea = localStorage.getItem('textareaInput');
+
             await fetch('http://localhost:8000/api/question/submit', {
                 method: "POST",
                 headers: {
-                    Accept: "application/json",
+                    "Accept": "application/json",
                     "Content-Type": "application/json",
                     "Authorization": inputToken
                 },
                 body: JSON.stringify(
                     {
                         "questions": [
+                           {
+                            "question": {
+                              "text_question": "Genre",
+                              "answer": genres
+                            }
+                          },
                           {
                             "question": {
                               "text_question": "Artists",
                               "answer": artists
                             }
                           },
-                           {
+                          {
                             "question": {
-                              "text_question": "Genre",
-                              "answer": genres
+                                "text_question": "Nltk",
+                                "answer": inputTextarea
                             }
-                          }
+                        }
                         ]
                       })
                 })
@@ -83,6 +105,10 @@ export default class FormPreferences extends Component {
         const handleFormSubmit = (event) =>  {
 
             event.preventDefault()
+
+            let textVal = document.getElementById("myTextarea").value;
+            console.log(textVal);
+            localStorage.setItem("textareaInput",textVal);
 
             var artists = [];
             var inputArtist = document.getElementsByClassName('artist');
@@ -105,7 +131,7 @@ export default class FormPreferences extends Component {
 
             getPreferences(artists, checkedGenre);
             loginSpotify();
-            // window.location.replace("http://localhost:8000/api/users/login");
+            window.location.replace("http://localhost:8000/api/sparql/login");
         }
 
            
@@ -116,27 +142,8 @@ export default class FormPreferences extends Component {
                 
                  <div >
                     <h2 style={{"fontWeight":"bold", "textDecoration":"underline",  "textAlign":"center"}}>Tell us what you like!</h2>
-                    {/* <h3>Music will describe you.</h3> */}
                 </div>
-                <br/>
-
-                <label style={drop_choose}>Country</label>
-                <div style={drop_choose}>
-                    <select id="country" name="country">
-                        <option value="Australia">Australia</option>
-                        <option value="Canada">Canada</option>
-                        <option value="Usa">USA</option>
-                        <option value="England">England</option>
-                        <option value="Belgium">Belgium</option>
-                        <option value="Romania">Romania</option>
-                        <option value="Russia">Russia</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Italy">Italy</option>
-                        <option value='Other'>Other</option>
-                    </select>
-                 </div>
-
-                <br/>
+                <br/><br/>
             
                 <label style={drop_choose}>Choose your favorite genre of music:</label>
                 <div style={drop_choosee}>
@@ -146,17 +153,18 @@ export default class FormPreferences extends Component {
                         <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="Rock" name="Rock" />Rock<br/>
                         <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="Folk" name="Folk" />Folk<br/>
                         <input style={{"width":"20px", "height":"20px"}} className="genre" type="checkbox" value="Latino" name="Latino" />Latino<br/>
-                </div>
-                <br/>
+                </div> <br/>
 
                 <label  style={drop_choose}>Complete your favorite artists:</label>
                 <p>Eg. Luciano Pavarotti, Solomun</p>
                 <input className="artist" type = "Text" id="artist1" ref={node => (this.artist1 = node)}></input><br/> 
                 <input className="artist" type = "Text" id="artist2" ref={node => (this.artist2 = node)}></input> <br/>
                 <input className="artist" type = "Text" id="artist3" ref={node => (this.artist3 = node)}></input> <br/>
-                <input className="artist" type = "Text" id="artist4" ref={node => (this.artist4 = node)}></input> <br/>
+                <input className="artist" type = "Text" id="artist4" ref={node => (this.artist4 = node)}></input> <br/> <br/>
+                
+                <label style={drop_choose}>Tell us something about whether you like listening or not(eg. artists, genre):</label>
+                <textarea className='html-editor'  id="myTextarea" rows="5" cols="50"></textarea>
 
-                <br/>
                 <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"> Next Step</button>
                 
             </form>
