@@ -182,21 +182,27 @@ router.get('/genre/spotify',  (req, res, next) => {
             var index = my_sparql.getRandomInt(myList.length)
             var mySearch = myList[index]['bandName']['value']
             var replaced = mySearch.split(' ').join('%20');
+            console.log(mySearch)
             var o = {
                 url : 'https://api.spotify.com/v1/search?q='+replaced+'&type=artist',
                 headers: { 'Authorization': 'Bearer ' + pCode },
                 json: true
               };
             request.get(o, function(error, response, body) {
-              
-              if(body['artists']['items'].length == 0){
-                  var resultList = []
+              if(body == undefined || body['artists']['items'].length == 0 ){
                   var singleMap = new Map()
                   singleMap['name'] = mySearch
-                  resultList.push(singleMap)
-                  return res.json(resultList)
+                  return res.json(singleMap)
               }else{
-                return res.json(body['artists']['items'])
+                var lastListOfArtist =  body['artists']['items']
+                if(lastListOfArtist.length >1){
+                  for(var artist in lastListOfArtist){
+                    if(lastListOfArtist[artist]['name'].toLowerCase() == mySearch.toLowerCase()){
+                        return res.json(lastListOfArtist[artist])
+                    }
+                  }
+                }
+                return res.json(lastListOfArtist[0])
               }
             });
 
