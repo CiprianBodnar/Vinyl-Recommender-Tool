@@ -17,6 +17,7 @@ var rCode
 const mongoose = require('mongoose');
 const Question = mongoose.model('Questions')
 var resultOfRandom 
+var randomArtist
 
 /**
  * Generates a random string containing numbers and letters
@@ -156,8 +157,8 @@ router.get('/refresh_token', function(req, res) {
 
 router.get('/artist/aux', (req, res, next) => {
 
-       
-  var linkResultOfSparql =  my_sparql.myArtistQuery("BLA")
+  auxRandom =   randomArtist.split(' ').join("_");
+  var linkResultOfSparql =  my_sparql.myArtistQuery(auxRandom)
   fetch(linkResultOfSparql)
   .then(resp => resp.json())
   .then(data => {
@@ -181,21 +182,27 @@ router.get('/genre/spotify',  (req, res, next) => {
             var index = my_sparql.getRandomInt(myList.length)
             var mySearch = myList[index]['bandName']['value']
             var replaced = mySearch.split(' ').join('%20');
+            console.log(mySearch)
             var o = {
                 url : 'https://api.spotify.com/v1/search?q='+replaced+'&type=artist',
                 headers: { 'Authorization': 'Bearer ' + pCode },
                 json: true
               };
             request.get(o, function(error, response, body) {
-              
-              if(body['artists']['items'].length == 0){
-                  var resultList = []
+              if(body == undefined || body['artists']['items'].length == 0 ){
                   var singleMap = new Map()
                   singleMap['name'] = mySearch
-                  resultList.push(singleMap)
-                  return res.json(resultList)
+                  return res.json(singleMap)
               }else{
-                return res.json(body['artists']['items'])
+                var lastListOfArtist =  body['artists']['items']
+                if(lastListOfArtist.length >1){
+                  for(var artist in lastListOfArtist){
+                    if(lastListOfArtist[artist]['name'].toLowerCase() == mySearch.toLowerCase()){
+                        return res.json(lastListOfArtist[artist])
+                    }
+                  }
+                }
+                return res.json(lastListOfArtist[0])
               }
             });
 
@@ -204,36 +211,49 @@ router.get('/genre/spotify',  (req, res, next) => {
 
 router.get("/artist/spotify/generator", (req, res, next)=> {
   resultMap = new Map()
-  fetch(sparql_url_artist)
-        .then(resp => resp.json())
-        .then(data =>{
-          var index = my_sparql.getRandomInt(data.length)
-          var mySearch = data[index]['label']['value']
-          var replaced = mySearch.split(' ').join('%20');
-          var o = {
-            url : 'https://api.spotify.com/v1/search?q='+replaced+'&type=track',
-            headers: { 'Authorization': 'Bearer ' + pCode },
-            json: true
-          };
-          request.get(o, function(error, response, body) {
+
+  Question.find({}, function( err , question){
+
+    if(err){
+      console.log("nothing found")
+  }
+  else{
+    randomArtist =  ( my_sparql.getRandomArtist(question, userId))
+    fetch(sparql_url_artist)
+    .then(resp => resp.json())
+    .then(data =>{
+      var index = my_sparql.getRandomInt(data.length)
+      var mySearch = data[index]['label']['value']
+      var replaced = mySearch.split(' ').join('%20');
+      var o = {
+        url : 'https://api.spotify.com/v1/search?q='+replaced+'&type=track',
+        headers: { 'Authorization': 'Bearer ' + pCode },
+        json: true
+      };
+      request.get(o, function(error, response, body) {
+          
+          console.log(mySearch)
+          var listOfTracks = body['tracks']['items']
+          for(it in listOfTracks){
+            var listOfArtists = listOfTracks[it]['album']['artists']
+            for(jt in listOfArtists){
+              if( listOfArtists[jt]['name'] == randomArtist){
+                resultMap['link'] = listOfTracks[it]['href']
+                return res.json(resultMap)
               
-              console.log(mySearch)
-              var listOfTracks = body['tracks']['items']
-              for(it in listOfTracks){
-                var listOfArtists = listOfTracks[it]['album']['artists']
-                for(jt in listOfArtists){
-                  if( listOfArtists[jt]['name'] == "Queen"){
-                    resultMap['link'] = listOfTracks[it]['href']
-                    return res.json(resultMap)
-                  
-                  }
-                }
               }
-            
-            resultMap['name'] = mySearch
-            return res.json(resultMap)        
-          });
-        });
+            }
+          }
+        
+        resultMap['name'] = mySearch
+        return res.json(resultMap)        
+      });
+    });
+  }
+
+  });
+
+  
 });
 
 router.get('/artist/spotify', (req, res, next)=> {
