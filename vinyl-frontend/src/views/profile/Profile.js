@@ -8,80 +8,113 @@ import Background from '../../assets/vinyl3.jpg'
 export default class Profile extends Component {
 
   render(){
-
     async function getGenreSparql(){
 
-      const url = 'http://localhost:8000/api/sparql/genre/spotify';
       var idUser = localStorage.getItem('id_user');
+      var url = 'http://localhost:8000/api/sparql/genre/spotify?id=';
+      url = url + idUser;
+
+      let req = new Request(url, {
+        method: 'GET',
+        // headers: {
+        //   "Content-Type": "application/json"
+        // },
+        mode: 'cors',
+        // params: {id: idUser}
+      });
+        fetch(req)
+        .then((response) => {
+        if(response.ok){
+            return response.json();
+        }
+        else{
+            throw new Error('BAD HTTP stuff')
+        }
+        })
+        .then((jsonData) => {
+
+        console.log(jsonData);
+
+        var genreRec = []
+        console.log(jsonData.name);
+        genreRec.push(jsonData.name); //0
+
+          if(jsonData.hasOwnProperty('external_urls')){
+          genreRec.push(jsonData.external_urls.spotify); //1
+        }
+        else{
+          genreRec.push(0);
+        }
+        if(jsonData.hasOwnProperty('followers')){
+          genreRec.push(jsonData.followers.total); //2
+        }
+        else{
+          genreRec.push(0);
+        }
+  
+        if(jsonData.hasOwnProperty('genres')){
+          genreRec.push(jsonData.genres[0]); //3
+        }
+        else{
+          genreRec.push(0);
+        }
+
+        if(jsonData.hasOwnProperty('images')){  
+          genreRec.push(jsonData.images[0].url); //4
+        }
+        else{
+          genreRec.push(0);
+        }
+
+        localStorage.removeItem('genreRecc');
+        localStorage.setItem("genreRecc", JSON.stringify(genreRec));
+    })
+    .catch((err) => {
+        console.log('ERROR', err.message);
+    });  
+
+    var response = JSON.parse(localStorage.getItem("genreRecc"));
+    console.log("egwegwegwegw" + response);
+    }
+
+    async function getArtistSparql(){
+
+      var idUser = localStorage.getItem('id_user');
+      var url = 'http://localhost:8000/api/sparql/artist/spotify?id=';
+      url = url + idUser;
+
       let req = new Request(url, {
         method: 'GET',
         mode: 'cors',
-        params: {id: idUser}
       });
-
-      fetch(req)
+        fetch(req)
         .then((response) => {
-          if(response.ok){
-            // console.log('eeeee');
+        if(response.ok){
             return response.json();
-          }
-          else{
-            console.log('error');
-            throw new Error('BAD HTTP stuff');
-          }
+        }
+        else{
+            throw new Error('BAD HTTP stuff')
+        }
         })
         .then((jsonData) => {
-          console.log('gwegwegw');
-          console.log(jsonData);
-          })
+
+        console.log(jsonData);
+        })
         .catch((err) => {
             console.log('ERROR', err.message);
-        });   
-        console.log('efwefewfwe');           
+        });  
       }
-     
-              // for(const prop2 in subData){
-                      // var item = subData[prop2];
-      
-                      // console.log(item);
-
-                      // console.log(jsonData.name);
-
-                      // console.log(item.external_urls.spotify);
-                      // console.log(item.followers.total);
-                      // console.log(item.genres[0]);
-                      // console.log(item.images[0].url);
-
-
-                      // if(item.name === false){
-                              // names.push(item.name);
-                              // urls_spotify.push(item.external_urls.spotify);
-                              // followers.push(item.followers.total);
-                              // genres.push(item.genres[0]);
-                              // images.push(item.images[0].url);
-                        // localStorage.setItem("names", jsonData.name);
-                        // localStorage.setItem("urls_spotify",item.external_urls.spotify);
-                        // localStorage.setItem("followers", item.followers.total);
-                        // localStorage.setItem("genres", item.genres[0]);
-                        // localStorage.setItem("images",item.images[0].url);
-                      // }
-
-      
+  
 
     const handleFormSubmit = (event) =>  {
 
       event.preventDefault()
-      // var stoName = localStorage.JSON.parse(localStorage.getItem("names"));
-      // while(!stoName){
-      //   getSparql();
-      //   stoName = localStorage.JSON.parse(localStorage.getItem("names"))
-      // }
-      // var album = localStorage.getItem('names');
-      // while( album === null){
-          getGenreSparql();
       
-      // getSparql();
-      // window.location.replace("http://localhost:3000/profile/collection");
+      //   stoName = localStorage.JSON.parse(localStorage.getItem("names"))
+
+      // getGenreSparql();
+      getArtistSparql();
+            // window.location.replace("http://localhost:3000/profile/collection");
   }
 
     return (
