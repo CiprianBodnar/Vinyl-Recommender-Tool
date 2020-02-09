@@ -130,7 +130,7 @@ export default class FormPreferences extends Component {
             localStorage.setItem("genrePref", JSON.stringify(checkedGenre));
 
             getPreferences(artists, checkedGenre);
-            loginSpotify();
+            // loginSpotify();
             window.location.replace("http://localhost:8000/api/sparql/login");
         }
 

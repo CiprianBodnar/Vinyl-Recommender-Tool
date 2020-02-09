@@ -9,20 +9,12 @@ export default class Profile extends Component {
 
   render(){
 
-    async function getSparql(){
+    async function getGenreSparql(){
 
-      // var getToken = localStorage.getItem('token');
-      // var putToken = "Token " + getToken;
-      
-      const url = 'http://localhost:8000/api/sparql/spotify';
-
-      var idUser  = localStorage.getItem('id_user');
-
-      let header = new Headers();
-      // header.append('Authorization', putToken);
+      const url = 'http://localhost:8000/api/sparql/genre/spotify';
+      var idUser = localStorage.getItem('id_user');
       let req = new Request(url, {
         method: 'GET',
-        headers: header,
         mode: 'cors',
         params: {id: idUser}
       });
@@ -30,51 +22,50 @@ export default class Profile extends Component {
       fetch(req)
         .then((response) => {
           if(response.ok){
+            // console.log('eeeee');
             return response.json();
           }
           else{
-            throw new Error('BAD HTTP stuff')
+            console.log('error');
+            throw new Error('BAD HTTP stuff');
           }
         })
         .then((jsonData) => {
           console.log('gwegwegw');
           console.log(jsonData);
-          // localStorage.setItem('lenJsonSparq',jsonData.length);
+          })
+        .catch((err) => {
+            console.log('ERROR', err.message);
+        });   
+        console.log('efwefewfwe');           
+      }
+     
+              // for(const prop2 in subData){
+                      // var item = subData[prop2];
+      
+                      // console.log(item);
 
-          // for(const prop in jsonData){
+                      // console.log(jsonData.name);
 
-              var subData = jsonData[0];
-              console.log(subData);
-              for(const prop2 in subData){
-                      var item = subData[prop2];
-                      console.log('efwefewfwe');
-                      console.log(item);
-                      console.log(item.name);
-                      console.log(item.external_urls.spotify);
-                      console.log(item.followers.total);
-                      console.log(item.genres[0]);
-                      console.log(item.images[0].url);
-                      if(item.name === false){
+                      // console.log(item.external_urls.spotify);
+                      // console.log(item.followers.total);
+                      // console.log(item.genres[0]);
+                      // console.log(item.images[0].url);
+
+
+                      // if(item.name === false){
                               // names.push(item.name);
                               // urls_spotify.push(item.external_urls.spotify);
                               // followers.push(item.followers.total);
                               // genres.push(item.genres[0]);
                               // images.push(item.images[0].url);
-                        localStorage.setItem("names", item.name);
-                        localStorage.setItem("urls_spotify",item.external_urls.spotify);
-                        localStorage.setItem("followers", item.followers.total);
-                        localStorage.setItem("genres", item.genres[0]);
-                        localStorage.setItem("images",item.images[0].url);
-                      }
-                }
-          // }
+                        // localStorage.setItem("names", jsonData.name);
+                        // localStorage.setItem("urls_spotify",item.external_urls.spotify);
+                        // localStorage.setItem("followers", item.followers.total);
+                        // localStorage.setItem("genres", item.genres[0]);
+                        // localStorage.setItem("images",item.images[0].url);
+                      // }
 
-
-        })
-        .catch((err) => {
-            console.log('ERROR', err.message);
-        });              
-      }
       
 
     const handleFormSubmit = (event) =>  {
@@ -87,7 +78,7 @@ export default class Profile extends Component {
       // }
       // var album = localStorage.getItem('names');
       // while( album === null){
-          getSparql();
+          getGenreSparql();
       
       // getSparql();
       // window.location.replace("http://localhost:3000/profile/collection");
