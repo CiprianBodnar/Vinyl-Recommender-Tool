@@ -8,6 +8,7 @@ const errorHandler = require('errorhandler');
 const cookieParser = require('cookie-parser');
 require('./lib/model/User')
 require('./lib/model/Question')
+require('./lib/model/Album')
 require('./lib/service/passport-config')
 const swaggerConf = require('./lib/service/swaggerConfig')
 const endpoints = require('./lib/controller')

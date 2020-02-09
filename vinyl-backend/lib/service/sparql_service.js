@@ -2,6 +2,27 @@
 var rdfstore = require('rdfstore');
 
 class SPARQL_service {
+
+wikidata(){
+  var DBP = "https://query.wikidata.org/";
+
+  var query = [
+    "SELECT * WHERE {",
+      "?song rdfs:label ?label ;",
+            "wdt:P31    ?instance ;",
+            "wdt:P175   ?artist .",
+    
+      "OPTIONAL { ?song wdt:P1651  ?youtubeId }",
+      
+      "FILTER (?artist = wd:Q15862)",
+      "FILTER (?instance IN (wd:Q2031291, wd:Q2188189, wd:Q7302866, wd:Q134556, wd:Q7366, wd:Q169930))",
+      "FILTER (?instance NOT IN (wd:Q482994))",
+      "FILTER (lang(?label) = 'en')",
+    "} LIMIT 10"
+  ].join(" ")
+  var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;
+  return queryURL;
+}  
     
 myGenreQuey(genre) {
     var DBP = "http://dbpedia.org/sparql";

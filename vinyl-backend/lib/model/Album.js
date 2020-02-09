@@ -1,4 +1,4 @@
-"use strict"
+
 const mongoose = require('mongoose')
 
 const AlbumSchema = new mongoose.Schema({
@@ -6,10 +6,21 @@ const AlbumSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    author:{
+    user_id:{
         type: String,
         require: true
+    },
+    songs: {
+        type: [Map]
     }
-},{strict: false});
+});
 
-module.exports = mongoose.model('Album', AlbumSchema);
+AlbumSchema.methods.toAuthJSON = function() {
+    return {
+      _id: this._id,
+      title: this.title,
+      songs: this.songs
+    };
+  };
+
+module.exports = mongoose.model('Albums', AlbumSchema);
