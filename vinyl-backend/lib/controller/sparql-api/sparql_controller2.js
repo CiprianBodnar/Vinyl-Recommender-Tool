@@ -222,6 +222,7 @@ router.get("/artist/spotify/generator", (req, res, next)=> {
     fetch(sparql_url_artist)
     .then(resp => resp.json())
     .then(data =>{
+      console.log(data)
       var index = my_sparql.getRandomInt(data.length)
       var mySearch = data[index]['label']['value']
       var replaced = mySearch.split(' ').join('%20');

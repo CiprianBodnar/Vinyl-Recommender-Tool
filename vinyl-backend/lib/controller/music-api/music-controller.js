@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const auth = require('../../service/auth');
+var playlist_service = require('../../service/playlist_service')
 /**
  * @swagger
  * definitions:
@@ -257,8 +258,12 @@ router.delete('/playlist/{id}', auth.required, (req, res, next)=>{
  *          401:
  *              description: Unauthorize to this endpoint, please register
  */
-router.post('/playlist', auth.required, (req, res, next)=>{
-    const { payload: { id } } = req;
-    return res
+router.post('/playlist', (req, res, next)=>{
+    const { body: { playlist } } = req;
+
+    playlist_service.save(playlist)
+
+
+    return res.json('Succesfull created')
 })
 module.exports = router;
