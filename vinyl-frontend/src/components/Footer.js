@@ -14,7 +14,7 @@ export default class Footer extends Component{
                 <MDBContainer fluid className="text-center text-md-left">
                     <MDBRow>
                     <MDBCol md="6">
-                        <p >
+                        <p style={{color:'black'}} >
                         Thank you for accessing our website. We are waiting for you!
                         </p>
                     </MDBCol>
