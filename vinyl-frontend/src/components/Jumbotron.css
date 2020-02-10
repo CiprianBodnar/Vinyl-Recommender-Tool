@@ -62,6 +62,7 @@
 	width: 200px;
 	height: 200px;
 	transform: rotateX(10deg) rotateZ(-20deg);
+	margin-left: 20px;
   }
   
   .record-sleeve {

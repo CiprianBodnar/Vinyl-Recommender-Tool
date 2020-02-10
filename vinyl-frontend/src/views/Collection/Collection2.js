@@ -3,11 +3,12 @@ import NavigationLogged from '../../components/NavigationLogged'
 import Footer from '../../components/Footer';
 import Jumbotron from '../../components/Jumbotron';
 import MusicSoundcloud from '../../components/MusicSoundcloud';
-import Arrow from '../../assets/arrow.png';
 import './Collection.css';
+import Arrow from '../../assets/arrow.png';
 
 
-export default class Collection extends Component {
+
+export default class Collection2 extends Component {
 
     constructor(props){
         super(props);
@@ -247,13 +248,12 @@ export default class Collection extends Component {
             event.preventDefault()
             getGenreSparql();
             getArtistSparql();
-            window.location.replace("http://localhost:3000/profile/collection2");
+            window.location.replace("http://localhost:3000/profile/collection");
 
         }
           
     return (
-    <div className="back" style={{backgroundColor: '#00000054'}}>
-
+            <div className="back">
             <NavigationLogged /> 
             <Jumbotron/>
             <br/>
@@ -284,19 +284,17 @@ export default class Collection extends Component {
                                 <h4 className="card-title">{this.state.artistRec_name}</h4>
                                 <p className="card-text text-secondary">Genre: {this.state.artistRec_genre} </p>
                                 <p className="card-text text-secondary">Followers on spotify: {this.state.artistRec_foll}</p>
-                                <a className="spoty-button"  href={this.state.artistRec_url} className="btn btn-outline-success">Go to Spotify</a>
+                                <a className="spoty-button" href={this.state.artistRec_url} className="btn btn-outline-success">Go to Spotify</a>
                             </div>
                         </div>
                      </div> 
                 </div>
 
             </div>
-            <div >
-                <p className="arrow-next"><strong>Next recomandations:</strong> <a onClick={handleFormSubmit} type="submit" >
-                    <img alt="Arrow" src={Arrow} width="100" height="100"></img>
-                </a>
-                </p>
-            </div>
+            <p className="arrow-next"><strong>Next recomandations:</strong> <a onClick={handleFormSubmit} type="submit" >
+                <img alt="Arrow" src={Arrow} width="100" height="100"></img>
+            </a>
+            </p>
             <Footer />
         </div>
     );

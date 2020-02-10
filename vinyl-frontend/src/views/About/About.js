@@ -1,16 +1,15 @@
 import React from 'react';
 import NavigationHome from '../../components/NavigationHome'
-import { Container} from 'react-bootstrap';
 import Footer from '../../components/Footer';
 import Background from '../../assets/vinyl-wall.jpg'
 
 export const About = () => {
 
   return (
-    <Container>
+    <div className="back" style={{backgroundColor: '#00000054'}}>
         <NavigationHome /> 
         <br/><br/><br/>
-        <div className="container">
+        <div className="container" >
 
             <div className="card card-image" style={{backgroundImage: "url("+Background+")"}}>
 
@@ -29,8 +28,7 @@ export const About = () => {
         </div>
         <br/><br/>
         <Footer />
-    </Container>
-      
+</div>      
   )
 }
 
