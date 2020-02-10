@@ -149,5 +149,12 @@ myArtistQuery(artist){
     }
   }
 
+  removeBrackets(string){
+    if(string.indexOf('(') < string.indexOf(')' ) ){
+      return string.substr(0, string.indexOf('(')).trim()
+    }
+    return string
+  }
+
 };
 module.exports = SPARQL_service

@@ -17,6 +17,7 @@ var rCode
 const mongoose = require('mongoose');
 const Question = mongoose.model('Questions')
 var resultOfRandom 
+var backup
 var randomArtist
 
 /**
@@ -189,7 +190,8 @@ router.get('/genre/spotify',  (req, res, next) => {
                 json: true
               };
             request.get(o, function(error, response, body) {
-              if(body == undefined || body['artists']['items'].length == 0 ){
+            
+              if(body == undefined ||  body['artists'] == undefined || body['artists']['items'].length == 0 ){
                   var singleMap = new Map()
                   singleMap['name'] = mySearch
                   return res.json(singleMap)
@@ -222,9 +224,13 @@ router.get("/artist/spotify/generator", (req, res, next)=> {
     fetch(sparql_url_artist)
     .then(resp => resp.json())
     .then(data =>{
-      console.log(data)
       var index = my_sparql.getRandomInt(data.length)
       var mySearch = data[index]['label']['value']
+      console.log(mySearch)
+      mySearch =  my_sparql.removeBrackets(mySearch)
+      backup = mySearch
+      console.log(mySearch)
+
       var replaced = mySearch.split(' ').join('%20');
       var o = {
         url : 'https://api.spotify.com/v1/search?q='+replaced+'&type=track',
@@ -232,8 +238,8 @@ router.get("/artist/spotify/generator", (req, res, next)=> {
         json: true
       };
       request.get(o, function(error, response, body) {
-          
-          console.log(mySearch)
+         
+        if(body != undefined){
           var listOfTracks = body['tracks']['items']
           for(it in listOfTracks){
             var listOfArtists = listOfTracks[it]['album']['artists']
@@ -245,11 +251,18 @@ router.get("/artist/spotify/generator", (req, res, next)=> {
               }
             }
           }
+        }
         
         resultMap['name'] = mySearch
+        resultMap['artist'] = randomArtist
         return res.json(resultMap)        
       });
-    });
+    })
+    .catch((error) =>  {
+      var localMap = new Map()
+      localMap['name'] = backup
+      localMap['artist'] = randomArtist
+      return res.json(localMap)});
   }
 
   });
@@ -280,7 +293,9 @@ router.get('/artist/spotify', (req, res, next)=> {
       return res.json(data)
     }
    
-  });
+  })
+  .catch((error) =>  {
+    return res.json(error)});
 });    
 
 module.exports = router;
