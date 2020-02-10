@@ -77,33 +77,33 @@ export default class Profile extends Component {
     console.log("egwegwegwegw" + response);
     }
 
-    async function getArtistSparql(){
+    // async function getArtistSparql(){
 
-      var idUser = localStorage.getItem('id_user');
-      var url = 'http://localhost:8000/api/sparql/artist/spotify?id=';
-      url = url + idUser;
+    //   var idUser = localStorage.getItem('id_user');
+    //   var url = 'http://localhost:8000/api/sparql/artist/spotify?id=';
+    //   url = url + idUser;
 
-      let req = new Request(url, {
-        method: 'GET',
-        mode: 'cors',
-      });
-        fetch(req)
-        .then((response) => {
-        if(response.ok){
-            return response.json();
-        }
-        else{
-            throw new Error('BAD HTTP stuff')
-        }
-        })
-        .then((jsonData) => {
+    //   let req = new Request(url, {
+    //     method: 'GET',
+    //     mode: 'cors',
+    //   });
+    //     fetch(req)
+    //     .then((response) => {
+    //     if(response.ok){
+    //         return response.json();
+    //     }
+    //     else{
+    //         throw new Error('BAD HTTP stuff')
+    //     }
+    //     })
+    //     .then((jsonData) => {
 
-        console.log(jsonData);
-        })
-        .catch((err) => {
-            console.log('ERROR', err.message);
-        });  
-      }
+    //     console.log(jsonData);
+    //     })
+    //     .catch((err) => {
+    //         console.log('ERROR', err.message);
+    //     });  
+    //   }
   
 
     const handleFormSubmit = (event) =>  {
@@ -112,8 +112,8 @@ export default class Profile extends Component {
       
       //   stoName = localStorage.JSON.parse(localStorage.getItem("names"))
 
-      // getGenreSparql();
-      getArtistSparql();
+      getGenreSparql();
+      // getArtistSparql();
             // window.location.replace("http://localhost:3000/profile/collection");
   }
 
