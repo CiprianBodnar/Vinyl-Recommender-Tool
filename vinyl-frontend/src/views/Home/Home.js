@@ -10,7 +10,7 @@ import '../../components/Jumbotron.css';
 export const Home = () => {
   return (
     
-    <div>
+    <div className="back" style={{backgroundColor: '#00000054'}}>
         <NavigationHome /> 
         <Jumbotron />
         

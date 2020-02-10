@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import NavigationHome from './NavigationHome'
-import { Container} from 'react-bootstrap';
 import Footer from './Footer';
 
 export default class SignUp extends Component {
@@ -72,7 +71,7 @@ export default class SignUp extends Component {
         }
 
         return (
-        <Container>
+    <div className="back" style={{backgroundColor: '#00000054'}}>
             <NavigationHome />
             <form style={formm} onSubmit={this.handleSubmit}>
                 <h3 style={{"fontWeight":"bold", "textDecoration":"underline",  "textAlign":"center"}}>Sign Up</h3>
@@ -103,7 +102,7 @@ export default class SignUp extends Component {
                 </p>
             </form>
             <Footer />
-        </Container>    
+        </div>  
        
         );
     }

@@ -16,11 +16,7 @@ export default class Profile extends Component {
 
       let req = new Request(url, {
         method: 'GET',
-        // headers: {
-        //   "Content-Type": "application/json"
-        // },
         mode: 'cors',
-        // params: {id: idUser}
       });
         fetch(req)
         .then((response) => {
@@ -33,99 +29,137 @@ export default class Profile extends Component {
         })
         .then((jsonData) => {
 
-        console.log(jsonData);
+        
+        if(jsonData.hasOwnProperty('name')){
+         var genreRec_name =  jsonData.name; 
+          }
+        else{
+          var genreRec_name = 'no in spotify';
+        }
+        localStorage.setItem('genreRec_name', genreRec_name);
 
-        var genreRec = []
-        console.log(jsonData.name);
-        genreRec.push(jsonData.name); //0
-
-          if(jsonData.hasOwnProperty('external_urls')){
-          genreRec.push(jsonData.external_urls.spotify); //1
+        if(jsonData.hasOwnProperty('external_urls')){
+          var genreRec_url = jsonData.external_urls.spotify; 
         }
         else{
-          genreRec.push(0);
+          var genreRec_url = 'https://www.spotify.com/ro/';
         }
+        localStorage.setItem('genreRec_url', genreRec_url);
+
+
         if(jsonData.hasOwnProperty('followers')){
-          genreRec.push(jsonData.followers.total); //2
+          var genreRec_foll = jsonData.followers.total; 
         }
         else{
-          genreRec.push(0);
+          var genreRec_foll = 'no in spotify';
         }
+        localStorage.setItem('genreRec_foll', genreRec_foll);
   
         if(jsonData.hasOwnProperty('genres')){
-          genreRec.push(jsonData.genres[0]); //3
+          var genreRec_genre = jsonData.genres[0]; 
         }
         else{
-          genreRec.push(0);
+          var genreRec_genre = 'no in spotify';
         }
+        localStorage.setItem('genreRec_genre', genreRec_genre);
 
         if(jsonData.hasOwnProperty('images')){  
-          genreRec.push(jsonData.images[0].url); //4
+          var genreRec_image = jsonData.images[0].url; 
         }
         else{
-          genreRec.push(0);
+          var genreRec_image =  '/../../assets/photo.jpg';
         }
-
-        localStorage.removeItem('genreRecc');
-        localStorage.setItem("genreRecc", JSON.stringify(genreRec));
+        localStorage.setItem('genreRec_image', genreRec_image);
     })
     .catch((err) => {
         console.log('ERROR', err.message);
     });  
+  }
 
-    var response = JSON.parse(localStorage.getItem("genreRecc"));
-    console.log("egwegwegwegw" + response);
-    }
 
-    // async function getArtistSparql(){
+    async function getArtistSparql(){
 
-    //   var idUser = localStorage.getItem('id_user');
-    //   var url = 'http://localhost:8000/api/sparql/artist/spotify?id=';
-    //   url = url + idUser;
+      var idUser = localStorage.getItem('id_user');
+      var url = 'http://localhost:8000/api/sparql/artist/spotify?id=';
+      url = url + idUser;
 
-    //   let req = new Request(url, {
-    //     method: 'GET',
-    //     mode: 'cors',
-    //   });
-    //     fetch(req)
-    //     .then((response) => {
-    //     if(response.ok){
-    //         return response.json();
-    //     }
-    //     else{
-    //         throw new Error('BAD HTTP stuff')
-    //     }
-    //     })
-    //     .then((jsonData) => {
+      let req = new Request(url, {
+        method: 'GET',
+        mode: 'cors',
+      });
+        fetch(req)
+        .then((response) => {
+        if(response.ok){
+            return response.json();
+        }
+        else{
+            throw new Error('BAD HTTP stuff')
+        }
+        })
+        .then((jsonData) => {
 
-    //     console.log(jsonData);
-    //     })
-    //     .catch((err) => {
-    //         console.log('ERROR', err.message);
-    //     });  
-    //   }
+        if(jsonData.hasOwnProperty('name')){
+        var artistRec_name = jsonData.name; //0
+        }
+        else{
+          var artistRec_name = 'No find on spotify.';
+        }
+        localStorage.setItem('artistRec_name', artistRec_name);
+
+        if(jsonData.hasOwnProperty('external_urls')){
+          var artistRec_url = jsonData.external_urls.spotify; 
+        }
+        else{
+          var artistRec_url = 'https://www.spotify.com/ro/';
+        }
+        localStorage.setItem('artistRec_url',artistRec_url);
+
+        if(jsonData.hasOwnProperty('followers')){
+          var artistRec_foll = jsonData.followers.total; 
+        }
+        else{
+          var artistRec_foll = 'No find on spotify.';
+        }
+        localStorage.setItem('artistRec_foll', artistRec_foll);
   
+        if(jsonData.hasOwnProperty('genres')){
+         var artistRec_genre = jsonData.genres[0]; 
+        }
+        else{
+          var artistRec_genre = 'No find on spotify.';
+        }
+        localStorage.setItem('artistRec_genre', artistRec_genre);
+
+        if(jsonData.hasOwnProperty('images')){  
+          var artistRec_image = jsonData.images[0].url; 
+        }
+        else{
+          var artistRec_image  =  '/../../assets/photo.jpg';
+        }
+        localStorage.setItem('artistRec_image', artistRec_image);
+
+        })
+        .catch((err) => {
+            console.log('ERROR', err.message);
+        });  
+    }
 
     const handleFormSubmit = (event) =>  {
 
       event.preventDefault()
-      
-      //   stoName = localStorage.JSON.parse(localStorage.getItem("names"))
-
       getGenreSparql();
-      // getArtistSparql();
-            // window.location.replace("http://localhost:3000/profile/collection");
+      getArtistSparql();
+      window.location.replace("http://localhost:3000/profile/collection");
   }
 
     return (
-          <div>
+          <div className="back" style={{backgroundColor: '#00000054'}}>
           <NavigationLogged /> 
           <Jumbotron/>
           <br/>
-          {/* <MusicSoundcloud/> */}
+          <MusicSoundcloud/>
           <br/><br/>
           <div className="container">
-
               <div className="card card-image" style={{backgroundImage: "url("+Background+")"}}>
               
                     <div className="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
@@ -136,13 +170,11 @@ export default class Profile extends Component {
                           </div>
                     </div>
                     <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"><strong>Let's see your recommandation!</strong></button>
-
               </div>   
           </div>
           <br/>
           <Footer />
       </div>
-        
     );
   }
 }

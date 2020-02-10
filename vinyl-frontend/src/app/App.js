@@ -7,6 +7,8 @@ import SignUp from '../components/SignUp'
 import Profile from '../views/Profile/Profile'
 import FormPreferences from '../components/FormPreferences'
 import Collection from '../views/Collection/Collection'
+import Collection2 from '../views/Collection/Collection2'
+
 import './App.css';
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
             <Route path='/profile/user' component={Profile} />
             <Route path='/form' component={FormPreferences}/>
             <Route path='/profile/collection' component={Collection}/>
+            <Route path='/profile/collection2' component={Collection2}/>
         </Switch>
     </div>
   </BrowserRouter>

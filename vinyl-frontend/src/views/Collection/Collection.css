@@ -22,3 +22,19 @@
 .card-img-top:hover{
     transform: scale(1.8);
 }
+
+.arrow-next {
+    text-align: center;
+}
+
+.spoty-button{
+background-color: #28a745;
+}
+
+.btn {
+    background: #28a745;
+}
+
+.back{
+    background-color: #00000054;
+}
