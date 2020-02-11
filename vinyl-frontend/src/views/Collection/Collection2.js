@@ -5,7 +5,7 @@ import Jumbotron from '../../components/Jumbotron';
 import MusicSoundcloud from '../../components/MusicSoundcloud';
 import './Collection.css';
 import Arrow from '../../assets/arrow.png';
-
+import PhotoNull from  '../../assets/photo.jpg';
 
 
 export default class Collection2 extends Component {
@@ -234,7 +234,7 @@ export default class Collection2 extends Component {
                 var artistRec_image = jsonData.images[0].url; 
               }
               else{
-                var artistRec_image  =  '/../../assets/photo.jpg';
+                var artistRec_image  = {PhotoNull};
               }
               localStorage.setItem('artistRec_image', artistRec_image);
       
@@ -247,8 +247,9 @@ export default class Collection2 extends Component {
           const handleFormSubmit = (event) =>  {
             event.preventDefault()
             getGenreSparql();
-            // getArtistSparql();
-            window.location.replace("http://localhost:3000/profile/collection");
+            getArtistSparql();
+
+            // window.location.replace("http://localhost:3000/profile/collection");
 
         }
           
