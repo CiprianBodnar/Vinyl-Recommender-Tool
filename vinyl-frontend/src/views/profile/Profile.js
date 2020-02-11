@@ -7,6 +7,19 @@ import Background from '../../assets/vinyl3.jpg'
 
 export default class Profile extends Component {
 
+
+
+
+  constructor(props){
+    super(props);
+        this.state = {
+          artistsPref : JSON.parse(localStorage.getItem('artistsPref')),
+          genrePref : JSON.parse(localStorage.getItem('genrePref')),
+          album_array : JSON.parse(localStorage.getItem('album_array')),
+          song_array : JSON.parse(localStorage.getItem('song_array'))
+}
+  }
+
   render(){
     async function getGenreSparql(){
 
@@ -29,7 +42,7 @@ export default class Profile extends Component {
         })
         .then((jsonData) => {
 
-        
+        console.log(jsonData);
         if(jsonData.hasOwnProperty('name')){
          var genreRec_name =  jsonData.name; 
           }
@@ -148,8 +161,8 @@ export default class Profile extends Component {
 
       event.preventDefault()
       getGenreSparql();
-      getArtistSparql();
-      window.location.replace("http://localhost:3000/profile/collection");
+      // getArtistSparql();
+      // window.location.replace("http://localhost:3000/profile/collection");
   }
 
     return (
@@ -170,7 +183,12 @@ export default class Profile extends Component {
                           </div>
                     </div>
                     <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"><strong>Let's see your recommandation!</strong></button>
-              </div>   
+
+              </div> <br/>
+              <p style={{color:'black'}}>Artists: {this.state.artistsPref}</p>
+              <p style={{color:'black'}}>Genres: {this.state.genrePref } </p>
+              <p style={{color:'black'}}>Songs: {this.state.song_array} </p>
+              <p style={{color:'black'}}>Albums: {this.state.album_array} </p>  
           </div>
           <br/>
           <Footer />

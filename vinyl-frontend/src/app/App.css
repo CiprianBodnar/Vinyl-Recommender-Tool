@@ -60,3 +60,14 @@ body {
   color: #0c0d0e;
   text-decoration: underline;
 }
+
+
+
+.App-Component{
+  margin: 150px auto 0 auto;
+  width: 600px;
+}
+
+.App-link {
+  color: #42c487;
+}
