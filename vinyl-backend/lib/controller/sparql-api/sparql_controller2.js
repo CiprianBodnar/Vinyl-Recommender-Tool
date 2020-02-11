@@ -19,7 +19,8 @@ const Question = mongoose.model('Questions')
 var resultOfRandom 
 var backup
 var randomArtist
-
+var lastArtistSearched = "a"
+var mySearchArtist 
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -159,6 +160,7 @@ router.get('/refresh_token', function(req, res) {
 router.get('/artist/aux', (req, res, next) => {
 
   auxRandom =   randomArtist.split(' ').join("_");
+  console.log("ARTIST AUX"+ auxRandom)
   var linkResultOfSparql =  my_sparql.myArtistQuery(auxRandom)
   fetch(linkResultOfSparql)
   .then(resp => resp.json())
@@ -174,36 +176,50 @@ router.get('/artist/aux', (req, res, next) => {
 
 router.get('/genre/spotify',  (req, res, next) => {
     userId = req.query.id
-    
+    console.log("-----------------------------------------------")
     fetch(sparql_url_genre)
         .then(resp => resp.json())
         .then(data =>{
+          if(mySearchArtist != undefined){
+            lastArtistSearched = mySearchArtist
+
+          }
+            //console.log(data)
             mapOfBands = my_sparql.storeInMap(data)
             myList = my_sparql.removeDuplicates(mapOfBands)
+            
             var index = my_sparql.getRandomInt(myList.length)
-            var mySearch = myList[index]['bandName']['value']
-            var replaced = mySearch.split(' ').join('%20');
-            console.log(mySearch)
+            mySearchArtist = myList[index]['bandName']['value']
+            var replaced = mySearchArtist.split(' ').join('%20');
+            if(mySearchArtist == lastArtistSearched && myList.length>3){
+              while(mySearchArtist == lastArtistSearched){
+                var i = my_sparql.getRandomInt(myList.length)
+                mySearchArtist = myList[i]['bandName']['value']
+              }
+              lastArtistSearched = mySearchArtist
+            }
+           
             var o = {
                 url : 'https://api.spotify.com/v1/search?q='+replaced+'&type=artist',
                 headers: { 'Authorization': 'Bearer ' + pCode },
                 json: true
               };
             request.get(o, function(error, response, body) {
-            
               if(body == undefined ||  body['artists'] == undefined || body['artists']['items'].length == 0 ){
                   var singleMap = new Map()
-                  singleMap['name'] = mySearch
+                  singleMap['name'] = mySearchArtist
                   return res.json(singleMap)
               }else{
                 var lastListOfArtist =  body['artists']['items']
                 if(lastListOfArtist.length >1){
                   for(var artist in lastListOfArtist){
-                    if(lastListOfArtist[artist]['name'].toLowerCase() == mySearch.toLowerCase()){
-                        return res.json(lastListOfArtist[artist])
+                    if(lastListOfArtist[artist]['name'].toLowerCase() == mySearchArtist.toLowerCase()){
+                      console.log("GENRE" +lastListOfArtist[artist])
+                        return res.json(lastListOfArtist[artist]['name'])
                     }
                   }
                 }
+                console.log("GENRET" + lastListOfArtist[0])
                 return res.json(lastListOfArtist[0])
               }
             });
@@ -221,15 +237,16 @@ router.get("/artist/spotify/generator", (req, res, next)=> {
   }
   else{
     randomArtist =  ( my_sparql.getRandomArtist(question, userId))
+    console.log(" ARTIST RANDOM ARTIST RESULT"+ randomArtist)
     fetch(sparql_url_artist)
     .then(resp => resp.json())
     .then(data =>{
       var index = my_sparql.getRandomInt(data.length)
       var mySearch = data[index]['label']['value']
-      console.log(mySearch)
+      console.log("ARTIST" +mySearch)
       mySearch =  my_sparql.removeBrackets(mySearch)
       backup = mySearch
-      console.log(mySearch)
+      console.log("ARTIST" +mySearch)
 
       var replaced = mySearch.split(' ').join('%20');
       var o = {
@@ -246,6 +263,7 @@ router.get("/artist/spotify/generator", (req, res, next)=> {
             for(jt in listOfArtists){
               if( listOfArtists[jt]['name'] == randomArtist){
                 resultMap['link'] = listOfTracks[it]['href']
+                //console.log(listOfTracks[it]['href'])
                 return res.json(resultMap)
               
               }
@@ -272,7 +290,7 @@ router.get("/artist/spotify/generator", (req, res, next)=> {
 
 router.get('/artist/spotify', (req, res, next)=> {
   userId = req.query.id
-  
+  console.log("ARTIST USER ID " +userId)
   fetch('http://localhost:8000/api/sparql/artist/spotify/generator')
   .then(resp => resp.json())
   .then(data =>{
@@ -287,6 +305,7 @@ router.get('/artist/spotify', (req, res, next)=> {
         resultMap['name'] = body['name']
         resultMap['link'] = body['external_urls']['spotify']
         resultMap['images'] = body['album']['images']
+        console.log(resultMap['images'])
         return res.json(resultMap)      
       });
     }else{

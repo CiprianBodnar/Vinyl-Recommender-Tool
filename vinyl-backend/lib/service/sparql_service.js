@@ -37,6 +37,7 @@ myGenreQuey(genre) {
            "}",
            "LIMIT 50",].join(" ")
     var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;
+    console.log("GENRE "+ query)
     return queryURL;
     }
 
@@ -75,7 +76,7 @@ myArtistQuery(artist){
                 var listOfGenre = question[q].answer
                 var randomIndex = this.getRandomInt(listOfGenre.length)
                 var obj = listOfGenre[randomIndex]
-                console.log(obj)
+                console.log("GENRETT" +obj)
                 return obj
             }  
         }
@@ -83,12 +84,14 @@ myArtistQuery(artist){
     }
 
     getRandomArtist(question, userId){
+      
       for(var q in question){
         if(question[q].user_id == userId){
             if(question[q].question == "Artists"){
                 var listOfGenre = question[q].answer
                 var randomIndex = this.getRandomInt(listOfGenre.length)
                 var obj = listOfGenre[randomIndex]
+                console.log("ARTIST RESULT FROM OBJ"+ obj)
                 return obj
             }  
         }
