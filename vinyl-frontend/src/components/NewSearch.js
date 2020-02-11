@@ -31,7 +31,7 @@ export default class NewSearch extends Component {
 
 
     return (
-        <Container>
+        <Container style={{backgroundColor: '#00000054'}}>
             <NavigationLogged />
             <form method="GET" style={formm}>         
                 <div >

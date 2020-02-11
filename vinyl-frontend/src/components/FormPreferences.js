@@ -31,13 +31,12 @@ export default class FormPreferences extends Component {
 
 
     return (
-        <Container>
+        <Container style={{backgroundColor: '#00000054'}}>
             <NavigationHome />
             <form method="GET" style={formm}>         
                 <div >
                     <h2 style={{"fontWeight":"bold", "textDecoration":"underline",  "textAlign":"center"}}>Tell us what you like!</h2>
                 </div>
-                <br/><br/>
             
                 <div className="App-Component">
                 <AutoCompleteText items={musicGenres}/>

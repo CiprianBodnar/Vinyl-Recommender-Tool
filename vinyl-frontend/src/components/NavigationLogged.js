@@ -25,7 +25,7 @@ export default class Navigation extends Component{
                 <Navbar.Collapse className="justify-content-end">
                     <Nav>
                         <NavDropdown title="My profile" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/profile/collection">Collection</NavDropdown.Item>
+                            <NavDropdown.Item href="/profile/user">Recommandations</NavDropdown.Item>
                             <NavDropdown.Item href="/home">Sign Out</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

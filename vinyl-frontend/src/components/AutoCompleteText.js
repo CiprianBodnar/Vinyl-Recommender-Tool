@@ -8,6 +8,10 @@ export default class AutoCompleteText extends React.Component{
         this.state={
             suggestions: [],
             text : '',
+            artistpref : '',
+            genrepref : '',
+            songpref : '',
+            albumpref : ''
         };
     }
 
@@ -20,7 +24,6 @@ export default class AutoCompleteText extends React.Component{
             suggestions = items.sort().filter(v => regex.test(v));
         }
             this.setState(() => ({suggestions,text:value}));
-            //console.log("value",value);
     }
 
     suggestionSelected(value){
@@ -80,17 +83,17 @@ export default class AutoCompleteText extends React.Component{
            console.log("search genres: ",genre_array);
            console.log("search artists: ",artist_array);
 
-        //    localStorage.clear('artistsPref');
-        //    localStorage.clear('genrePref');
-        //    localStorage.clear('album_array');
-        //    localStorage.clear('song_array');
+           this.setState({
+              artistpref : artist_array,
+              genrePref : genre_array,
+              songpref : song_array,
+              albumpref : album_array
+            })
 
            localStorage.setItem('artistsPref', JSON.stringify(artist_array));
            localStorage.setItem('genrePref', JSON.stringify(genre_array));
            localStorage.setItem('album_array', JSON.stringify(album_array));
            localStorage.setItem('song_array', JSON.stringify(song_array));
-
-
 
            console.log("search songs: ",song_array);
            console.log("search albums: ",album_array);
@@ -196,19 +199,17 @@ export default class AutoCompleteText extends React.Component{
         const{text}=this.state;
         return(
             <div className="App"> 
-            <button className="btn btn--loginApp-link" onClick={() => {this.string()}}>
-            Search
-                  </button>
-                 
-            
-           <div className="AutoCompleteText">
-              
-               <input value={text} placeholder="Type your favorite genre, artist, song..." onChange={this.onTextChanged} type="text" />
-               {this.renderSuggestions()}
-
-           </div>
-            <button onClick={handleFormSubmit} type="submit" className="btn btn-primary btn-block"> Next Step</button>
- 
+                <div className="AutoCompleteText">
+                    <input value={text} placeholder='Type your favorite genre, artist, song... ' onChange={this.onTextChanged} type="textarea" />
+                    {this.renderSuggestions()}
+                </div>
+                <button className="btn btn--loginApp-link button-search" onClick={() => {this.string()}}>
+                        Search
+                    </button>
+                <div>
+                    <p>Your favorite artists: {this.state.artistpref}</p>
+                </div>    
+                <button onClick={handleFormSubmit} type="submit" className="btn btn-block btn--loginApp-link button-next"> Next Step</button>
            </div>
         );
     }
