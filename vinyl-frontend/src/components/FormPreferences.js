@@ -113,7 +113,7 @@ export default class FormPreferences extends Component {
             var artists = [];
             var inputArtist = document.getElementsByClassName('artist');
             for(var i=0; inputArtist[i]; ++i){
-                if(inputArtist[i] != null){
+                if(inputArtist[i] != null && inputArtist[i].value.length > 1){
                     artists.push(inputArtist[i].value)
                 }
             }
