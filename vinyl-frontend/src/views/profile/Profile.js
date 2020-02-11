@@ -13,10 +13,6 @@ export default class Profile extends Component {
   constructor(props){
     super(props);
         this.state = {
-          // artistsPref : JSON.parse(localStorage.getItem('artistsPref')),
-          // genrePref : JSON.parse(localStorage.getItem('genrePref')),
-          // album_array : JSON.parse(localStorage.getItem('album_array')),
-          // song_array : JSON.parse(localStorage.getItem('song_array')),
           initialStateSearch: "Search details for an artist...",
           currentArtist: '',
           genreRec_name : 'By preferred genres',
@@ -28,16 +24,20 @@ export default class Profile extends Component {
           artistRec_url : '',
           artistRec_foll : '',
           artistRec_genre : '',
-          artistRec_image : 'https://images.freeimages.com/images/large-previews/506/my-turntable-2-1424358.jpg', 
+          artistRec_image : 'https://images.freeimages.com/images/large-previews/506/my-turntable-2-1424358.jpg',
+          artistsPref : JSON.parse(localStorage.getItem('artistsPref')),
+          genrePref : JSON.parse(localStorage.getItem('genrePref')),
+          album_array : JSON.parse(localStorage.getItem('album_array')),
+          song_array : JSON.parse(localStorage.getItem('song_array'))
   };
   }
-  changeArtist(currentArtist){
-    this.setState({currentArtist});
+  changeArtist(newArtist){
+    this.setState({currentArtist : newArtist});
   }
+
 
   getSearchArtist = async (artistName) => {
 
-    // var idUser = localStorage.getItem('id_user');
     var url = 'http://localhost:8000/api/sparql/artist/details?artistName=';
     url = url + artistName;
 
@@ -227,11 +227,12 @@ getArtistSparql = async()=>{
             <MusicSoundcloud/>
             <br/><br/>
             <Container>
-                {/* <div class="search-box">
+                <div className="search-box">
                     <form>
-                      <input type="text" placeholder={this.state.initialStateSearch} onChange={this.changeArtist.bind(this, 'currentText')} />
+                      <input type="text" placeholder={this.state.initialStateSearch} onChange={this.changeArtist.bind(this)} />
+                      <button onClick={() => {this.changeArtist.bind(this); this.getSearchArtist(this.state.currentArtist)}}>Search</button>
                     </form>
-                </div> */}
+                </div>
                 <div className="card card-image" style={{backgroundImage: "url("+Background+")"}}>
                 
                       <div className="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
@@ -244,10 +245,10 @@ getArtistSparql = async()=>{
                       <button onClick={() => {this.getGenreSparql(); this.getArtistSparql();}} type="submit" className="btn btn-primary btn-block"><strong>Let's see your recommandation!</strong></button>
 
                 </div> <br/>
-                {/* <p style={{color:'black'}}>Artists: {this.state.artistsPref}</p>
+                <p style={{color:'black'}}>Artists: {this.state.artistsPref}</p>
                 <p style={{color:'black'}}>Genres: {this.state.genrePref } </p>
                 <p style={{color:'black'}}>Songs: {this.state.song_array} </p>
-                <p style={{color:'black'}}>Albums: {this.state.album_array} </p>   */}
+                <p style={{color:'black'}}>Albums: {this.state.album_array} </p>  
                 <div className="row">
                     <div className="col-md-6">
                       <div className="card text-center shadow">
