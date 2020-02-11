@@ -17,6 +17,8 @@ export default class Navigation extends Component{
                         to="/profile/user">Home</NavLink>
                         <NavLink className="d-inline p-2 bg-dark text-white"
                         to="/about">About</NavLink>
+                        <NavLink className="d-inline p-2 bg-dark text-white"
+                        to="/newsearch">New Search</NavLink>
                     </Nav>
 
                 </Navbar.Collapse>
