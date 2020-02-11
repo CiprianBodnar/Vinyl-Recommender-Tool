@@ -246,7 +246,7 @@ export default class Collection extends Component {
           const handleFormSubmit = (event) =>  {
             event.preventDefault()
             getGenreSparql();
-            getArtistSparql();
+            // getArtistSparql();
             window.location.replace("http://localhost:3000/profile/collection2");
 
         }
