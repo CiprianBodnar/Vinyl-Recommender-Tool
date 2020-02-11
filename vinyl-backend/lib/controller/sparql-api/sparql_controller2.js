@@ -94,12 +94,16 @@ router.get('/callback', function(req, res) {
         rCode = refresh_token    
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://localhost:3000/profile/user');
-      } else {
-        res.redirect('/#' +
-          querystring.stringify({
-            error: 'invalid_token'
-          }));
+        res.redirect('http://localhost:3000/profile/user/#' +
+        querystring.stringify({
+          access_token: access_token,
+          refresh_token: refresh_token
+        }));
+    } else {
+      res.redirect('/#' +
+        querystring.stringify({
+          error: 'invalid_token'
+        }));
       }
     });
   }
@@ -198,28 +202,31 @@ router.get('/genre/spotify',  (req, res, next) => {
               }
               lastArtistSearched = mySearchArtist
             }
-           
+            console.log("::::::::::::::::::::::::::::"+ replaced)
             var o = {
                 url : 'https://api.spotify.com/v1/search?q='+replaced+'&type=artist',
                 headers: { 'Authorization': 'Bearer ' + pCode },
                 json: true
               };
             request.get(o, function(error, response, body) {
+              console.log(body)
               if(body == undefined ||  body['artists'] == undefined || body['artists']['items'].length == 0 ){
                   var singleMap = new Map()
                   singleMap['name'] = mySearchArtist
+                
                   return res.json(singleMap)
               }else{
                 var lastListOfArtist =  body['artists']['items']
+                console.log("GENRE" +lastListOfArtist[0])
                 if(lastListOfArtist.length >1){
                   for(var artist in lastListOfArtist){
+                    
                     if(lastListOfArtist[artist]['name'].toLowerCase() == mySearchArtist.toLowerCase()){
-                      console.log("GENRE" +lastListOfArtist[artist])
                         return res.json(lastListOfArtist[artist]['name'])
                     }
                   }
                 }
-                console.log("GENRET" + lastListOfArtist[0])
+                console.log("GENRET" + lastListOfArtist)
                 return res.json(lastListOfArtist[0])
               }
             });
@@ -316,5 +323,23 @@ router.get('/artist/spotify', (req, res, next)=> {
   .catch((error) =>  {
     return res.json(error)});
 });    
+
+
+router.get('/artist/details', (req, res, next) => {
+  artistName = req.query.artistName
+  artistName = artistName.replace(" ", "_")
+  var linkResultOfSparql =  my_sparql.myArtistDetails(artistName)
+  fetch(linkResultOfSparql)
+    .then(resp => resp.json())
+    .then(data => {
+        //if(data['results']['bidings'].length>0){
+          return res.json(data['results']['bindings'])
+
+        //}
+    })
+    .catch((error) =>  {
+        return res.json(error)
+    });
+});
 
 module.exports = router;

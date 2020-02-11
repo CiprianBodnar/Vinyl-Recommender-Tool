@@ -23,6 +23,40 @@ wikidata(){
   var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;
   return queryURL;
 }  
+
+myArtistDetails(artist){
+  
+  var DBP = "http://dbpedia.org/sparql";
+
+
+  var query = [
+    "SELECT ?type ?wikidataArtist  ?artistName ?artistFirstName",
+    "?artistLastName ?artistBirthName ?artistGender ?artistBirthPlace ?bandHomeTown ?artistActivityStartYear ?artistActivityEndYear WHERE {",
+      "?dbpediaArtist rdf:type                 ?type ;",
+                     "rdfs:label               ?artistName ;",
+                     "dbo:abstract             ?aboutArtist .",
+    
+      "OPTIONAL { ?dbpediaArtist dbo:hometown             ?bandHomeTown            }    ",        
+      "OPTIONAL { ?dbpediaArtist dbo:birthPlace           ?artistBirthPlace        }      ",        
+      "OPTIONAL { ?dbpediaArtist dbo:activeYearsStartYear ?artistActivityStartYear }",
+      "OPTIONAL { ?dbpediaArtist dbo:activeYearsEndYear   ?artistActivityEndYear   }",
+      "OPTIONAL { ?dbpediaArtist dbo:birthName            ?artistBirthName         }",
+      "OPTIONAL { ?dbpediaArtist foaf:givenName           ?artistFirstName         }",
+      "OPTIONAL { ?dbpediaArtist foaf:surname             ?artistLastName          }",
+      "OPTIONAL { ?dbpediaArtist foaf:gender              ?artistGender            }",
+      "OPTIONAL { ?dbpediaArtist owl:sameAs               ?wikidataArtist          }",
+      
+      "FILTER (?dbpediaArtist = dbr:"+artist+")",
+      "FILTER (?type IN (dbo:MusicalArtist, dbo:Band))",
+      "FILTER (regex(?wikidataArtist, \"wikidata.org/entity\"))",
+      "FILTER (lang(?artistName) = \"en\")",
+      "FILTER (lang(?aboutArtist) = \"en\")",
+    "} LIMIT 10",
+
+  ].join(" ")
+  var queryURL = DBP + "?query=" + encodeURIComponent(query) + "&format=json" ;
+  return queryURL;
+}
     
 myGenreQuey(genre) {
     var DBP = "http://dbpedia.org/sparql";
