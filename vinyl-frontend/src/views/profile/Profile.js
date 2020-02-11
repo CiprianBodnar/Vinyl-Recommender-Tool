@@ -17,7 +17,8 @@ export default class Profile extends Component {
           // genrePref : JSON.parse(localStorage.getItem('genrePref')),
           // album_array : JSON.parse(localStorage.getItem('album_array')),
           // song_array : JSON.parse(localStorage.getItem('song_array')),
-
+          initialStateSearch: "Search details for an artist...",
+          currentArtist: '',
           genreRec_name : 'By preferred genres',
           genreRec_url : '',
           genreRec_foll : '',
@@ -30,6 +31,45 @@ export default class Profile extends Component {
           artistRec_image : 'https://images.freeimages.com/images/large-previews/506/my-turntable-2-1424358.jpg', 
   };
   }
+  changeArtist(currentArtist){
+    this.setState({currentArtist});
+  }
+
+  getSearchArtist = async (artistName) => {
+
+    // var idUser = localStorage.getItem('id_user');
+    var url = 'http://localhost:8000/api/sparql/artist/details?artistName=';
+    url = url + artistName;
+
+    let req = new Request(url, {
+      method: 'GET',
+      mode: 'cors',
+    });
+      fetch(req)
+      .then((response) => {
+      if(response.ok){
+          return response.json();
+      }
+      else{
+          throw new Error('BAD HTTP stuff')
+      }
+      })
+      .then((jsonData) => {
+        console.log(jsonData)
+
+      // this.setState({
+      //   genreRec_name : vargenreRec_name,
+      //   genreRec_url : vargenreRec_url,
+      //   genreRec_foll : vargenreRec_foll,
+      //   genreRec_genre : vargenreRec_genre,
+      //   genreRec_image : vargenreRec_image
+      // });
+
+  })
+  .catch((err) => {
+      console.log('ERROR', err.message);
+  });  
+}
 
 
   getGenreSparql = async () => {
@@ -179,74 +219,6 @@ getArtistSparql = async()=>{
   render(){
 
 
-    async function getArtistSparqll(){
-
-      var idUser = localStorage.getItem('id_user');
-      var url = 'http://localhost:8000/api/sparql/artist/spotify?id=';
-      url = url + idUser;
-
-      let req = new Request(url, {
-        method: 'GET',
-        mode: 'cors',
-      });
-        fetch(req)
-        .then((response) => {
-        if(response.ok){
-            return response.json();
-        }
-        else{
-            throw new Error('BAD HTTP stuff')
-        }
-        })
-        .then((jsonData) => {
-
-        if(jsonData.hasOwnProperty('name')){
-        var artistRec_name = jsonData.name; //0
-        }
-        else{
-          var artistRec_name = 'No find on spotify.';
-        }
-        localStorage.setItem('artistRec_name', artistRec_name);
-
-        if(jsonData.hasOwnProperty('external_urls')){
-          var artistRec_url = jsonData.external_urls.spotify; 
-        }
-        else{
-          var artistRec_url = 'https://www.spotify.com/ro/';
-        }
-        localStorage.setItem('artistRec_url',artistRec_url);
-
-        if(jsonData.hasOwnProperty('followers')){
-          var artistRec_foll = jsonData.followers.total; 
-        }
-        else{
-          var artistRec_foll = 'No find on spotify.';
-        }
-        localStorage.setItem('artistRec_foll', artistRec_foll);
-  
-        if(jsonData.hasOwnProperty('genres')){
-         var artistRec_genre = jsonData.genres[0]; 
-        }
-        else{
-          var artistRec_genre = 'No find on spotify.';
-        }
-        localStorage.setItem('artistRec_genre', artistRec_genre);
-
-        if(jsonData.hasOwnProperty('images')){  
-          var artistRec_image = jsonData.images[0].url; 
-        }
-        else{
-          var artistRec_image  =  '/../../assets/photo.jpg';
-        }
-        localStorage.setItem('artistRec_image', artistRec_image);
-
-        })
-        .catch((err) => {
-            console.log('ERROR', err.message);
-        });  
-    }
-
-
     return (
           <div className="back" style={{backgroundColor: '#00000054'}}>
             <NavigationLogged /> 
@@ -255,6 +227,11 @@ getArtistSparql = async()=>{
             <MusicSoundcloud/>
             <br/><br/>
             <Container>
+                {/* <div class="search-box">
+                    <form>
+                      <input type="text" placeholder={this.state.initialStateSearch} onChange={this.changeArtist.bind(this, 'currentText')} />
+                    </form>
+                </div> */}
                 <div className="card card-image" style={{backgroundImage: "url("+Background+")"}}>
                 
                       <div className="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
@@ -283,6 +260,8 @@ getArtistSparql = async()=>{
                                   <p className="card-text text-secondary">Followers on spotify: {this.state.genreRec_foll}</p>
                                   <a className="spoty-button"  href={this.state.genreRec_url} className="btn btn-outline-success">Go to Spotify</a>
                             </div>
+                            <button onClick={() => { this.getSearchArtist(this.state.artistRec_name);}}>Details</button>
+
                         </div>
                       </div>
                       <div className="col-md-6">
@@ -296,6 +275,7 @@ getArtistSparql = async()=>{
                                       <p className="card-text text-secondary">Followers on spotify: {this.state.artistRec_foll}</p>
                                       <a className="spoty-button" href={this.state.artistRec_url} className="btn btn-outline-success">Go to Spotify</a>
                                   </div>
+
                               </div>
                       </div> 
                 </div>
