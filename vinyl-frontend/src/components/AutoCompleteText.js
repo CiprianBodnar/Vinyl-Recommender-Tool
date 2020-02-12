@@ -68,7 +68,7 @@ export default class AutoCompleteText extends React.Component{
            if(words.length<3)
            {
                if(musicGenres.includes(text_input)){
-                    genre_array.push(text_input)
+                    genre_array.push(text_input.charAt(0).toUpperCase() + text_input.slice(1))
                }
                else{
                 //if gen proprii   

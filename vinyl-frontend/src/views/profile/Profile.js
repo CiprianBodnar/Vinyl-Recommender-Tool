@@ -274,7 +274,7 @@ onSubmit = (e) => {
             <Container>
                 <div className="search-box">
                     <form onSubmit={this.handleSearchTermSubmit}>
-                      <input name="currentArtist" type="text" value="Search an artist.." onChange={e =>this.handleChange(e)} />
+                      <input name="currentArtist" type="text"  onChange={e =>this.handleChange(e)} />
                       <button type='submit'  onClick={(e) => this.onSubmit(e), this.getSearchArtist(this.state.currentArtist)}>Search</button>                     
                     </form>
                     <div >
