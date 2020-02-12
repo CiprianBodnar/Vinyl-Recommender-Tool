@@ -15,14 +15,21 @@ export default class Profile extends Component {
         this.state = {
           initialStateSearch: "Search details for an artist...",
           currentArtist: '',
+          wikiA: '',
+          nameA: '',
+          birthNameA: '',
+          birthPlaceA: '',
+          activityStartA: '',
           genreRec_name : 'By preferred genres',
           genreRec_url : '',
           genreRec_foll : '',
+          genRec_id : '',
           genreRec_genre : '',
           genreRec_image : 'https://images.freeimages.com/images/large-previews/b32/vinyl-dream-1253154.jpg',
           artistRec_name : 'By favorite artists',
           artistRec_url : '',
           artistRec_foll : '',
+          artistRec_id : '',
           artistRec_genre : '',
           artistRec_image : 'https://images.freeimages.com/images/large-previews/506/my-turntable-2-1424358.jpg',
           artistsPref : JSON.parse(localStorage.getItem('artistsPref')),
@@ -39,6 +46,7 @@ export default class Profile extends Component {
   getSearchArtist = async (artistName) => {
 
     var url = 'http://localhost:8000/api/sparql/artist/details?artistName=';
+    // artistName = localStorage.getItem('artistSearch');
     url = url + artistName;
 
     let req = new Request(url, {
@@ -55,15 +63,20 @@ export default class Profile extends Component {
       }
       })
       .then((jsonData) => {
-        console.log(jsonData)
+        console.log(jsonData);
+        console.log(jsonData[0].wikidataArtist.value);
+        console.log(jsonData[0].artistName.value);
+        console.log(jsonData[0].artistBirthName.value);
+        console.log(jsonData[0].artistBirthName.value);
+        console.log(jsonData[0].artistActivityStartYear.value);
 
-      // this.setState({
-      //   genreRec_name : vargenreRec_name,
-      //   genreRec_url : vargenreRec_url,
-      //   genreRec_foll : vargenreRec_foll,
-      //   genreRec_genre : vargenreRec_genre,
-      //   genreRec_image : vargenreRec_image
-      // });
+      this.setState({
+        wikiA : jsonData[0].wikidataArtist.value,
+        nameA : jsonData[0].artistName.value,
+        birthNameA : jsonData[0].artistBirthName.value,
+        birthPlaceA : jsonData[0].artistBirthName.value,
+        activityStartA : jsonData[0].artistActivityStartYear.value
+      });
 
   })
   .catch((err) => {
@@ -98,7 +111,14 @@ export default class Profile extends Component {
         var vargenreRec_name =  jsonData.name; 
         }
       else{
-        var vargenreRec_name = 'no in spotify';
+        var vargenreRec_name = 'Unavailable on spotify, just on dbpedia.';
+      }
+
+      if(jsonData.hasOwnProperty('id')){
+        var vargenreRec_id = jsonData.id; 
+      }
+      else{
+        var vargenreRec_id = 'Unavailable on spotify.';
       }
 
       if(jsonData.hasOwnProperty('external_urls')){
@@ -107,20 +127,19 @@ export default class Profile extends Component {
       else{
         var vargenreRec_url = 'https://www.spotify.com/ro/';
       }
-      
 
       if(jsonData.hasOwnProperty('followers')){
         var vargenreRec_foll = jsonData.followers.total; 
       }
       else{
-        var vargenreRec_foll = 'no in spotify';
+        var vargenreRec_foll = 'Unavailable on spotify.';
       }
 
       if(jsonData.hasOwnProperty('genres')){
         var vargenreRec_genre = jsonData.genres[0]; 
       }
       else{
-        var vargenreRec_genre = 'no in spotify';
+        var vargenreRec_genre = 'Unavailable on spotify.';
       }
 
       if(jsonData.hasOwnProperty('images')){  
@@ -133,6 +152,7 @@ export default class Profile extends Component {
 
       this.setState({
         genreRec_name : vargenreRec_name,
+        genRec_id : vargenreRec_id,
         genreRec_url : vargenreRec_url,
         genreRec_foll : vargenreRec_foll,
         genreRec_genre : vargenreRec_genre,
@@ -171,8 +191,15 @@ getArtistSparql = async()=>{
     var varartistRec_name = jsonData.name; //0
     }
     else{
-      var varartistRec_name = 'No find on spotify.';
+      var varartistRec_name = 'Unavailable on spotify, just on dbpedia.';
     }
+
+    if(jsonData.hasOwnProperty('id')){
+      var varartistRec_id = jsonData.id; //0
+      }
+      else{
+        var varartistRec_id = 'Unavailable on spotify.';
+      }
 
     if(jsonData.hasOwnProperty('external_urls')){
       var varartistRec_url = jsonData.external_urls.spotify; 
@@ -185,14 +212,14 @@ getArtistSparql = async()=>{
       var varartistRec_foll = jsonData.followers.total; 
     }
     else{
-      var varartistRec_foll = 'No find on spotify.';
+      var varartistRec_foll = 'Unavailable on spotify.';
     }
 
     if(jsonData.hasOwnProperty('genres')){
      var varartistRec_genre = jsonData.genres[0]; 
     }
     else{
-      var varartistRec_genre = 'No find on spotify.';
+      var varartistRec_genre = 'Unavailable on spotify.';
     }
 
     if(jsonData.hasOwnProperty('images')){  
@@ -206,6 +233,7 @@ getArtistSparql = async()=>{
       artistRec_name : varartistRec_name,
       artistRec_url : varartistRec_url,
       artistRec_foll : varartistRec_foll,
+      artistRec_id : varartistRec_id,
       artistRec_genre : varartistRec_genre,
       artistRec_image : varartistRec_image
     });
@@ -214,6 +242,20 @@ getArtistSparql = async()=>{
     .catch((err) => {
         console.log('ERROR', err.message);
     });  
+}
+
+handleChange = (e) => {
+  this.setState({
+      [e.target.name]: e.target.value
+  })
+}
+
+onSubmit = (e) => {
+  e.preventDefault();
+  const form = {
+   currentArtist: this.state.currentArtist,
+  }
+ localStorage.setItem('artistSearch',this.state.currentArtist);
 }
 
   render(){
@@ -228,10 +270,18 @@ getArtistSparql = async()=>{
             <br/><br/>
             <Container>
                 <div className="search-box">
-                    <form>
-                      <input type="text" placeholder={this.state.initialStateSearch} onChange={this.changeArtist.bind(this)} />
-                      <button onClick={() => {this.changeArtist.bind(this); this.getSearchArtist(this.state.currentArtist)}}>Search</button>
+                    <form onSubmit={this.handleSearchTermSubmit}>
+                      <input name="currentArtist" type="text" value="Search an artist.." onChange={e =>this.handleChange(e)} />
+                      <button type='submit'  onClick={(e) => this.onSubmit(e), this.getSearchArtist(this.state.currentArtist)}>Search</button>                     
                     </form>
+                    <div >
+                      <p style={{color:'black'}}><strong>Stage name:</strong> {this.state.nameA}</p>
+                      <p style={{color:'black'}}><strong>Wikipedia artist link:</strong> <a href={this.state.wikiA} >{this.state.wikiA}</a></p>
+                      <p style={{color:'black'}}><strong>Birth name:</strong> {this.state.birthNameA}</p>
+                      <p style={{color:'black'}}><strong>Birth place:</strong> <a href={this.state.birthPlaceA}>{this.state.birthPlaceA}</a></p>
+                      <p style={{color:'black'}}><strong>Year in which the career began:</strong> {this.state.activityStartA}</p>
+                    </div>
+
                 </div>
                 <div className="card card-image" style={{backgroundImage: "url("+Background+")"}}>
                 
@@ -259,10 +309,9 @@ getArtistSparql = async()=>{
                                   <h4 className="card-title">{this.state.genreRec_name}</h4>
                                   <p className="card-text text-secondary">Genre: {this.state.genreRec_genre} </p>
                                   <p className="card-text text-secondary">Followers on spotify: {this.state.genreRec_foll}</p>
+                                  <iframe src = {"https://open.spotify.com/embed/artist/"+this.state.genRec_id} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe><br/>
                                   <a className="spoty-button"  href={this.state.genreRec_url} className="btn btn-outline-success">Go to Spotify</a>
                             </div>
-                            <button onClick={() => { this.getSearchArtist(this.state.artistRec_name);}}>Details</button>
-
                         </div>
                       </div>
                       <div className="col-md-6">
@@ -274,9 +323,9 @@ getArtistSparql = async()=>{
                                       <h4 className="card-title">{this.state.artistRec_name}</h4>
                                       <p className="card-text text-secondary">Genre: {this.state.artistRec_genre} </p>
                                       <p className="card-text text-secondary">Followers on spotify: {this.state.artistRec_foll}</p>
+                                      <iframe src = {"https://open.spotify.com/embed/artist/"+this.state.artistRec_id} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe><br/>
                                       <a className="spoty-button" href={this.state.artistRec_url} className="btn btn-outline-success">Go to Spotify</a>
                                   </div>
-
                               </div>
                       </div> 
                 </div>

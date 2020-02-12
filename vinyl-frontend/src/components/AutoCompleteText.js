@@ -206,9 +206,6 @@ export default class AutoCompleteText extends React.Component{
                 <button className="btn btn--loginApp-link button-search" onClick={() => {this.string()}}>
                         Search
                     </button>
-                <div>
-                    <p>Your favorite artists: {this.state.artistpref}</p>
-                </div>    
                 <button onClick={handleFormSubmit} type="submit" className="btn btn-block btn--loginApp-link button-next"> Next Step</button>
            </div>
         );
