@@ -3,6 +3,7 @@ import NavigationLogged from '../../components/NavigationLogged'
 import Footer from '../../components/Footer';
 import Jumbotron from '../../components/Jumbotron';
 import MusicSoundcloud from '../../components/MusicSoundcloud';
+import Spotify from '../../components/Spotify';
 import Background from '../../assets/vinyl3.jpg'
 import { Container } from 'react-bootstrap';
 import Arrow from '../../assets/arrow.png';
@@ -267,6 +268,8 @@ onSubmit = (e) => {
             <Jumbotron/>
             <br/>
             <MusicSoundcloud/>
+            <br/><br/>
+            <Spotify></Spotify>
             <br/><br/>
             <Container>
                 <div className="search-box">

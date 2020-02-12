@@ -1,5 +1,6 @@
 import React from 'react';
 import './AutoCompleteText.css';
+import musicGenres from "./music-genres";
 
 export default class AutoCompleteText extends React.Component{
     constructor (props) {
@@ -58,15 +59,23 @@ export default class AutoCompleteText extends React.Component{
            var album_array=[];
            var song_array=[];
            
-           const text_input = "I like Jazz music and Rock music. My favorite song is Take Five and Free Bird. I always prefer Classic music, especially Opera music by Luciano Pavarotti or Giuseppe Verdi and performed by Angela Gheorghiu; I like Metal albums; I always dislike Rap music; I hate songs produced by Andrea Bocelli";
-        //    const text_input = this.state.text;
+           //const text_input = "I like Jazz music and Rock music. My favorite song is Take Five and Free Bird. I always prefer Classic music, especially Opera music by Luciano Pavarotti or Giuseppe Verdi and performed by Angela Gheorghiu; I like Metal albums; I always dislike Rap music; I hate songs produced by Andrea Bocelli";
+           const text_input = this.state.text;
            var natural = require('natural');
            var tokenizer = new natural.WordTokenizer();
            var words = tokenizer.tokenize(text_input);
 
-           console.log("words.length  ",words.length)
+           if(words.length<3)
+           {
+               if(musicGenres.includes(text_input)){
+                    genre_array.push(text_input)
+               }
+               else{
+                //if gen proprii   
+                artist_array.push(text_input)}
+           }; 
     
-           if(text_input.length>2){
+           if(words.length>2){
             for (let i in words){
                i=parseInt(i, 10);
     
